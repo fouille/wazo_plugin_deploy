@@ -5,14 +5,14 @@
     "packageName": "io.wazo.portal.pbx-dashboard",
     "productType": "portal",
     "name" : {
-      "short": "Plugin de confgiuration pour les sites",
+      "short": "Plugin de configuration",
       "full": "Plugin de confgiuration pour les sites déployés"
     },
     "developer": {
       "name": "FMW"
     },
     "description": {
-      "short": "Plugin de confgiuration pour les sites déployés",
+      "short": "Plugin de configuration",
       "full": "Plugin de confgiuration pour les sites déployés afin de simplifier la mise en production d'un site client."
     },
     "icons": {
