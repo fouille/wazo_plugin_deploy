@@ -13,7 +13,7 @@ const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader
 
 const config = {
     performance: {
-        maxAssetSize: 1000000,
+        maxAssetSize: 10000000,
         maxEntrypointSize: 10000000,
         hints: 'error',
     },
@@ -105,7 +105,7 @@ const config = {
                 include: [
                     path.resolve(__dirname, 'assets')
                 ],
-                use: [stylesHandler, 'css-loader'],
+                use: [stylesHandler, 'css-loader', 'style-loader'],
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,

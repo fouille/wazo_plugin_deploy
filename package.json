@@ -1,6 +1,12 @@
 {
   "devDependencies": {
-    "@webpack-cli/generators": "^3.0.7"
+    "@fortawesome/fontawesome-free": "^6.5.1",
+    "@webpack-cli/generators": "^3.0.7",
+    "css-loader": "^6.8.1",
+    "jquery-nice-select": "^1.1.0",
+    "nice-select2": "^2.1.0",
+    "style-loader": "^3.3.3",
+    "tippy.js": "^6.3.7"
   },
   "version": "1.0.0",
   "description": "Wazo Plugin Deploy FMW",

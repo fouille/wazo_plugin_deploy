@@ -6,13 +6,13 @@
     "productType": "portal",
     "name" : {
       "short": "Plugin de configuration",
-      "full": "Plugin de configuration pour les sites déployés"
+      "full": "Plugin de confgiuration pour les sites déployés"
     },
     "developer": {
       "name": "FMW"
     },
     "description": {
-      "short": "Plugin de configuration",
+      "short": "Plugin de configuration pour les sites",
       "full": "Plugin de configuration pour les sites déployés afin de simplifier la mise en production d'un site client."
     },
     "icons": {
@@ -22,7 +22,7 @@
       {
         "entityId": "stack-dashboard-config",
         "context": ["generalPbxTab"],
-        "name": "Configuration",
+        "name": "Wizard Configuration",
         "contentUrl": "./index.html"
       }
     ]

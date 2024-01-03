@@ -1,7 +1,6 @@
 	/*  Wizard */
 	jQuery(function ($) {
 		"use strict";
-		$('form#wrapped').attr('action', 'survey.php');
 		$("#wizard_container").wizard({
 			stepsWrapper: "#wrapped",
 			submit: ".submit",
@@ -28,7 +27,16 @@
 		$("#wizard_container").wizard({
 			afterSelect: function (event, state) {
 				$("#progressbar").progressbar("value", state.percentComplete);
-				$("#location").text(state.stepsComplete + "/" + state.stepsPossible);
+				$("#location").text("(" + state.stepsComplete + "/" + state.stepsPossible + ")");
+				$("#location").attr("data-state", state.stepsComplete);
+				if (state.stepsComplete == 1) {
+					document.getElementById("title_text").innerText = "Configuration du site";
+        			document.getElementById("subtitle_text").innerText = "A cette étape, choisissez les paramètres globaux à affecter au site"
+				}
+				if (state.stepsComplete == state.stepsPossible) {
+					document.getElementById("title_text").innerText = "Résumé de la Configuration";
+        			document.getElementById("subtitle_text").innerText = "Vérifiez et sauvegardez vos réglages"
+				}
 			}
 		});
 		// Validate select
@@ -48,42 +56,3 @@
 			}
 		});
 	});
-
-// Summary 
-function getVals(formControl, controlType) {
-	switch (controlType) {
-
-		case 'question_1':
-			// Get the value for a radio
-			var value = $(formControl).val();
-			$("#question_1").text(value);
-			break;
-
-		case 'question_2':
-			// Get name for set of checkboxes
-			var checkboxName = $(formControl).attr('name');
-
-			// Get all checked checkboxes
-			var value = [];
-			$("input[name*='" + checkboxName + "']").each(function () {
-				// Get all checked checboxes in an array
-				if (jQuery(this).is(":checked")) {
-					value.push($(this).val());
-				}
-			});
-			$("#question_2").text(value.join(", "));
-			break;
-
-		case 'question_3':
-			// Get the value for a radio
-			var value = $(formControl).val();
-			$("#question_3").text(value);
-			break;
-
-		case 'additional_message':
-			// Get the value for a textarea
-			var value = $(formControl).val();
-			$("#additional_message").text(value);
-			break;
-	}
-}
