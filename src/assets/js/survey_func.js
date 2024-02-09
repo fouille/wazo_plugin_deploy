@@ -30,11 +30,15 @@
 				$("#location").text("(" + state.stepsComplete + "/" + state.stepsPossible + ")");
 				$("#location").attr("data-state", state.stepsComplete);
 				if (state.stepsComplete == 1) {
-					document.getElementById("title_text").innerText = "Configuration du site";
+					document.getElementById("title_text").innerText = "Configuration Globale du site";
         			document.getElementById("subtitle_text").innerText = "A cette étape, choisissez les paramètres globaux à affecter au site"
 				}
+				if (state.stepsComplete == 2) {
+					document.getElementById("title_text").innerText = "Configuration Pour les Applications";
+        			document.getElementById("subtitle_text").innerText = "A cette étape, choisissez les paramètres destinés aux applications Wazo"
+				}
 				if (state.stepsComplete == state.stepsPossible) {
-					document.getElementById("title_text").innerText = "Résumé de la Configuration";
+					document.getElementById("title_text").innerText = "Résumé des Configurations";
         			document.getElementById("subtitle_text").innerText = "Vérifiez et sauvegardez vos réglages"
 				}
 			}
