@@ -33,7 +33,14 @@ const config = {
         historyApiFallback: true,
         watchFiles: ["./public/*"],
         port: "3000",
-        hot: true
+        hot: true,
+        open: {
+            target : '',
+            app: {
+                name: 'Opera',
+                arguments: ['--incognito', '--new-window'],
+              },
+        }
     },
     plugins: [
         new webpack.ProvidePlugin({
