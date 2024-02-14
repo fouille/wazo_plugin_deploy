@@ -137,7 +137,7 @@ for (let element of btn_next) {
       keys.app_codecs = app_codecs;
       keys.app_ma = app_ma;
       keys.app_wda = app_wda;
-      console.log(keys);
+      // console.log(keys);
       add_info_to_summary(keys);
   })
 }
@@ -217,7 +217,7 @@ for (let element_turn of btn_turn) {
   const moh_list = await fetch(host + api_confd_moh, options).then(response => response.json());
   // appel api pour liste les configuration dapp existante
   apps_list = await fetch(host + api_confd_apps_get, options).then(response => response.json());
-  console.log(apps_list);
+  // console.log(apps_list);
   
   // traitement si configuration app existe pour affichage sur page accueil
   let dock_value_apps = "";
@@ -229,7 +229,9 @@ for (let element_turn of btn_turn) {
         (apps_items[g].name == "wazo-euc-application-desktop") ? dock_value_apps += "Wazo Desktop" + " " : '';
     }
   }
-  const apps_list_active = ((apps_list.total > 0) ? 'Oui ('+dock_value_apps+')' : 'Non');
+
+  // condition pour afficher la liste des conf d'app activent et la bulle d'information 
+  const apps_list_active = (apps_list.total > 0) ? "Oui (" + dock_value_apps + ")" : (document.getElementById("step1_tippy_app_show").style.display = "none", "Non");
 
   //traitement des template sip
   const endpoint_section_options = template_sip_global_data.items[0].endpoint_section_options;
