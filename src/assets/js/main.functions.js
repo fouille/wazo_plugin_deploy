@@ -61,7 +61,7 @@ export async function update_sip_template_endpoint(keys) {
       if (promise == null || promise.status == 204 || promise.ok){
         update_sip_template_webrtc_endpoint(keys)
       } else {
-          console.log("no auth");
+          // console.log("no auth");
       }
       } catch (erreur) {
           console.error("Erreur :", erreur); 
@@ -99,7 +99,7 @@ async function update_sip_template_webrtc_endpoint(pkeys) {
       document.getElementById("final-step-one").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
       update_apps(apps_list, pkeys)
     } else {
-        console.log("no auth");
+        // console.log("no auth");
     }
     } catch (erreur) {
         console.error("Erreur :", erreur); 
@@ -138,9 +138,9 @@ async function updateORcreate_ext_apps(name, app_keys, create_or_not) {
   try {
     let promise = await fetch(host+api_confd_sip_temp_global_put, put_options);
     if (promise == null || promise.status == 204 || promise.ok){
-      console.log(name + ": OK");
+      // console.log(name + ": OK");
     }else{
-      console.log(name + ": NOK");
+      // console.log(name + ": NOK");
     }
   }
   catch (erreur) {
@@ -149,52 +149,52 @@ async function updateORcreate_ext_apps(name, app_keys, create_or_not) {
 }
 // function pour update ou ajout une configuration d'application 
 async function update_apps(apps_list, app_keys) {
-  console.log(apps_list);
+  // console.log(apps_list);
   if (apps_list.total > 0 && (app_keys.app_ma.enable == "true" || app_keys.app_wda.enable == "true")){
-    console.log("Etat MA = " + app_keys.app_ma.enable);
-    console.log("Etat WDA = " + app_keys.app_wda.enable);
+    // console.log("Etat MA = " + app_keys.app_ma.enable);
+    // console.log("Etat WDA = " + app_keys.app_wda.enable);
     let apps_items = apps_list.items;
     let apps_labell = app_keys.app_labels.activate_labels;
     for (let g = 0; g < apps_labell.length; g++) {
-      console.log(apps_items);
-      console.log("Demande d'app conf: "+ apps_labell[g]);
+      // console.log(apps_items);
+      // console.log("Demande d'app conf: "+ apps_labell[g]);
       const checkItemsExist = obj => obj.name === apps_labell[g];
-      console.log("CHECK ITEM");
+      // console.log("CHECK ITEM");
       let label_name_check = apps_items.some(checkItemsExist);
-      console.log(label_name_check);
-      console.log("FIN CHECK");
+      // console.log(label_name_check);
+      // console.log("FIN CHECK");
       let label_name = apps_labell[g];
       //je trouve un objet dans les items dapp retournés
       if (label_name_check === true) {
-        console.log("L'app existe deja alors");
-        console.log("BOUCLE UPDATE");       
+        // console.log("L'app existe deja alors");
+        // console.log("BOUCLE UPDATE");       
         if (label_name == apps_labell[g]) {
-          console.log("boucle update label: "+label_name);
+          // console.log("boucle update label: "+label_name);
           await updateORcreate_ext_apps(label_name, app_keys, 0)
         }else{
-          console.log("erreur boucle update");
+          // console.log("erreur boucle update");
         }
       }else if (label_name_check === false) {
-        console.log("L'app N'existe PAS deja alors");
-        console.log("BOUCLE CREATE");
-        console.log(apps_labell[g]);
-        console.log("boucle create label: "+apps_labell[g]);
+        // console.log("L'app N'existe PAS deja alors");
+        // console.log("BOUCLE CREATE");
+        // console.log(apps_labell[g]);
+        // console.log("boucle create label: "+apps_labell[g]);
         await updateORcreate_ext_apps(apps_labell[g], app_keys, 1)
       }
     }
   }else if(apps_list.total == 0 && (app_keys.app_ma.enable == "true" || app_keys.app_wda.enable == "true")){
-    console.log("il ny a pas d'app configuree : ");
-    console.log("MA2 = " + app_keys.app_ma.enable);
-    console.log("WDA2 = " + app_keys.app_wda.enable);
+    // console.log("il ny a pas d'app configuree : ");
+    // console.log("MA2 = " + app_keys.app_ma.enable);
+    // console.log("WDA2 = " + app_keys.app_wda.enable);
     //fonction de creation des conf dapp
     let apps_label = app_keys.app_labels.activate_labels;
     for (let h = 0; h < apps_label.length; h++){
-      console.log("create app : " + apps_label[h]);
+      // console.log("create app : " + apps_label[h]);
       await updateORcreate_ext_apps(apps_label[h], app_keys, 1)
     }
   }
   else{
-    console.log("il ny a pas d'app à configurer");
+    // console.log("il ny a pas d'app à configurer");
   }
   // EXIT de fin
   setTimeout(function(){
@@ -209,7 +209,8 @@ async function update_apps(apps_list, app_keys) {
       document.getElementById("final-step-two").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
       document.getElementById("final-step-three").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
     document.getElementById("title_text").innerText = "Terminé !";
-    document.getElementById("subtitle_text").innerText = ""
+    document.getElementById("subtitle_text").innerText = "";
+    document.getElementById("main_question").innerText = "Configuration appliquée :"
   }, 1500);
 
 
