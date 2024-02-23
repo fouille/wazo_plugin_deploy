@@ -1,6 +1,10 @@
+[[redirects]]
+  from = "/*"
+  to = "/public"
+  status = 200
+  force = true
+  headers = {X-From = "portal.wazo.io"}
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
     Access-Control-Allow-Origin = "*"
