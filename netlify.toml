@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/public"
-  to = "https://ornate-taiyaki-474d7b.netlify.app/public/"
+  to = "https://wazo-plugin-deploy.netlify.app/public/"
   status = 200
   force = true
   headers = {X-From = "portal.wazo.io"}
