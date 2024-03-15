@@ -1,12 +1,12 @@
 {
     "manifestVersion": "0.1",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "id": "fmw-wazo-plugin-deploy",
     "packageName": "io.wazo.portal.pbx-dashboard",
     "productType": "portal",
     "name" : {
       "short": "Plugin de configuration",
-      "full": "Plugin de confgiuration pour les sites déployés"
+      "full": "Plugin de configuration pour les sites déployés"
     },
     "developer": {
       "name": "FMW"
