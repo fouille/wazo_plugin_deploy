@@ -14,6 +14,8 @@ import {
   codec_list_text,
   locale_list_wazo
 } from "./main.const";
+const version = '© [AIV]{date}[/AIV] FMW - Pour Wazo Communication - [AIV]v{version}[/AIV]';
+document.getElementsByClassName("copy")[0].innerHTML = version;
 const clm = require('country-locale-map');
 const app = new App();
 export let template_sip_global_data_uuid = "";

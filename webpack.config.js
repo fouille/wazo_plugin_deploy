@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
+const WebpackAutoInject = require('webpack-auto-inject-version-next');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -36,6 +37,22 @@ const config = {
         hot: true
     },
     plugins: [
+        new WebpackAutoInject({
+            components: {
+                AutoIncreaseVersion: true,
+                InjectAsComment: false,
+                InjectByTag: true
+            },
+            componentsOptions: {
+                InjectByTag: {
+                    fileRegex: /\.+/,
+                    // regexp to find [AIV] tag inside html, if you tag contains unallowed characters you can adjust the regex
+                    // but also you can change [AIV] tag to anything you want
+                    AIVTagRegexp: /(\[AIV])(([a-zA-Z{} ,:;!()_@\-"'\\\/])+)(\[\/AIV])/g,
+                    dateFormat: 'yyyy'
+                }
+            }
+        }),
         new webpack.ProvidePlugin({
             $: "jquery",
             jquery: "jQuery",
