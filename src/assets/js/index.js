@@ -369,7 +369,7 @@ for (let element_turn of btn_turn) {
               '</label>' +
               '</div>'
       } 
-      if (codec_list[i].value == "vp8" || codec_list[i].value == "vp9" || codec_list[i].value == "h264") {
+      else if (codec_list[i].value == "vp8" || codec_list[i].value == "vp9" || codec_list[i].value == "h264") {
         //liste codec VIDEO pour template global (nactive pas)
         select_box += '<div class="form-group form-check-inline">' +
               '<label class="container_check version_2">' + codec_list[i].name +

@@ -9,7 +9,7 @@
     "tippy.js": "^6.3.7",
     "webpack-auto-inject-version-next": "^1.2.4"
   },
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Wazo Plugin Deploy FMW",
   "name": "wazo-plugin-deploy-fmw",
   "scripts": {
