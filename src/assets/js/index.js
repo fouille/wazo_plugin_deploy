@@ -31,6 +31,7 @@ const btn_next = document.getElementsByClassName("forward");
 const btn_submit = document.getElementsByClassName("submit");
 const btn_stun = document.getElementsByClassName("active_stun_wda");
 const btn_turn = document.getElementsByClassName("active_turn_ma");
+const btn_active_codec = document.getElementsByClassName("active_codec_video_enable");
 
 tippy('[data-tippy-content]', {
   // trigger: 'click focus',
@@ -148,6 +149,18 @@ for (let element of btn_submit) {
   element.addEventListener("click", function(e) {
       update_sip_template_endpoint(keys)
   })
+}
+
+// changement codec pour video 
+for (let element_codec of btn_active_codec) {
+    let select_vp8 = document.getElementsByClassName("vp8");
+    let select_vp9 = document.getElementsByClassName("vp9");
+    let select_h264 = document.getElementsByClassName("h264");
+    element_codec.onchange = () => {
+        (select_vp8[0].checked) ? select_vp8[0].checked = false : select_vp8[0].checked = true ;
+        (select_vp9[0].checked) ? select_vp9[0].checked = false : select_vp9[0].checked = true ;
+        (select_h264[0].checked) ? select_h264[0].checked = false : select_h264[0].checked = true ;
+    }
 }
 
 // changement etat select stun 
@@ -351,10 +364,26 @@ for (let element_turn of btn_turn) {
               //liste codec pour template webrtc
           select_box_webrtc += '<div class="form-group form-check-inline">' +
               '<label class="container_check version_2">' + codec_list[i].name +
-              '<input type="checkbox" name="active_codec_webrtc" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="" checked>' +
+              '<input type="checkbox" name="active_codec_webrtc" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="' + codec_list[i].value + '" checked>' +
               '<span class="checkmark"></span>' +
               '</label>' +
               '</div>'
+      } 
+      if (codec_list[i].value == "vp8" || codec_list[i].value == "vp9" || codec_list[i].value == "h264") {
+        //liste codec VIDEO pour template global (nactive pas)
+        select_box += '<div class="form-group form-check-inline">' +
+              '<label class="container_check version_2">' + codec_list[i].name +
+              '<input type="checkbox" name="active_codec" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="" >' +
+              '<span class="checkmark"></span>' +
+              '</label>' +
+              '</div>';
+        //liste et ACTIVE codec VIDEO pour template webrtc
+        select_box_webrtc += '<div class="form-group form-check-inline">' +
+        '<label class="container_check version_2">' + codec_list[i].name +
+        '<input type="checkbox" name="active_codec_webrtc" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="' + codec_list[i].value + '" checked>' +
+        '<span class="checkmark"></span>' +
+        '</label>' +
+        '</div>'
       } else {
           select_box += '<div class="form-group form-check-inline">' +
               '<label class="container_check version_2">' + codec_list[i].name +
@@ -365,7 +394,7 @@ for (let element_turn of btn_turn) {
               //liste codec pour template webrtc
           select_box_webrtc += '<div class="form-group form-check-inline">' +
               '<label class="container_check version_2">' + codec_list[i].name +
-              '<input type="checkbox" name="active_codec_webrtc" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="">' +
+              '<input type="checkbox" name="active_codec_webrtc" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="' + codec_list[i].value + '">' +
               '<span class="checkmark"></span>' +
               '</label>' +
               '</div>'
