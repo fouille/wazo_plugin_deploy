@@ -18,7 +18,11 @@ const config = {
         maxEntrypointSize: 10000000,
         hints: 'error',
     },
-    entry: './src/assets/js/index.js',
+    entry: {
+        'index': './src/assets/js/index.js',
+        'main': './src/assets/js/main.const.js',
+        'function': './src/assets/js/main.functions.js',
+    },
     output: {
         path: path.resolve(__dirname, 'public'),
         filename: "assets/js/[name].[contenthash].js",
@@ -87,6 +91,7 @@ const config = {
                     globOptions: {
                         dot: true,
                         gitignore: true,
+                        ignore: ["**/main.*", "**/index.js"]
                     },
                     to: "./assets/js"
                 },

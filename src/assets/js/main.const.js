@@ -2,11 +2,11 @@
 export const codec_list_text = `[
     {"value": "alaw", "name": "G.711 A-law"},
     {"value": "ulaw", "name": "G.711 U-law"},
-    {"value": "h264", "name": "H.264"},
-    {"value": "h263", "name": "H.263"},
+    {"value": "opus", "name": "Opus"},
     {"value": "g722", "name": "G.722"},
     {"value": "g729", "name": "G.729A"},
-    {"value": "opus", "name": "Opus"},
+    {"value": "h263", "name": "H.263"},
+    {"value": "h264", "name": "H.264"},
     {"value": "vp8", "name": "VP8"},
     {"value": "vp9", "name": "VP9"}
 ]`;

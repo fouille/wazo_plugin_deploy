@@ -120,7 +120,16 @@
 								<!-- /step-->
 
 								<div class="step">
-									<h3 class="main_question"><span class="tippy_codec" data-tippy-content="Choix des codecs à utiliser, nous vous recommandons d'activer un minimum de codec (correspondant à votre opérateur de trunk) afin de limiter la négociation. Attention, il n'est pas possible de choisir l'ordre de priorisation dans l'immédiat." ><i class="fa-solid fa-circle-info"></i></span> Activer des codecs WebRTC:</h3>
+									<h3 class="main_question"><span class="tippy_codec_video_enable" data-tippy-content="Cette option permet l'activation des codecs video pour vos applications" ><i class="fa-solid fa-circle-info"></i></span> Activer les codecs vidéo :</h3>
+									<div class="form-group">
+										<div class="styled-select clearfix active_codec_video_enable">
+											<select class="wide required" name="active_codec_video_enable" id="active_codec_video_enable">
+												<option value="yes">Oui</option>
+												<option value="no">Non</option>
+											</select>
+										</div>
+									</div>
+									<h3 class="main_question"><span class="tippy_codec" data-tippy-content="Choix des codecs à utiliser, nous vous recommandons d'activer un minimum de codec (correspondant à votre opérateur de trunk) afin de limiter la négociation. Attention, il n'est pas possible de choisir l'ordre de priorisation dans l'immédiat." ><i class="fa-solid fa-circle-info"></i></span> Codecs WebRTC activés:</h3>
 									<div id="codec_activable_webrtc">
 									</div>
 									<h3 class="main_question"><span class="tippy_nat" data-tippy-content="Cette option permet l'activation de votre serveur STUN pour les applications Web ET Desktop" ><i class="fa-solid fa-circle-info"></i></span> Activer STUN Web & Desktop :</h3>
@@ -132,12 +141,16 @@
 											</select>
 										</div>
 									</div>
-									<div class="form-group server_stun_wda">
-										URL Serveur STUN :	<input type="text" name="server_stun_wda" class="font-weight-bold form-control required" placeholder="exemple : stun.coturn.fr" autocomplete="off">
+									<div class="input-group server_stun_wda">
+										<div class="input-group-prepend">
+											<span class="input-group-text">URI et Port</span>
+										</div>
+										<input type="text" style="width: 40%;" name="server_stun_wda" class="font-weight-bold form-control required" placeholder="stun.exemple.com" autocomplete="off">
+										<input type="text" name="server_port_stun_wda" class="font-weight-bold form-control required"  value="3478" autocomplete="off">
 									</div>
-									<div class="form-group server_port_stun_wda">
+									<!-- <div class="form-group server_port_stun_wda">
 										Port Serveur STUN :	<input type="text" name="server_port_stun_wda" class="font-weight-bold form-control required"  value="3478" autocomplete="off">
-									</div>
+									</div> -->
 									<h3 class="main_question"><span class="tippy_nat" data-tippy-content="Cette option permet l'activation de votre serveur TURN pour les applications mobiles" ><i class="fa-solid fa-circle-info"></i></span> Activer TURN Mobile :</h3>
 									<div class="form-group">
 										<div class="styled-select clearfix active_turn_ma">
@@ -147,17 +160,21 @@
 											</select>
 										</div>
 									</div>
-									<div class="form-group server_turn_ma">
-										URL Serveur TURN :	<input type="text" name="server_turn_ma" class="font-weight-bold form-control required" placeholder="exemple : turn.coturn.fr" autocomplete="off">
+									<div class="input-group server_turn_ma">
+										<div class="input-group-prepend">
+											<span class="input-group-text">URI et Port</span>
+										</div>
+										<input type="text" style="width: 40%;" name="server_turn_ma" class="font-weight-bold form-control required" placeholder="turn.exemple.com" autocomplete="off">
+										<input type="text" name="server_port_turn_ma" class="font-weight-bold form-control required" value="3478" autocomplete="off">
 									</div>
-									<div class="form-group server_port_turn_ma">
+									<!-- <div class="form-group server_port_turn_ma">
 										Port Serveur TURN :	<input type="text" name="server_port_turn_ma" class="font-weight-bold form-control required" value="5349" autocomplete="off">
-									</div>
+									</div> -->
 									<div class="form-group server_username_turn_ma">
 										Identifiant Serveur TURN :	<input type="text" name="server_username_turn_ma" class="font-weight-bold form-control required" placeholder="" autocomplete="off">
 									</div>
 									<div class="form-group server_password_turn_ma">
-										Mot de passe Serveur TURN :	<input type="text" name="server_password_turn_ma" class="font-weight-bold form-control required" placeholder="" autocomplete="off">
+										Mot de passe Serveur TURN :	<input type="password" name="server_password_turn_ma" class="font-weight-bold form-control required" placeholder="" autocomplete="off">
 									</div>
 								</div>
 								<!-- /step-->
