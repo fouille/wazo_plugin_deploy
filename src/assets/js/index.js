@@ -235,11 +235,11 @@ export async function update_sip_template_endpoint(keys) {
     // EXIT de fin
     setTimeout(function(){
       // let btn_submit = document.getElementsByClassName("submit");
-      // let btn_next = document.getElementsByClassName("backward");
+      let btn_back = document.getElementsByClassName("backward");
       for (let element of btn_submit) {
         element.setAttribute('disabled', 'yes');
       }
-      for (let element of btn_next) {
+      for (let element of btn_back) {
           element.setAttribute('disabled', 'yes');
         }
         document.getElementById("final-step-two").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
