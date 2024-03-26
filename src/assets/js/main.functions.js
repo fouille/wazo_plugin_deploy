@@ -1,4 +1,14 @@
-import { apps_list, template_sip_webrtc_data_uuid, template_sip_global_data_uuid, host, tenant_uuid, token_session } from "./index";
+// import { 
+//   apps_list, 
+//   template_sip_webrtc_data_uuid, 
+//   template_sip_global_data_uuid, 
+//   host, 
+//   tenant_uuid, 
+//   token_session,
+//   btn_next,
+//   btn_submit
+// } from "./index";
+
 // function pour update du sip template
 export async function update_sip_template_endpoint(keys) {
   document.getElementById("title_text").innerText = "Patientez";
@@ -198,8 +208,8 @@ async function update_apps(apps_list, app_keys) {
   }
   // EXIT de fin
   setTimeout(function(){
-    let btn_submit = document.getElementsByClassName("submit");
-    let btn_next = document.getElementsByClassName("backward");
+    // let btn_submit = document.getElementsByClassName("submit");
+    // let btn_next = document.getElementsByClassName("backward");
     for (let element of btn_submit) {
       element.setAttribute('disabled', 'yes');
     }
