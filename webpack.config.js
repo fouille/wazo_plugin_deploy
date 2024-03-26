@@ -28,6 +28,7 @@ const config = {
         filename: "assets/js/[name].[contenthash].js",
         clean: true
     },
+    devtool: "source-map",
     devServer: {
         host: 'localhost',
         headers: {
