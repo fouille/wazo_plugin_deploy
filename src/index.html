@@ -10,10 +10,10 @@
     <title>Wazo Wizard Tenant Deployment</title>
 
     <!-- GOOGLE WEB FONT -->
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500,600" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500,600" rel="stylesheet"> -->
 
     <!-- BASE CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet"> -->
 	<link href="assets/css/menu.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
 	<link href="assets/css/vendors.css" rel="stylesheet">
@@ -44,6 +44,8 @@
 						<figure id="logo-img"><img src="assets/img/info_graphic_1.svg"  alt="" class="img-fluid"></figure>
 						<h2 id="title_text">Réglages de votre site</h2>
 						<p id="subtitle_text">Cet outil vous assiste pas à pas dans les réglages globaux de votre site client : <strong><span id="client_site_name"></span></strong></p>
+
+						<p class="mt-5" id="template_info_text"></p>
 					</div>
 					<div class="copy"></div>
 				</div>
@@ -107,74 +109,63 @@
 											</select>
 										</div>
 									</div>
-									<h3 class="main_question"><span class="tippy_nat" data-tippy-content="Cette option permet l'activation des paramètres nécessaire pour l'utilisation des postes téléphoniques derrière un environnement NAT." ><i class="fa-solid fa-circle-info"></i></span> Activer le NAT du site :</h3>
+									<h3 class="main_question"><span class="tippy_nat" data-tippy-content="Cette option permet l'activation des paramètres nécessaire pour l'utilisation des postes téléphoniques derrière un environnement NAT." ><i class="fa-solid fa-circle-info"></i></span> Paramètres NAT :</h3>
 									<div class="form-group">
-										<div class="styled-select clearfix nat_tenant">
-											<select class="wide required" name="nat_tenant" id="nat_tenant">
-												<option value="rtp_symmetric,rewrite_contact">Oui</option>
-												<option value="no">Non</option>
-											</select>
+										<div class="form-check form-switch">
+											<input class="form-check-input nat_tenant" type="checkbox" role="switch" name="nat_tenant" id="nat_tenant" checked>
+											<label class="form-check-label" for="nat_tenant">Activer les réglages NAT</label>
 										</div>
 									</div>
 								</div>
 								<!-- /step-->
 
-								<div class="step">
-									<h3 class="main_question"><span class="tippy_codec_video_enable" data-tippy-content="Cette option permet l'activation des codecs video pour vos applications" ><i class="fa-solid fa-circle-info"></i></span> Activer les codecs vidéo :</h3>
+								<div class="step">					
+									<h3 class="main_question"><span class="tippy_codec" data-tippy-content="Choix des codecs à utiliser, nous vous recommandons d'activer un minimum de codec (correspondant à votre opérateur de trunk) afin de limiter la négociation. Attention, il n'est pas possible de choisir l'ordre de priorisation dans l'immédiat." >
+										<i class="fa-solid fa-circle-info"></i></span> Les Codecs WebRTC :
+									</h3>
 									<div class="form-group">
-										<div class="styled-select clearfix active_codec_video_enable">
-											<select class="wide required" name="active_codec_video_enable" id="active_codec_video_enable">
-												<option value="yes">Oui</option>
-												<option value="no">Non</option>
-											</select>
+										<div class="form-check form-switch btn-enable-codec">
+											<input class="form-check-input active_codec_video_enable" type="checkbox" role="switch" name="active_codec_video_enable" id="active_codec_video_enable" checked>
+											<label class="form-check-label" for="active_codec_video_enable">Activer les codecs vidéo</label>
 										</div>
 									</div>
-									<h3 class="main_question"><span class="tippy_codec" data-tippy-content="Choix des codecs à utiliser, nous vous recommandons d'activer un minimum de codec (correspondant à votre opérateur de trunk) afin de limiter la négociation. Attention, il n'est pas possible de choisir l'ordre de priorisation dans l'immédiat." ><i class="fa-solid fa-circle-info"></i></span> Codecs WebRTC activés:</h3>
 									<div id="codec_activable_webrtc">
 									</div>
-									<h3 class="main_question"><span class="tippy_nat" data-tippy-content="Cette option permet l'activation de votre serveur STUN pour les applications Web ET Desktop" ><i class="fa-solid fa-circle-info"></i></span> Activer STUN Web & Desktop :</h3>
+									<h3 class="main_question"><span class="tippy_nat" data-tippy-content="Cette option permet l'activation de votre serveur STUN pour les applications Web ET Desktop" >
+										<i class="fa-solid fa-circle-info"></i></span> STUN Wazo Web & Desktop :
+									</h3>
 									<div class="form-group">
-										<div class="styled-select clearfix active_stun_wda">
-											<select class="wide required" name="active_stun_wda" id="active_stun_wda">
-												<option value="yes">Oui</option>
-												<option value="no">Non</option>
-											</select>
+										<div class="form-check form-switch">
+											<input class="form-check-input active_stun_wda" type="checkbox" role="switch" name="active_stun_wda" id="active_stun_wda" checked>
+											<label class="form-check-label" for="active_stun_wda">Activer le STUN personnalisé</label>
 										</div>
 									</div>
 									<div class="input-group server_stun_wda">
-										<div class="input-group-prepend">
 											<span class="input-group-text">URI et Port</span>
-										</div>
-										<input type="text" style="width: 40%;" name="server_stun_wda" class="font-weight-bold form-control required" placeholder="stun.exemple.com" autocomplete="off">
+										<input type="text" style="width: 40%;" name="server_stun_wda" class="font-weight-bold form-control required" placeholder="stun.exemple.com" pattern="" autocomplete="off">
 										<input type="text" name="server_port_stun_wda" class="font-weight-bold form-control required"  value="3478" autocomplete="off">
 									</div>
-									<!-- <div class="form-group server_port_stun_wda">
-										Port Serveur STUN :	<input type="text" name="server_port_stun_wda" class="font-weight-bold form-control required"  value="3478" autocomplete="off">
-									</div> -->
-									<h3 class="main_question"><span class="tippy_nat" data-tippy-content="Cette option permet l'activation de votre serveur TURN pour les applications mobiles" ><i class="fa-solid fa-circle-info"></i></span> Activer TURN Mobile :</h3>
+									<h3 class="main_question"><span class="tippy_nat" data-tippy-content="Cette option permet l'activation de votre serveur TURN pour les applications mobiles" >
+										<i class="fa-solid fa-circle-info"></i></span> TURN Wazo Mobile :
+									</h3>
 									<div class="form-group">
-										<div class="styled-select clearfix active_turn_ma">
-											<select class="wide required" name="active_turn_ma" id="active_turn_ma">
-												<option value="yes">Oui</option>
-												<option value="no">Non</option>
-											</select>
+										<div class="form-check form-switch">
+											<input class="form-check-input active_turn_ma" type="checkbox" role="switch" name="active_turn_ma" id="active_turn_ma" checked>
+											<label class="form-check-label" for="active_turn_ma">Activer le TURN personnalisé</label>
 										</div>
 									</div>
 									<div class="input-group server_turn_ma">
-										<div class="input-group-prepend">
 											<span class="input-group-text">URI et Port</span>
-										</div>
-										<input type="text" style="width: 40%;" name="server_turn_ma" class="font-weight-bold form-control required" placeholder="turn.exemple.com" autocomplete="off">
+										<input type="text" style="width: 40%;" name="server_turn_ma" class="font-weight-bold form-control required" placeholder="turn.exemple.com" pattern="" autocomplete="off">
 										<input type="text" name="server_port_turn_ma" class="font-weight-bold form-control required" value="3478" autocomplete="off">
 									</div>
-									<!-- <div class="form-group server_port_turn_ma">
-										Port Serveur TURN :	<input type="text" name="server_port_turn_ma" class="font-weight-bold form-control required" value="5349" autocomplete="off">
-									</div> -->
-									<div class="form-group server_username_turn_ma">
-										Identifiant Serveur TURN :	<input type="text" name="server_username_turn_ma" class="font-weight-bold form-control required" placeholder="" autocomplete="off">
+									<div class="input-group server_username_turn_ma">
+										<span class="input-group-text">Identifiant</span>
+										<input type="text" name="server_username_turn_ma" class="font-weight-bold form-control required" placeholder="" autocomplete="off">
 									</div>
-									<div class="form-group server_password_turn_ma">
-										Mot de passe Serveur TURN :	<input type="password" name="server_password_turn_ma" class="font-weight-bold form-control required" placeholder="" autocomplete="off">
+									<div class="input-group server_password_turn_ma">
+										<span class="input-group-text">Mot de passe</span>
+										<input type="password" name="server_password_turn_ma" class="font-weight-bold form-control required" placeholder="" autocomplete="off">
 									</div>
 								</div>
 								<!-- /step-->
@@ -211,7 +202,7 @@
 							<div id="bottom-wizard">
 								<button type="button" id="backward" name="backward" class="backward">Précédent</button>
 								<button type="button" id="forward" name="forward" class="forward">Suivant</button>
-								<button type="button" id="process" name="process" class="submit">Enregistrer</button>
+								<button type="button" id="process" name="process" class="submit wizard_save">Enregistrer</button>
 							</div>
 							<!-- /bottom-wizard -->
 						</form>
@@ -223,6 +214,151 @@
 		<!-- /row-->
 	</div>
 	<!-- /container-fluid -->
+
+	<!-- Modal terms -->
+	<div class="modal fade" id="template-modal" tabindex="-1" role="dialog" aria-labelledby="templateModal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="templateModal">Modèle Wizard</h4>
+					<div class="form-check form-switch form-check-reverse btn-enable-template">
+						<input class="form-check-input flexSwitchCheckEnableTemplate" type="checkbox" role="switch" id="flexSwitchCheckEnableTemplate">
+						<label class="form-check-label text-danger fw-bold" id="flexSwitchCheckEnableTemplate_label" for="flexSwitchCheckEnableTemplate">Activer le modèle</label>
+					</div>
+				</div>
+				<div class="modal-body">
+					<p><small>Les informations de ce modèle de configuration sont enregistrées dans la ressource  <strong>Localstorage</strong> de votre navigateur. En cas d'effacement, les paramètres de votre modèle ne seront plus écris automatiquement.</small></p>
+					<div class="accordion" id="accordionExample">
+						<div class="accordion-item">
+						  <h2 class="accordion-header">
+							<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							  Configuration Générale
+							</button>
+						  </h2>
+						  <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<p>Cette étape est destinée à la configuration générale du site créé, elle s'applique principalement aux paramètres SIP.</p>
+								<div class="form-group">
+									<div class="styled-select clearfix template_locales_tenant">
+										<label for="template_locales_tenant" class="form-label fw-bold">Langue du site :</label>
+										<select class="wide required" name="template_locales_tenant" id="template_locales_tenant">
+											<option selected>Choix de la langue</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="template_nat_tenant" class="form-label fw-bold">Paramètres NAT :</label>
+									<div class="form-check form-switch">
+										<label class="form-check-label" for="template_nat_tenant">Activer le support NAT</label>
+										<input class="form-check-input template_nat_tenant" type="checkbox" role="switch" id="template_nat_tenant" checked>
+										
+									</div>
+								</div>
+								<div>
+									<label for="template_codec_activable" class="form-label fw-bold">Codecs du site :</label>
+									<div id="template_codec_activable"></div>
+								</div>
+								
+							</div>
+						  </div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+							  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWebrtc" aria-expanded="false" aria-controls="collapseWebrtc">
+								Configuration Appplications Wazo
+							  </button>
+							</h2>
+							<div id="collapseWebrtc" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+							  <div class="accordion-body">
+								<p>Cette étape est destinée à la configuration WebRTC du site créé.</p>
+								<div class="form-group">
+									<div class="form-check form-switch btn-enable-codec">
+										<input class="form-check-input template_active_codec_video_enable" type="checkbox" role="switch" name="template_active_codec_video_enable" id="template_active_codec_video_enable" checked>
+										<label class="form-check-label" for="template_active_codec_video_enable">Activer les codecs vidéo</label>
+									</div>
+								</div>
+								<div id="template_codec_activable_webrtc"></div>
+							  </div>
+							</div>
+						  </div>
+						<div class="accordion-item">
+						  <h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							  Configuration pour Wazo Web et Desktop
+							</button>
+						  </h2>
+						  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<p>Cette étape est destinée à la personnalisation du serveur STUN à destination des applications Wazo Web et Desktop, cette étape est fortement recommandée.</p>
+								<div class="form-group">
+									<div class="form-check form-switch">
+										<input class="form-check-input template_active_stun_wda" type="checkbox" role="switch" id="template_active_stun_wda" checked>
+										<label class="form-check-label" for="template_active_stun_wda">Activer le STUN personnalisé</label>
+									</div>
+								</div>
+								<div class="input-group server_stun_wda">
+										<span class="input-group-text">URI et Port</span>
+									<input type="text" style="width: 40%;" name="template_server_stun_wda" class="font-weight-bold form-control" placeholder="stun.exemple.com" autocomplete="off">
+									<input type="text" name="template_server_port_stun_wda" class="font-weight-bold form-control"  value="3478" autocomplete="off">
+								</div>
+							</div>
+						  </div>
+						</div>
+						<div class="accordion-item">
+						  <h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+							  Configuration Wazo Mobile
+							</button>
+						  </h2>
+						  <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<p>Cette étape est destinée à la personnalisation du serveur TURN à destination des applications Wazo Mobile, la configuration d'un paramètre TURN est obligatoire pour les clients les utilisants.</p>
+								<div class="form-group">
+									<div class="form-check form-switch">
+										<input class="form-check-input template_active_turn_ma" type="checkbox" role="switch" id="template_active_turn_ma" checked>
+										<label class="form-check-label" for="template_active_turn_ma">Activer le TURN personnalisé</label>
+									</div>
+								</div>
+								<div class="input-group template_server_turn_ma">
+										<span class="input-group-text">URI et Port</span>
+									<input type="text" style="width: 40%;" name="template_server_turn_ma" class="font-weight-bold form-control" placeholder="turn.exemple.com" autocomplete="off">
+									<input type="text" name="template_server_port_turn_ma" class="font-weight-bold form-control" value="3478" autocomplete="off">
+								</div>
+								<div class="input-group template_server_username_turn_ma">
+									<span class="input-group-text">Identifiant</span>
+									<input type="text" name="template_server_username_turn_ma" class="font-weight-bold form-control" placeholder="" autocomplete="off">
+								</div>
+								<div class="input-group template_server_password_turn_ma">
+									<span class="input-group-text">Mot de passe</span>
+									<input type="password" name="template_server_password_turn_ma" class="font-weight-bold form-control" placeholder="" autocomplete="off">
+								</div>
+							</div>
+						  </div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn btn-danger template_remove" name="template_remove" data-bs-dismiss="modal">Supprimer</button>
+					<button type="button" class="btn_1 template_save" name="template_save" data-bs-dismiss="modal">Enregistrer</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<div class="modal fade" id="warning-modal" tabindex="-1" role="dialog" aria-labelledby="warning-modal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title text-danger">/!\ Erreur de vérification</h5>
+			</div>
+			<div class="modal-body">
+			  <p>Le domaine saisi semble incorrecte.</p>
+			</div>
+		  </div>
+		</div>
+	  </div>
 
 	<!-- COMMON SCRIPTS -->
 	<script src="assets/js/jquery-3.7.1.min.js"></script>
