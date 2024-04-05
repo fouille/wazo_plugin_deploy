@@ -49,7 +49,9 @@ body {
   background: #fff;
   font-size: 0.875rem;
   line-height: 1.4;
-  font-family: "Work Sans", Arial, sans-serif;
+  /* font-family: "Work Sans", Arial, sans-serif; */
+  --default-font: Muli, Helvetica, Arial, sans-serif;
+  font-family: Muli, Helvetica, Arial, sans-serif;;
   color: #555;
 }
 
@@ -501,6 +503,7 @@ a#logo {
   left: 0;
   width: 100%;
   opacity: 0.5;
+  font-size: x-small;
 }
 @media (max-width: 991px) {
   .copy {
@@ -541,7 +544,7 @@ input#website {
 }
 
 h3.main_question {
-  margin: 0 0 20px 0;
+  margin: 10px 0 20px 0;
   padding: 0;
   font-weight: 500;
   font-size: 18px;
@@ -601,7 +604,8 @@ button.submit:before {
 }
 
 .backward:hover,
-.forward:hover {
+.forward:hover,
+.wizard_save:hover {
   background: #d80075;
   color: #fff;
 }

@@ -2,14 +2,14 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@webpack-cli/generators": "^3.0.7",
+    "bootstrap": "^5.3.3",
     "css-loader": "^6.8.1",
-    "jquery-nice-select": "^1.1.0",
     "nice-select2": "^2.1.0",
     "style-loader": "^3.3.3",
     "tippy.js": "^6.3.7",
     "webpack-auto-inject-version-next": "^1.2.4"
   },
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Wazo Plugin Deploy FMW",
   "name": "wazo-plugin-deploy-fmw",
   "scripts": {
@@ -23,7 +23,9 @@
     "copy-webpack-plugin": "^11.0.0",
     "country-locale-map": "^1.9.0",
     "html-webpack-plugin": "^5.6.0",
+    "jquery": "^3.7.1",
     "mini-css-extract-plugin": "^2.7.6",
+    "popper.js": "^1.16.1",
     "webpack-dev-server": "^4.15.1"
   }
 }

@@ -118,10 +118,10 @@ const config = {
             },
             {
                 test: /\.css$/i,
-                include: [
-                    path.resolve(__dirname, 'assets')
-                ],
-                use: [stylesHandler, 'css-loader', 'style-loader'],
+                // include: [
+                //     path.resolve(__dirname, 'assets')
+                // ],
+                use: ['style-loader', 'css-loader'],
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,

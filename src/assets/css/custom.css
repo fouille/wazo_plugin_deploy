@@ -4,3 +4,9 @@
 .input-group {
     margin-bottom: 1rem !important;
 }
+.btn-enable-template {
+    margin: calc(-.2* var(--bs-modal-header-padding-y)) calc(-.2* var(--bs-modal-header-padding-x)) calc(-.2* var(--bs-modal-header-padding-y)) auto;
+}
+.btn-create-template a{
+    color: white !important;
+}
