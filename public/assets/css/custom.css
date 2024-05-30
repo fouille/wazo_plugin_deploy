@@ -15,6 +15,10 @@
     margin-left: 5px !important;
 }
 
+.mr-5 {
+    margin-right: 5px !important;
+}
+
 .cp {
     cursor: pointer !important;
 }
@@ -25,4 +29,10 @@
     left: 0;
     width: 100%;
     font-size: small;
-  }
+}
+
+@media (max-width: 991px) {
+    .flags {
+        display: none;
+    }
+}
