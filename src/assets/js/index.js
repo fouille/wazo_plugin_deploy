@@ -158,8 +158,6 @@ document.getElementById('step3_panel3_text2').innerHTML = i18next.t('step3.step3
 //fin steps//
 //fin language//
 
-const clm = require('country-locale-map');
-
 export let template_sip_global_data_uuid = "";
 export let template_sip_webrtc_data_uuid = "";
 export let apps_list = "";
@@ -276,6 +274,9 @@ export async function update_sip_template_endpoint(keys) {
                 ],
                 ["moh_suggest",
                     keys.moh.sip_value
+                ],
+                ["send_pai",
+                    "yes"
                 ]
             ]
         })
