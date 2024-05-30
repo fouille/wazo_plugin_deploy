@@ -1,12 +1,36 @@
 import '@fortawesome/fontawesome-free/js/fontawesome';
 import '@fortawesome/fontawesome-free/js/solid';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "/node_modules/flag-icons/css/flag-icons.min.css";
+
 
 import tippy from 'tippy.js';
 import 'bootstrap';
+
+
+import i18next from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+import fr from '../locales/fr.json';
+import en from '../locales/en.json';
+import es from '../locales/es.json';
+
+i18next
+  .use(LanguageDetector)
+  .init({
+    supportedLngs: ['en', 'fr', 'es'],
+    resources: {
+      fr,
+      en,
+      es
+    }
+});
+
 import {
     App
 } from '@wazo/euc-plugins-sdk';
+const app = new App();
+
 import "./survey_func";
 // import {
 //   update_sip_template_endpoint,
@@ -17,10 +41,125 @@ import {
     codec_list_text,
     locale_list_wazo
 } from "./main.const";
-const version = '© [AIV]{date}[/AIV] FMW - Pour Wazo Communication - [AIV]v{version}[/AIV]';
+
+
+const version = '© [AIV]{date}[/AIV] FMW - '+ i18next.t('global.copyright') +' - [AIV]v{version}[/AIV]';
 document.getElementsByClassName("copy")[0].innerHTML = version;
+//rc1.0.8 I18N LANGUAGE//
+//global
+document.getElementById('backward').innerHTML = i18next.t('global.backward');
+document.getElementById('forward').innerHTML = i18next.t('global.forward');
+document.getElementById('process').innerHTML = i18next.t('global.process');
+
+//template//
+document.getElementById('template_save').innerHTML = i18next.t('global.process');
+document.getElementById('template_remove').innerHTML = i18next.t('global.delete');
+document.getElementById('templateModal').innerHTML = i18next.t('template.templateModal');
+document.getElementById('flexSwitchCheckEnableTemplate_label').innerHTML = i18next.t('template.activate');
+document.getElementById('information_text').innerHTML = i18next.t('template.information_text');
+//collapseOne
+document.getElementById('collapseOne_btn').innerHTML = i18next.t('template.collapseOne_btn');
+document.getElementById('collapseOne_text').innerHTML = i18next.t('template.collapseOne_text');
+document.getElementById('collapseOne_lang').innerHTML = i18next.t('template.collapseOne_lang');
+document.getElementById('collapseOne_lang_select').innerHTML = i18next.t('template.collapseOne_lang_select');
+document.getElementById('collapseOne_nat').innerHTML = i18next.t('template.collapseOne_nat');
+document.getElementById('collapseOne_nat_label').innerHTML = i18next.t('template.collapseOne_nat_label');
+document.getElementById('collapseOne_codecs').innerHTML = i18next.t('template.collapseOne_codecs');
+//collapseWebrtc
+document.getElementById('collapseWebrtc_btn').innerHTML = i18next.t('template.collapseWebrtc_btn');
+document.getElementById('collapseWebrtc_text').innerHTML = i18next.t('template.collapseWebrtc_text');
+document.getElementById('collapseWebrtc_codecs_enable').innerHTML = i18next.t('template.collapseWebrtc_codecs_enable');
+//collapseTwo
+document.getElementById('collapseTwo_btn').innerHTML = i18next.t('template.collapseTwo_btn');
+document.getElementById('collapseTwo_text').innerHTML = i18next.t('template.collapseTwo_text');
+document.getElementById('collapseTwo_stun_enable').innerHTML = i18next.t('template.collapseTwo_stun_enable');
+document.getElementById('collapseTwo_stun_uri').innerHTML = i18next.t('template.collapseTwo_stun_uri');
+//collapsThree
+document.getElementById('collapseThree_btn').innerHTML = i18next.t('template.collapseThree_btn');
+document.getElementById('collapseThree_text').innerHTML = i18next.t('template.collapseThree_text');
+document.getElementById('collapseThree_turn_enable').innerHTML = i18next.t('template.collapseThree_turn_enable');
+document.getElementById('collapseThree_turn_uri').innerHTML = i18next.t('template.collapseThree_turn_uri');
+document.getElementById('collapseThree_turn_username').innerHTML = i18next.t('template.collapseThree_turn_username');
+document.getElementById('collapseThree_turn_password').innerHTML = i18next.t('template.collapseThree_turn_password');
+//end template//
+//steps//
+//step0
+document.getElementById('title_text').innerHTML = i18next.t('step0.title_text');
+document.getElementById('subtitle_text').innerHTML = i18next.t('step0.subtitle_text');
+document.getElementById('step0_panel1_title').innerHTML = i18next.t('step0.step0_panel1_title');
+document.getElementById('step0_panel1_lang').innerHTML = i18next.t('step0.step0_panel1_lang');
+document.getElementById('step0_panel1_codecs').innerHTML = i18next.t('step0.step0_panel1_codecs');
+document.getElementById('step0_panel1_moh').innerHTML = i18next.t('step0.step0_panel1_moh');
+document.getElementById('step0_panel1_nat').innerHTML = i18next.t('step0.step0_panel1_nat');
+document.getElementById('step0_panel2_title').innerHTML = i18next.t('step0.step0_panel2_title');
+document.getElementById('step0_panel2_codecs').innerHTML = i18next.t('step0.step0_panel2_codecs');
+document.getElementById('step0_panel2_apps').innerHTML = i18next.t('step0.step0_panel2_apps');
+tippy('#step1_tippy_app_show', {
+    content: i18next.t('step0.step0_panel2_apps_tippy'),
+    placement: 'left',
+});
+//fin step0
+//step1
+document.getElementById('step1_panel1_title').innerHTML = i18next.t('step1.step1_panel1_title');
+document.getElementById('step1_panel2_title').innerHTML = i18next.t('step1.step1_panel2_title');
+document.getElementById('step1_panel3_title').innerHTML = i18next.t('step1.step1_panel3_title');
+document.getElementById('step1_panel3_moh_default').innerHTML = i18next.t('step1.step1_panel3_moh_default');
+document.getElementById('step1_panel4_title').innerHTML = i18next.t('step1.step1_panel4_title');
+document.getElementById('step1_panel4_nat_enable').innerHTML = i18next.t('step1.step1_panel4_nat_enable');
+tippy('#step1_panel1_title_tippy', {
+    content: i18next.t('step1.step1_panel1_title_tippy'),
+    placement: 'left',
+});
+tippy('#step1_panel2_title_tippy', {
+    content: i18next.t('step1.step1_panel2_title_tippy'),
+    placement: 'left',
+});
+tippy('#step1_panel3_title_tippy', {
+    content: i18next.t('step1.step1_panel3_title_tippy'),
+    placement: 'left',
+});
+tippy('#step1_panel4_title_tippy', {
+    content: i18next.t('step1.step1_panel4_title_tippy'),
+    placement: 'left',
+});
+//fin step1
+//step2
+document.getElementById('step2_panel1_title').innerHTML = i18next.t('step2.step2_panel1_title');
+tippy('#step2_panel2_title_tippy', {
+    content: i18next.t('step2.step2_panel1_title_tippy'),
+    placement: 'left',
+});
+//step2 special (ici on recupere les textes du template pour appliquer a la step2, car identique)
+document.getElementById('step2_panel1_enable_codecs').innerHTML = i18next.t('template.collapseWebrtc_codecs_enable');
+document.getElementById('step2_panel2_title').innerHTML = i18next.t('template.collapseTwo_btn');
+document.getElementById('step2_panel2_stun_enable').innerHTML = i18next.t('template.collapseTwo_stun_enable');
+document.getElementById('step2_panel2_stun_uri').innerHTML = i18next.t('template.collapseTwo_stun_uri');
+tippy('#step2_panel2_title_tippy', {
+    content: i18next.t('template.collapseTwo_text'),
+    placement: 'left',
+});
+document.getElementById('step2_panel3_title').innerHTML = i18next.t('template.collapseThree_btn');
+document.getElementById('step2_panel3_turn_enable').innerHTML = i18next.t('template.collapseThree_turn_enable');
+document.getElementById('step2_panel3_turn_uri').innerHTML = i18next.t('template.collapseThree_turn_uri');
+document.getElementById('step2_panel3_turn_username').innerHTML = i18next.t('template.collapseThree_turn_username');
+document.getElementById('step2_panel3_turn_password').innerHTML = i18next.t('template.collapseThree_turn_password');
+tippy('#step2_panel3_title_tippy', {
+    content: i18next.t('template.collapseThree_text'),
+    placement: 'left',
+});
+//fin step2
+//step3
+document.getElementById('main_question').innerHTML = i18next.t('step3.main_question');
+document.getElementById('step3_panel1_title').innerHTML = i18next.t('step3.step3_panel1_title');
+document.getElementById('step3_panel2_title').innerHTML = i18next.t('step3.step3_panel2_title');
+document.getElementById('step3_panel3_title').innerHTML = i18next.t('step3.step3_panel3_title');
+document.getElementById('step3_panel3_text1').innerHTML = i18next.t('step3.step3_panel3_text1');
+document.getElementById('step3_panel3_text2').innerHTML = i18next.t('step3.step3_panel3_text2');
+//fin steps//
+//fin language//
+
 const clm = require('country-locale-map');
-const app = new App();
+
 export let template_sip_global_data_uuid = "";
 export let template_sip_webrtc_data_uuid = "";
 export let apps_list = "";
@@ -40,11 +179,36 @@ const btn_active_codec = document.getElementById("active_codec_video_enable");
 const btn_template_active_codec = document.getElementById("template_active_codec_video_enable");
 const btn_template_remove = document.getElementsByClassName("template_remove");
 const btn_template_active_template = document.getElementById("flexSwitchCheckEnableTemplate");
+const btn_language_fr = document.getElementsByClassName("fi-fr");
+const btn_language_en = document.getElementsByClassName("fi-gb");
+const btn_language_es = document.getElementsByClassName("fi-es");
+
+//bouton de choix de langue
+for (let element of btn_language_fr) {
+    element.addEventListener("click", function(e) {
+        localStorage.setItem("i18nextLng", 'fr');
+        location.reload();
+    })
+}
+for (let element of btn_language_en) {
+    element.addEventListener("click", function(e) {
+        localStorage.setItem("i18nextLng", 'en');
+        location.reload();
+    })
+}
+for (let element of btn_language_es) {
+    element.addEventListener("click", function(e) {
+        localStorage.setItem("i18nextLng", 'es');
+        location.reload();
+    })
+}
+
+
 // FUNCTIONS
 
 // function pour update du sip template
 export async function update_sip_template_endpoint(keys) {
-    document.getElementById("title_text").innerText = "Patientez";
+    document.getElementById("title_text").innerText = i18next.t('global.wait');
     document.getElementById("final-step-one").innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
     document.getElementById("final-step-two").innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
     document.getElementById("final-step-three").innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
@@ -271,10 +435,10 @@ async function update_apps(apps_list, app_keys) {
         }
         document.getElementById("final-step-two").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
         document.getElementById("final-step-three").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
-        document.getElementById("title_text").innerText = "Terminé !";
+        document.getElementById("title_text").innerText = i18next.t('step3.finish');
         document.getElementById("subtitle_text").innerText = "";
         document.getElementById("template_info_text").innerText = "";
-        document.getElementById("main_question").innerText = "Configuration appliquée :"
+        document.getElementById("main_question").innerText = i18next.t('step3.configuration');
     }, 1500);
 
 
@@ -315,13 +479,13 @@ export function add_info_to_summary(data_keys) {
     // creation des balises pour la page resumé
     const check_before_send = document.getElementsByClassName("check_before_send")[0];
     const check_before_send_app = document.getElementsByClassName("check_before_send_app")[0];
-    check_before_send.innerHTML = "<li><span class='font-weight-bold'> Langue :</span> " + data_keys.locale.label + "</li>" +
-        "<li><span class='font-weight-bold'>Codecs activés :</span> " + data_keys.codecs.label + "</li>" +
-        "<li><span class='font-weight-bold'>Musique d'attente :</span> " + data_keys.moh.label + "</li>" +
-        "<li><span class='font-weight-bold'>Nat Actif :</span> " + data_keys.nat.label + "</li>";
-    check_before_send_app.innerHTML = "<li><span class='font-weight-bold'>Codecs activés :</span> " + data_keys.app_codecs.label + "</li>" +
-        "<li><span class='font-weight-bold'>Service STUN (Web & Desktop) :</span> " + ((data_keys.app_wda.enable === "true") ? 'Oui' : 'Non') + "</li>" +
-        "<li><span class='font-weight-bold'>Service TURN (Mobile) :</span> " + ((data_keys.app_ma.enable === "true") ? 'Oui' : 'Non') + "</li>"
+    check_before_send.innerHTML = "<li><span class='font-weight-bold'> "+i18next.t('step3.step3_panel1_lang')+"</span> " + data_keys.locale.label + "</li>" +
+        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_codecs')+"</span> " + data_keys.codecs.label + "</li>" +
+        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_moh')+"</span> " + data_keys.moh.label + "</li>" +
+        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_nat')+"</span> " + data_keys.nat.label + "</li>";
+    check_before_send_app.innerHTML = "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_codecs')+"</span> " + data_keys.app_codecs.label + "</li>" +
+        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_apps_stun')+"</span> " + ((data_keys.app_wda.enable === "true") ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>" +
+        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_apps_turn')+"</span> " + ((data_keys.app_ma.enable === "true") ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>"
 
 }
 
@@ -470,6 +634,9 @@ export const dkeys = {
 for (let element of btn_next) {
     element.addEventListener("click", function(e) {
         e.preventDefault;
+        //errors//
+        document.getElementById('warning_title').innerHTML = i18next.t('error.warning_title');
+        document.getElementById('warning_text').innerHTML = i18next.t('error.warning_text_domain');
         // VERIFICATION DE DOMAINE SAISI pour future version
         // let getstate = document.getElementById("location");
         // let state = getstate.getAttribute('data-state')
@@ -735,7 +902,7 @@ for (let element_turn of btn_turn) {
             //BTN ENABLE
             (btn_template_active_template.checked == false) ? document.getElementById("flexSwitchCheckEnableTemplate_label").classList.add("text-danger", "fw-bold"): document.getElementById("flexSwitchCheckEnableTemplate_label").classList.remove("text-danger", "fw-bold");
 
-            document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> Votre modèle de configuration est actif, pour le modifier <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">cliquez ici</a>';
+            document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+ i18next.t('template.template_info_text') +' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal"> '+i18next.t('template.template_info_text_btn')+' </a>';
             document.getElementById("template_info_text").classList.add("text-success");
             document.getElementsByName("template_remove")[0].style.display = 'inline';
 
@@ -782,20 +949,20 @@ for (let element_turn of btn_turn) {
 
         } else {
             document.getElementsByName("template_remove")[0].style.display = 'inline';
-            document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> Un modèle de configuration a été trouvé mais il n\'est pas actif, pour l\'activer <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">cliquez ici</a>';
+            document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+i18next.t('template.template_info_text_case2')+' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">'+i18next.t('template.template_info_text_btn')+'</a>';
             document.getElementById("template_info_text").classList.add("text-warning");
             // console.log('template non actif')
         }
     } else {
         // console.log('template pas trouvé');
         document.getElementsByName("template_remove")[0].style.display = 'none';
-        document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> Aucun modèle de configuration trouvé, pour en créer un <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">cliquez ici</a>'
+        document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+i18next.t('template.template_info_text_case3')+' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">'+i18next.t('template.template_info_text_btn')+'</a>'
 
     }
 
     /////// FIN TEMPLATE
     // condition pour afficher la liste des conf d'app activent et la bulle d'information 
-    const apps_list_active = (apps_list.total > 0) ? "Oui (" + dock_value_apps + ")" : (document.getElementById("step1_tippy_app_show").style.display = "none", "Non");
+    const apps_list_active = (apps_list.total > 0) ? i18next.t('global.yes') + " (" + dock_value_apps + ")" : (document.getElementById("step1_tippy_app_show").style.display = "none", i18next.t('global.no'));
 
     //traitement des template sip
     const endpoint_section_options = template_sip_global_data.items[0].endpoint_section_options;
@@ -890,17 +1057,17 @@ for (let element_turn of btn_turn) {
         if ("template_keys" in localStorage) {
             // si inclusion de template 
             if (template.template_enable == 'no' && locale_list[i].locale == template.locale.sip_value) {
-                template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + locale_list[i].locale_text + '</option>';
+                template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
             } else if (template.template_enable == 'yes' && locale_list[i].locale == template.locale.sip_value) {
-                select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + locale_list[i].locale_text + '</option>';
-                template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + locale_list[i].locale_text + '</option>';
+                select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
+                template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
             } else {
-                select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + locale_list[i].locale_text + '</option>';
-                template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + locale_list[i].locale_text + '</option>'
+                select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
+                template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>'
             }
         } else {
-            select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + locale_list[i].locale_text + '</option>';
-            template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + locale_list[i].locale_text + '</option>'
+            select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
+            template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>'
         }
     }
     locales_tenant_select.append(select_locales_select);
@@ -1054,13 +1221,13 @@ for (let element_turn of btn_turn) {
     document.getElementsByName("codec_webrtc")[0].innerHTML = dock_value_codecs_webrtc;
     document.getElementsByName("apps_webrtc")[0].innerHTML = apps_list_active;
     if (template_sip_global_endpoint_section_options.rtp_symmetric === "yes" && template_sip_global_endpoint_section_options.rewrite_contact === "yes") {
-        document.getElementsByName("nat")[0].innerHTML = "Oui"
+        document.getElementsByName("nat")[0].innerHTML = i18next.t('global.yes')
     } else {
-        document.getElementsByName("nat")[0].innerHTML = "Non"
+        document.getElementsByName("nat")[0].innerHTML = i18next.t('global.no')
     }
     // MOH 
     if (template_sip_global_endpoint_section_options.moh_suggest === undefined) {
-        document.getElementsByName("moh")[0].innerHTML = "Option non définie"
+        document.getElementsByName("moh")[0].innerHTML = i18next.t('global.undefined')
     } else {
         document.getElementsByName("moh")[0].innerHTML = template_sip_global_endpoint_section_options.moh_suggest
     }

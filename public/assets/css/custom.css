@@ -10,3 +10,19 @@
 .btn-create-template a{
     color: white !important;
 }
+
+.ml-5 {
+    margin-left: 5px !important;
+}
+
+.cp {
+    cursor: pointer !important;
+}
+
+.flags {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    width: 100%;
+    font-size: small;
+  }

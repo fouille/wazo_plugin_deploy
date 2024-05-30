@@ -13,10 +13,10 @@ export const codec_list_text = `[
 
 // constante locales 
 export const locale_list_wazo = `[
-    {"locale": "fr_FR", "locale_text": "Français"},
+    {"locale": "fr_FR", "locale_text": "French"},
     {"locale": "en_US", "locale_text": "English"},
-    {"locale": "fr_CA", "locale_text": "Canadien"},
+    {"locale": "fr_CA", "locale_text": "Canadian"},
     {"locale": "es_ES", "locale_text": "Spanish"},
-    {"locale": "de_DE", "locale_text": "Deutch"},
-    {"locale": "nl_NL", "locale_text": "Netherland"}
+    {"locale": "de_DE", "locale_text": "German"},
+    {"locale": "nl_NL", "locale_text": "Dutch"}
 ]`;

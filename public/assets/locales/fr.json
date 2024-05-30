@@ -1,0 +1,111 @@
+{
+    "translation": {
+        "global": {
+            "copyright": "Pour Wazo Communication",
+            "backward": "Précédent",
+            "forward": "Suivant",
+            "process": "Enregistrer",
+            "delete": "Supprimer",
+            "wait": "Patientez",
+            "yes": "Oui",
+            "no": "Non",
+            "undefined": "Option non définie"
+            
+        },
+        "locales_pbx": {
+            "French":"Français",
+            "English": "Anglais",
+            "Spanish": "Espagnol",
+            "Canadian": "Canadien",
+            "German": "Allemand",
+            "Dutch": "Hollandais"
+
+        },
+        "template": {
+            "template_info_text": "Votre modèle de configuration est actif, pour le modifier",
+            "template_info_text_case2": "Un modèle de configuration a été trouvé mais il n'est pas actif, pour l'activer",
+            "template_info_text_case3": "Aucun modèle de configuration trouvé, pour en créer un",
+            "template_info_text_btn": "cliquez ici",
+            "activate": "Activer le modèle",
+            "templateModal": "Configuration modèle",
+            "information_text": "Les informations de ce modèle de configuration sont enregistrées dans la ressource  <strong>Localstorage</strong> de votre navigateur. En cas d'effacement, les paramètres de votre modèle ne seront plus écris automatiquement.",
+            "collapseOne_btn": "Configuration Globale",
+            "collapseOne_text": "Cette étape est destinée à la configuration générale du site créé, elle s'applique principalement aux paramètres SIP.",
+            "collapseOne_lang": "Langue du site :",
+            "collapseOne_lang_select": "Choix de la langue",
+            "collapseOne_nat": "Paramètres NAT :",
+            "collapseOne_nat_label": "Activer le support NAT",
+            "collapseOne_codecs": "Codecs du site :",
+            "collapseWebrtc_btn": "Configuration Générale Appplications",
+            "collapseWebrtc_text": "Cette étape est destinée à la configuration WebRTC du site créé.",
+            "collapseWebrtc_codecs_enable": "Activer les codecs vidéo",
+            "collapseTwo_btn": "Configuration pour Wazo Web et Desktop",
+            "collapseTwo_text": "Cette étape est destinée à la personnalisation du serveur STUN à destination des applications Wazo Web et Desktop, cette étape est fortement recommandée.",
+            "collapseTwo_stun_enable": "Activer le STUN personnalisé",
+            "collapseTwo_stun_uri": "URI et Port",
+            "collapseThree_btn": "Configuration pour Wazo Mobile",
+            "collapseThree_text": "Cette étape est destinée à la personnalisation du serveur TURN à destination des applications Wazo Mobile, la configuration d'un paramètre TURN est obligatoire pour les clients les utilisants.",
+            "collapseThree_turn_enable": "Activer le TURN personnalisé",
+            "collapseThree_turn_uri": "URI et Port",
+            "collapseThree_turn_username": "Identifiant",
+            "collapseThree_turn_password": "Mot de passe"
+        },
+        "step0": {
+            "title_text": "Paramètres actuels de votre site",
+            "subtitle_text": "Cet outil vous accompagne étape par étape dans le paramétrage global de votre site client :",
+            "step0_panel1_title": "Vos réglages globaux actuels :",
+            "step0_panel1_lang": "Langue Active :",
+            "step0_panel1_codecs": "Codecs Actifs :",
+            "step0_panel1_nat": "Paramètres NAT Activés :",
+            "step0_panel1_moh": "Musique d'Attente par Défaut :",
+            "step0_panel2_title": "Vos réglages Application (WebRTC) actuels :",
+            "step0_panel2_codecs": "Codecs Actifs :",
+            "step0_panel2_apps": "Configuration d'application active :",
+            "step0_panel2_apps_tippy": "Les configurations d'application actives sont remplacées par le Wizard"
+        },
+        "step1": {
+            "title_text": "Configuration Globale du site",
+            "subtitle_text": "A cette étape, choisissez les paramètres globaux à affecter au site :",
+            "step1_panel1_title": "Langue du site :",
+            "step1_panel1_title_tippy": "Choix de la langue afin que le système puisse lire les fichiers audio dans la langue en question automatiquement.",
+            "step1_panel2_title": "Activer des codecs SIP (téléphone fixe) :",
+            "step1_panel2_title_tippy": "Choix des codecs à utiliser, nous vous recommandons d'activer un minimum de codec (correspondant à votre opérateur de trunk) afin de limiter la négociation. Attention, il n'est pas possible de choisir l'ordre de priorisation dans l'immédiat.",
+            "step1_panel3_title": "Musique d'attente par défaut :",
+            "step1_panel3_title_tippy": "Les musiques d'attente listées sont celles créées dans le site en question, cette option permet d'ajouter une musique d'attente par défaut pour l'ensemble du site.",
+            "step1_panel3_moh_default": "Par défaut",
+            "step1_panel4_title": "Paramètres NAT :",
+            "step1_panel4_title_tippy": "Cette option permet l'activation des paramètres nécessaire pour l'utilisation des postes téléphoniques derrière un environnement NAT.",
+            "step1_panel4_nat_enable": "Activer les réglages NAT"
+        },
+        "step2": {
+            "title_text": "Configuration Pour les Applications",
+            "subtitle_text": "A cette étape, choisissez les paramètres destinés aux applications Wazo de",
+            "step2_panel1_title": "Les Codecs WebRTC :",
+            "step2_panel1_title_tippy": "Choix des codecs à utiliser, nous vous recommandons d'activer un minimum de codec (correspondant à votre opérateur de trunk) afin de limiter la négociation. Attention, il n'est pas possible de choisir l'ordre de priorisation dans l'immédiat."
+        },
+        "step3": {
+            "title_text": "Résumé des Configurations",
+            "subtitle_text": "Vérifiez et sauvegardez vos réglages pour",
+            "main_question": "Avant d'enregistrer :",
+            "step3_panel1_title": "Votre configuration générale",
+            "step3_panel1_lang": "Langue :",
+            "step3_panel1_codecs": "Codecs activés :",
+            "step3_panel1_nat": "Paramètres NAT Activés :",
+            "step3_panel1_moh": "Musique d'Attente :",
+            "step3_panel2_title": "Votre configuration d'application.s",
+            "step3_panel2_codecs": "Codecs activés :",
+            "step3_panel2_apps_stun": "Service STUN (Web & Desktop) :",
+            "step3_panel2_apps_turn": "Service TURN (Mobile) :",
+            "step3_panel3_title": "Vérifiez",
+            "step3_panel3_text1": "Après avoir enregistré,",
+            "step3_panel3_text2": "Vous pouvez vérifier les paramètres appliqués depuis le menu \"Paramètres > Modèles SIP\".",
+            "finish": "Terminé !",
+            "configuration": "Configuration appliquée :"
+        },
+        "error": {
+            "warning_title": "/!\\ Erreur de vérification",
+            "warning_text_domain": "Le domaine saisi semble incorrecte."
+        }
+        
+    }
+}
