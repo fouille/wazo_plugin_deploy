@@ -15,12 +15,17 @@
         },
         "locales_pbx": {
             "French":"French",
+            "fr_FR":"French",
             "English": "English",
+            "en_US": "English",
             "Spanish": "Spanish",
+            "es_ES": "Spanish",
             "Canadian": "Canadian",
+            "fr_CA": "Canadian",
             "German": "German",
-            "Dutch": "Dutch"
-
+            "de_DE": "German",
+            "Dutch": "Dutch",
+            "nl_NL": "Dutch"
         },
         "template": {
             "template_info_text": "Your configuration template is active, to modify it",

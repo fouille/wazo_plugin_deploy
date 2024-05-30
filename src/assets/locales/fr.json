@@ -14,11 +14,17 @@
         },
         "locales_pbx": {
             "French":"Français",
+            "fr_FR":"Français",
             "English": "Anglais",
+            "en_US": "Anglais",
             "Spanish": "Espagnol",
+            "es_ES": "Espagnol",
             "Canadian": "Canadien",
+            "fr_CA": "Canadien",
             "German": "Allemand",
-            "Dutch": "Hollandais"
+            "de_DE": "Allemand",
+            "Dutch": "Hollandais",
+            "nl_NL": "Hollandais"
 
         },
         "template": {

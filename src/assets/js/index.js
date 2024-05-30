@@ -1216,7 +1216,7 @@ for (let element_turn of btn_turn) {
     document.getElementById("template_codec_activable_webrtc").innerHTML = template_select_box_webrtc;
     ///////////
     document.getElementById("client_site_name").innerHTML = client_site_name.items[0].name;
-    document.getElementsByName("lang")[0].innerHTML = clm.getCountryNameByAlpha2(language_data.slice(-2));
+    document.getElementsByName("lang")[0].innerHTML = i18next.t('locales_pbx.'+language_data);
     document.getElementsByName("codec")[0].innerHTML = dock_value_codecs;
     document.getElementsByName("codec_webrtc")[0].innerHTML = dock_value_codecs_webrtc;
     document.getElementsByName("apps_webrtc")[0].innerHTML = apps_list_active;
