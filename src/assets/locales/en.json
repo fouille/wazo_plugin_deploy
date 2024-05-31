@@ -1,0 +1,117 @@
+{
+    "translation": {
+        "global": {
+            "copyright": "For Wazo Communication",
+            "backward": "Previous",
+            "forward": "Next",
+            "process": "Save",
+            "delete": "Delete",
+            "wait": "Wait",
+            "finish": "Finish !",
+            "configuration": "Configuration applied:",
+            "yes": "Yes",
+            "no": "No",
+            "undefined": "Option non définie"
+        },
+        "locales_pbx": {
+            "French":"French",
+            "fr_FR":"French",
+            "English": "English",
+            "en_US": "English",
+            "Spanish": "Spanish",
+            "es_ES": "Spanish",
+            "Canadian": "Canadian",
+            "fr_CA": "Canadian",
+            "German": "German",
+            "de_DE": "German",
+            "Dutch": "Dutch",
+            "nl_NL": "Dutch"
+        },
+        "template": {
+            "template_info_text": "Your configuration template is active, to modify it",
+            "template_info_text_case2": "A configuration template was found but it is not active, to activate it",
+            "template_info_text_case3": "No configuration template found, to create one",
+            "template_info_text_btn": "click here",
+            "activate": "Enable template",
+            "templateModal": "Template Configuration",
+            "information_text": "The information from this configuration template is saved in your browser's <strong>Localstorage</strong> resource. If deleted, your model parameters will no longer be written automatically.",
+            "collapseOne_btn": "Global Configuration",
+            "collapseOne_text": "This step is intended for the general configuration of the created tenant, it mainly applies to SIP settings.",
+            "collapseOne_lang": "Tenant language:",
+            "collapseOne_lang_select": "Choice of language",
+            "collapseOne_nat": "NAT settings:",
+            "collapseOne_nat_label": "Enable NAT support",
+            "collapseOne_codecs": "Tenant codecs:",
+            "collapseWebrtc_btn": "General Configuration Applications",
+            "collapseWebrtc_text": "This step is intended for the WebRTC configuration of the created tenant.",
+            "collapseWebrtc_codecs_enable": "Enable video codecs",
+            "collapseTwo_btn": "Configuration for Wazo Web and Desktop",
+            "collapseTwo_text": "This step is intended for customizing the STUN server for Wazo Web and Desktop applications, this step is strongly recommended.",
+            "collapseTwo_stun_enable": "Enable custom STUN",
+            "collapseTwo_stun_uri": "URI and Port",
+            "collapseThree_btn": "Configuration for Wazo Mobile",
+            "collapseThree_text": "This step is intended for customizing the TURN server for Wazo Mobile applications; the configuration of a TURN parameter is mandatory for clients using them.",
+            "collapseThree_turn_enable": "Enable custom TURN",
+            "collapseThree_turn_uri": "URI and Port",
+            "collapseThree_turn_username": "Username",
+            "collapseThree_turn_password": "Password"
+        },
+        "step0": {
+            "title_text": "Current settings of your tenant",
+            "subtitle_text": "This tool assists you step by step in the overall settings of your customer tenant:",
+            "step0_panel1_title": "Your current global settings:",
+            "step0_panel1_lang": "Active Language:",
+            "step0_panel1_codecs": "Active Codecs:",
+            "step0_panel1_nat": "NAT Settings Enabled:",
+            "step0_panel1_moh": "Default Hold Music:",
+            "step0_panel2_title": "Your current Application (WebRTC) settings:",
+            "step0_panel2_codecs": "Active Codecs:",
+            "step0_panel2_apps": "Active application configuration:",
+            "step0_panel2_apps_tippy": "Active application configurations are replaced by the Wizard"
+        },
+        "step1": {
+            "title_text": "Global site configuration",
+            "subtitle_text": "At this step, choose the global parameters to assign to the site:",
+            "step1_panel1_title": "Site language:",
+            "step1_panel1_title_tippy": "Language selection so that the system can play audio files in the given language automatically.",
+            "step1_panel2_title": "Enable SIP codecs (phone):",
+            "step1_panel2_title_tippy": "Choosing the codecs to use, we recommend that you activate a minimum codec (corresponding to your trunk operator) in order to limit negotiation. Please note, it is not possible to choose the prioritization order immediately.",
+            "step1_panel3_title": "Default hold music:",
+            "step1_panel3_title_tippy": "The music on hold listed are those created in the site in question, this option allows you to add default music on hold for the entire site.",
+            "step1_panel3_moh_default": "By default",
+            "step1_panel4_title": "NAT settings:",
+            "step1_panel4_title_tippy": "This option allows the activation of the parameters necessary for the use of telephone sets behind a NAT environment.",
+            "step1_panel4_nat_enable": "Enable NAT settings"
+        },
+        "step2": {
+            "title_text": "Configuration for Applications",
+            "subtitle_text": "At this step, choose the settings intended for Wazo applications for",
+            "step2_panel1_title": "WebRTC Codecs:",
+            "step2_panel1_title_tippy": "Choosing the codecs to use, we recommend that you activate a minimum codec (corresponding to your trunk operator) in order to limit negotiation. Please note, it is not possible to choose the prioritization order immediately."
+        },
+        "step3": {
+            "title_text": "Configuration Summary",
+            "subtitle_text": "Check and save your settings for",
+            "main_question": "Before saving:",
+            "step3_panel1_title": "Your general configuration",
+            "step3_panel1_lang": "Language :",
+            "step3_panel1_codecs": "Enabled codecs:",
+            "step3_panel1_nat": "NAT Settings Enabled:",
+            "step3_panel1_moh": "Music On Hold :",
+            "step3_panel2_title": "Your application configuration",
+            "step3_panel2_codecs": "Enabled codecs:",
+            "step3_panel2_apps_stun": "STUN service (Web & Desktop):",
+            "step3_panel2_apps_turn": "TURN service (Mobile):",
+            "step3_panel3_title": "Check",
+            "step3_panel3_text1": "After saving,",
+            "step3_panel3_text2": "You can check the applied settings from the \"Settings > SIP Templates\" menu.",
+            "finish": "Finish !",
+            "configuration": "Configuration applied:"
+        },
+        "error": {
+            "warning_title": "/!\\ Verification error",
+            "warning_text_domain": "The domain entered appears to be incorrect."
+        }
+        
+    }
+}

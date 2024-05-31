@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 const WebpackAutoInject = require('webpack-auto-inject-version-next');
+const miniSVGDataURI = require('mini-svg-data-uri');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -22,6 +23,7 @@ const config = {
         'index': './src/assets/js/index.js',
         'main': './src/assets/js/main.const.js',
         'function': './src/assets/js/main.functions.js',
+        'i18': './src/assets/js/i18.js'
     },
     output: {
         path: path.resolve(__dirname, 'public'),
@@ -92,7 +94,7 @@ const config = {
                     globOptions: {
                         dot: true,
                         gitignore: true,
-                        ignore: ["**/main.*", "**/index.js"]
+                        ignore: ["**/main.*", "**/index.js", "**/i18.*"]
                     },
                     to: "./assets/js"
                 },
@@ -103,6 +105,14 @@ const config = {
                         gitignore: true,
                     },
                     to: "./assets/img"
+                },
+                {
+                    from: "./src/assets/locales",
+                    globOptions: {
+                        dot: true,
+                        gitignore: true,
+                    },
+                    to: "./assets/locales"
                 }
             ],
         })
@@ -124,12 +134,24 @@ const config = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+                test: /\.svg$/,
+                type: 'asset/inline',
+                generator: {
+                    dataUrl(content) {
+                    content = content.toString();
+                    return miniSVGDataURI(content);
+                    }
+                },
+                use: 'svgo-loader'
+            },
+            {
+                test: /\.(eot|ttf|woff|woff2|png|jpg|gif)$/i,
                 include: [
-                    path.resolve(__dirname, 'assets')
+                    path.resolve(__dirname, 'assets/img')
                 ],
-                type: 'asset/resource',
+                type: 'asset'
             }
+
         ],
     },
 };

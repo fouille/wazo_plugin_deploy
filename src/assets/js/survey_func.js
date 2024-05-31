@@ -1,3 +1,5 @@
+import i18next from "i18next";
+
 	/*  Wizard */
 	jQuery(function ($) {
 		"use strict";
@@ -30,16 +32,16 @@
 				$("#location").text("(" + state.stepsComplete + "/" + state.stepsPossible + ")");
 				$("#location").attr("data-state", state.stepsComplete);
 				if (state.stepsComplete == 1) {
-					document.getElementById("title_text").innerText = "Configuration Globale du site";
-        			document.getElementById("subtitle_text").innerText = "A cette étape, choisissez les paramètres globaux à affecter au site"
+					document.getElementById("title_text").innerText = i18next.t('step1.title_text');
+        			document.getElementById("subtitle_text").innerText = i18next.t('step1.subtitle_text');
 				}
 				if (state.stepsComplete == 2) {
-					document.getElementById("title_text").innerText = "Configuration Pour les Applications";
-        			document.getElementById("subtitle_text").innerText = "A cette étape, choisissez les paramètres destinés aux applications Wazo"
+					document.getElementById("title_text").innerText = i18next.t('step2.title_text');
+        			document.getElementById("subtitle_text").innerText = i18next.t('step2.subtitle_text');
 				}
 				if (state.stepsComplete == state.stepsPossible) {
-					document.getElementById("title_text").innerText = "Résumé des Configurations";
-        			document.getElementById("subtitle_text").innerText = "Vérifiez et sauvegardez vos réglages"
+					document.getElementById("title_text").innerText = i18next.t('step3.title_text');
+        			document.getElementById("subtitle_text").innerText = i18next.t('step3.subtitle_text');
 				}
 			}
 		});
