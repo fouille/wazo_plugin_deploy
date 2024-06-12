@@ -483,7 +483,7 @@ export function add_info_to_summary(data_keys) {
     check_before_send.innerHTML = "<li><span class='font-weight-bold'> "+i18next.t('step3.step3_panel1_lang')+"</span> " + data_keys.locale.label + "</li>" +
         "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_codecs')+"</span> " + data_keys.codecs.label + "</li>" +
         "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_moh')+"</span> " + data_keys.moh.label + "</li>" +
-        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_nat')+"</span> " + data_keys.nat.label + "</li>";
+        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_nat')+"</span> " + ((data_keys.nat.label === 'yes') ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>";
     check_before_send_app.innerHTML = "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_codecs')+"</span> " + data_keys.app_codecs.label + "</li>" +
         "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_apps_stun')+"</span> " + ((data_keys.app_wda.enable === "true") ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>" +
         "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_apps_turn')+"</span> " + ((data_keys.app_ma.enable === "true") ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>"

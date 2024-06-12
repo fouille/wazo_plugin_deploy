@@ -8,3 +8,9 @@
   for = "/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
+[[plugins]]
+package = "netlify-plugin-snyk"
+
+  [plugins.inputs]
+    failOnPreviews = true
+    yarnWorkspaces = false
