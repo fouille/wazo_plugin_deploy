@@ -32,7 +32,11 @@
     "jquery": "^3.7.1",
     "mini-css-extract-plugin": "^2.7.6",
     "popper.js": "^1.16.1",
+<<<<<<< HEAD
     "webpack": "^5.92.0",
     "webpack-dev-server": "^5.0.4"
+=======
+    "webpack-dev-server": "^5.0.0"
+>>>>>>> 4a81211 (fix: package.json & package-lock.json to reduce vulnerabilities (#18))
   }
 }
