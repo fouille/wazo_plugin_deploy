@@ -277,6 +277,9 @@ export async function update_sip_template_endpoint(keys) {
                 ],
                 ["send_pai",
                     "yes"
+                ],
+                ["set_var",
+                    "TIMEOUT(absolute)=36000"
                 ]
             ]
         })

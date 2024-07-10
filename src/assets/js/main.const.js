@@ -14,7 +14,8 @@ export const codec_list_text = `[
 // constante locales 
 export const locale_list_wazo = `[
     {"locale": "fr_FR", "locale_text": "French"},
-    {"locale": "en_US", "locale_text": "English"},
+    {"locale": "en_US", "locale_text": "English - US"},
+    {"locale": "en_GB", "locale_text": "English - GB"},
     {"locale": "fr_CA", "locale_text": "Canadian"},
     {"locale": "es_ES", "locale_text": "Spanish"},
     {"locale": "de_DE", "locale_text": "German"},

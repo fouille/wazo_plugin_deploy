@@ -15,8 +15,10 @@
         "locales_pbx": {
             "French":"Français",
             "fr_FR":"Français",
-            "English": "Anglais",
-            "en_US": "Anglais",
+            "English - US": "Anglais - US",
+            "en_US": "Anglais - US",
+            "English - GB": "Anglais - GB",
+            "en_GB": "Anglais - GB",
             "Spanish": "Espagnol",
             "es_ES": "Espagnol",
             "Canadian": "Canadien",
