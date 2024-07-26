@@ -11,7 +11,9 @@
         "configuration": "Configuración aplicada:",
         "yes": "Sí",
         "no": "No",
-        "undefined": "Opción no definida"
+        "undefined": "Opción no definida",
+        "admin_access": "Acceso no autorizado",
+        "admin_access_text": "No tienes derechos suficientes para acceder a esta página"
       },
       "locales_pbx": {
         "French": "Francés",

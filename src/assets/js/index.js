@@ -1,19 +1,17 @@
 import '@fortawesome/fontawesome-free/js/fontawesome';
 import '@fortawesome/fontawesome-free/js/solid';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "/node_modules/flag-icons/css/flag-icons.min.css";
-
-
+import '/node_modules/flag-icons/css/flag-icons.min.css';
 import tippy from 'tippy.js';
 import 'bootstrap';
-
-
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
 import fr from '../locales/fr.json';
 import en from '../locales/en.json';
 import es from '../locales/es.json';
+import { App } from '@wazo/euc-plugins-sdk';
+import './survey_func';
+import { codec_list_text, locale_list_wazo } from './main.const';
 
 i18next
   .use(LanguageDetector)
@@ -26,25 +24,11 @@ i18next
     }
 });
 
-import {
-    App
-} from '@wazo/euc-plugins-sdk';
 const app = new App();
+const version = `© [AIV]{date}[/AIV] FMW - ${i18next.t('global.copyright')} - [AIV]v{version}[/AIV]`;
 
-import "./survey_func";
-// import {
-//   update_sip_template_endpoint,
-//   create_nice_select,
-//   add_info_to_summary
-// } from "./main.functions";
-import {
-    codec_list_text,
-    locale_list_wazo
-} from "./main.const";
+document.querySelector('.copy').innerHTML = version;
 
-
-const version = '© [AIV]{date}[/AIV] FMW - '+ i18next.t('global.copyright') +' - [AIV]v{version}[/AIV]';
-document.getElementsByClassName("copy")[0].innerHTML = version;
 //rc1.0.8 I18N LANGUAGE//
 //global
 document.getElementById('backward').innerHTML = i18next.t('global.backward');
@@ -489,9 +473,9 @@ export function add_info_to_summary(data_keys) {
         "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_nat')+"</span> " + ((data_keys.nat.label === 'yes') ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>";
     check_before_send_app.innerHTML = "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_codecs')+"</span> " + data_keys.app_codecs.label + "</li>" +
         "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_apps_stun')+"</span> " + ((data_keys.app_wda.enable === "true") ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>" +
-        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_apps_turn')+"</span> " + ((data_keys.app_ma.enable === "true") ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>"
-
+        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_apps_turn')+"</span> " + ((data_keys.app_ma.enable === "true") ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>";
 }
+
 
 //END FUNCTIONS
 
@@ -834,405 +818,431 @@ for (let element_turn of btn_turn) {
     }
 }
 
-(async () => {
-    await app.initialize();
-    const context = app.getContext();
-    tenant_uuid = context.app.extra.tenant;
-    host = 'https://' + context.app.extra.instance.host;
-    token_session = context.app.extra.instance.session.token;
 
-    const api_auth_tenant_read = '/api/auth/0.1/tenants?offset=0';
-    const api_confd_moh = '/api/confd/1.1/moh?recurse=false';
-    const api_confd_sip_temp_global_get = '/api/confd/1.1/endpoints/sip/templates?recurse=false&search=global';
-    const api_confd_sip_temp_webrtc_get = '/api/confd/1.1/endpoints/sip/templates?recurse=false&search=webrtc';
-    const api_confd_apps_get = '/api/confd/1.1/external/apps?recurse=false';
+// BASE : on regarde si le type admin possède les ACL pour charger les éléments.
+const get_admin_type = () => {
+    (async () => {
+        await app.initialize();
+        const context = app.getContext();
+        // console.log(context);
+        tenant_uuid = context.app.extra.tenant;
+        host = 'https://' + context.app.extra.instance.host;
+        token_session = context.app.extra.instance.session.token;
+    
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Wazo-Tenant': tenant_uuid,
+                'X-Auth-Token': token_session
+            }
+        };
+        const admin_authorized = Object.values(context.user.acl).includes("deployd.#");
 
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Wazo-Tenant': tenant_uuid,
-            'X-Auth-Token': token_session
-        }
-    };
-    // appel api pour connaitre le nom du tenant et lexposer dans la page d'accueil
-    const client_site_name = await fetch(host + api_auth_tenant_read, options).then(response => response.json());
-    // appel api pour lister le template SIP Global et exposer les variables dans la page d'accueil 
-    const template_sip_global_data = await fetch(host + api_confd_sip_temp_global_get, options).then(response => response.json());
-    // appel api pour lister le template SIP WEBRTC et exposer les variables dans la page d'accueil 
-    const template_sip_webrtc_data = await fetch(host + api_confd_sip_temp_webrtc_get, options).then(response => response.json());
-    // appel api pour lister les noms et uuid des musiques dattente
-    const moh_list = await fetch(host + api_confd_moh, options).then(response => response.json());
-    // appel api pour liste les configuration dapp existante
-    apps_list = await fetch(host + api_confd_apps_get, options).then(response => response.json());
-    // // console.log(apps_list);
+    if (admin_authorized == false) {
 
-    // traitement si configuration app existe pour affichage sur page accueil
-    let dock_value_apps = "";
-    if (apps_list.total > 0) {
-        let apps_items = apps_list.items;
-        for (let g = 0; g < apps_items.length; g++) {
-            (apps_items[g].name == "wazo-euc-application-mobile") ? dock_value_apps += "Wazo Mobile" + " ": '';
-            (apps_items[g].name == "wazo-euc-application-web") ? dock_value_apps += "Wazo Web" + " ": '';
-            (apps_items[g].name == "wazo-euc-application-desktop") ? dock_value_apps += "Wazo Desktop" + " ": '';
-        }
+        //step0 UPDATE
+        document.getElementById('title_text').innerHTML = i18next.t('global.admin_access');
+        document.getElementById('subtitle_text').innerHTML = i18next.t('global.admin_access_text');
+        document.getElementById('step0_panel1_title').innerHTML = i18next.t('global.admin_access_text');
+        //desactivation des elements step0
+        const elementsList = document.querySelectorAll("#step0_panel1_lang, #step0_panel1_codecs, #step0_panel1_moh, #step0_panel1_nat, #step0_panel2_title, #step0_panel2_codecs, #step0_panel2_apps, #forward, #step1_tippy_app_show");
+        const elementsArray = [...elementsList];
+        elementsArray.forEach(element => {
+            // console.log(element);
+            element.style.display = "none"
+        });
     }
-
-    ////// TEMPLATE : application des paramètres enregistrés
-
-    //CONSTRUCTOR
-    if ("template_keys" in localStorage) {
-        template = JSON.parse(localStorage.getItem('template_keys'));
-        // console.log('template en localstorage')
-
-        document.getElementById("template_active_codec_video_enable").checked = template.app_codecs.video;
-        //WDA Template
-        document.getElementById("template_active_stun_wda").checked = (template.app_wda.enable === 'true'); //boolean value
-        document.getElementsByName("template_server_stun_wda")[0].value = template.app_wda.server_stun_wda;
-        document.getElementsByName("template_server_port_stun_wda")[0].value = template.app_wda.server_port_stun_wda;
-        //MA Template
-        document.getElementById("template_active_turn_ma").checked = (template.app_ma.enable === 'true'); //boolean value
-        document.getElementsByName("template_server_turn_ma")[0].value = template.app_ma.server_turn_ma;
-        document.getElementsByName("template_server_port_turn_ma")[0].value = template.app_ma.server_port_turn_ma;
-        document.getElementsByName("template_server_username_turn_ma")[0].value = template.app_ma.server_username_turn_ma;
-        document.getElementsByName("template_server_password_turn_ma")[0].value = template.app_ma.server_password_turn_ma;
-        //NAT Template
-        let template_nat_tenant = document.getElementById("template_nat_tenant");
-        (template.nat.sip_value == 'rtp_symmetric,rewrite_contact') ? template_nat_tenant.checked = true: template_nat_tenant.checked = false;
-
-        if (template.template_enable == 'yes') {
-            // console.log('template actif')
-            document.getElementById("flexSwitchCheckEnableTemplate").checked = true;
-            //BTN ENABLE
-            (btn_template_active_template.checked == false) ? document.getElementById("flexSwitchCheckEnableTemplate_label").classList.add("text-danger", "fw-bold"): document.getElementById("flexSwitchCheckEnableTemplate_label").classList.remove("text-danger", "fw-bold");
-
-            document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+ i18next.t('template.template_info_text') +' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal"> '+i18next.t('template.template_info_text_btn')+' </a>';
-            document.getElementById("template_info_text").classList.add("text-success");
-            document.getElementsByName("template_remove")[0].style.display = 'inline';
-
-
-            document.getElementById("active_codec_video_enable").checked = template.app_codecs.video;
-
-            //NAT Wizard
-            let nat_tenant = document.getElementById("nat_tenant");
-            (template.nat.sip_value == 'rtp_symmetric,rewrite_contact') ? nat_tenant.checked = true: nat_tenant.checked = false;
-
-
-            //WDA Wizard
-            document.getElementById("active_stun_wda").checked = (template.app_wda.enable === 'true'); //boolean value
-            document.getElementsByName("server_stun_wda")[0].value = template.app_wda.server_stun_wda;
-            document.getElementsByName("server_port_stun_wda")[0].value = template.app_wda.server_port_stun_wda;
-            //WDA Wizard cache zone WDA
-            if (document.getElementById("active_stun_wda").checked == false) {
-                let server_stun_wda = document.getElementsByName("server_stun_wda")[0];
-                let server_port_stun_wda = document.getElementsByName("server_port_stun_wda")[0];
-                server_stun_wda.classList.toggle("required");
-                server_port_stun_wda.classList.toggle("required");
-                $(".server_stun_wda, .server_port_stun_wda").toggle('show');
+    else {
+        
+            const api_auth_tenant_read = '/api/auth/0.1/tenants?offset=0';
+            const api_confd_moh = '/api/confd/1.1/moh?recurse=false';
+            const api_confd_sip_temp_global_get = '/api/confd/1.1/endpoints/sip/templates?recurse=false&search=global';
+            const api_confd_sip_temp_webrtc_get = '/api/confd/1.1/endpoints/sip/templates?recurse=false&search=webrtc';
+            const api_confd_apps_get = '/api/confd/1.1/external/apps?recurse=false';
+        
+            // appel api pour connaitre le nom du tenant et lexposer dans la page d'accueil
+            const client_site_name = await fetch(host + api_auth_tenant_read, options).then(response => response.json());
+            // appel api pour lister le template SIP Global et exposer les variables dans la page d'accueil 
+            const template_sip_global_data = await fetch(host + api_confd_sip_temp_global_get, options).then(response => response.json());
+            // appel api pour lister le template SIP WEBRTC et exposer les variables dans la page d'accueil 
+            const template_sip_webrtc_data = await fetch(host + api_confd_sip_temp_webrtc_get, options).then(response => response.json());
+            // appel api pour lister les noms et uuid des musiques dattente
+            const moh_list = await fetch(host + api_confd_moh, options).then(response => response.json());
+            // appel api pour liste les configuration dapp existante
+            apps_list = await fetch(host + api_confd_apps_get, options).then(response => response.json());
+            // // console.log(apps_list);
+        
+            // traitement si configuration app existe pour affichage sur page accueil
+            let dock_value_apps = "";
+            if (apps_list.total > 0) {
+                let apps_items = apps_list.items;
+                for (let g = 0; g < apps_items.length; g++) {
+                    (apps_items[g].name == "wazo-euc-application-mobile") ? dock_value_apps += "Wazo Mobile" + " ": '';
+                    (apps_items[g].name == "wazo-euc-application-web") ? dock_value_apps += "Wazo Web" + " ": '';
+                    (apps_items[g].name == "wazo-euc-application-desktop") ? dock_value_apps += "Wazo Desktop" + " ": '';
+                }
             }
-
-
-            // MA Wizard
-            document.getElementById("active_turn_ma").checked = (template.app_ma.enable === 'true'); //boolean value
-            document.getElementsByName("server_turn_ma")[0].value = template.app_ma.server_turn_ma;
-            document.getElementsByName("server_port_turn_ma")[0].value = template.app_ma.server_port_turn_ma;
-            document.getElementsByName("server_username_turn_ma")[0].value = template.app_ma.server_username_turn_ma;
-            document.getElementsByName("server_password_turn_ma")[0].value = template.app_ma.server_password_turn_ma;
-            //MA Wizard Cache Zone MA
-            if (document.getElementById("active_turn_ma").checked == false) {
-                let server_turn_ma = document.getElementsByName("server_turn_ma")[0];
-                let server_port_turn_ma = document.getElementsByName("server_port_turn_ma")[0];
-                let server_username_turn_ma = document.getElementsByName("server_username_turn_ma")[0];
-                let server_password_turn_ma = document.getElementsByName("server_password_turn_ma")[0];
-                server_turn_ma.classList.toggle("required");
-                server_port_turn_ma.classList.toggle("required");
-                server_username_turn_ma.classList.toggle("required");
-                server_password_turn_ma.classList.toggle("required");
-                $(".server_turn_ma, .server_port_turn_ma, .server_username_turn_ma, .server_password_turn_ma").toggle('show');
-            }
-
-        } else {
-            document.getElementsByName("template_remove")[0].style.display = 'inline';
-            document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+i18next.t('template.template_info_text_case2')+' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">'+i18next.t('template.template_info_text_btn')+'</a>';
-            document.getElementById("template_info_text").classList.add("text-warning");
-            // console.log('template non actif')
-        }
-    } else {
-        // console.log('template pas trouvé');
-        document.getElementsByName("template_remove")[0].style.display = 'none';
-        document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+i18next.t('template.template_info_text_case3')+' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">'+i18next.t('template.template_info_text_btn')+'</a>'
-
-    }
-
-    /////// FIN TEMPLATE
-    // condition pour afficher la liste des conf d'app activent et la bulle d'information 
-    const apps_list_active = (apps_list.total > 0) ? i18next.t('global.yes') + " (" + dock_value_apps + ")" : (document.getElementById("step1_tippy_app_show").style.display = "none", i18next.t('global.no'));
-
-    //traitement des template sip
-    const endpoint_section_options = template_sip_global_data.items[0].endpoint_section_options;
-    template_sip_global_data_uuid = template_sip_global_data.items[0].uuid;
-    const endpoint_section_options_webrtc = template_sip_webrtc_data.items[0].endpoint_section_options;
-    template_sip_webrtc_data_uuid = template_sip_webrtc_data.items[0].uuid;
-    //retravail le retour JSON du SIP Global pour traitement plus efficace ulterieur
-    const template_sip_global_endpoint_section_options = new Array();
-    for (let i = 0; i < endpoint_section_options.length; i++) {
-        for (let f = 0; f < endpoint_section_options[i].length; f++) {
-            if ([f] == 0) {
-                template_sip_global_endpoint_section_options[endpoint_section_options[i][f]] = "no value"
-            }
-            if ([f] == 1) {
-                template_sip_global_endpoint_section_options[endpoint_section_options[i][f - 1]] = endpoint_section_options[i][f]
-            }
-        }
-    }
-    const template_sip_webrtc_endpoint_section_options = new Array();
-    for (let j = 0; j < endpoint_section_options_webrtc.length; j++) {
-        for (let k = 0; k < endpoint_section_options_webrtc[j].length; k++) {
-            if ([k] == 0) {
-                template_sip_webrtc_endpoint_section_options[endpoint_section_options_webrtc[j][k]] = "no value"
-            }
-            if ([k] == 1) {
-                template_sip_webrtc_endpoint_section_options[endpoint_section_options_webrtc[j][k - 1]] = endpoint_section_options_webrtc[j][k]
-            }
-        }
-    }
-    let language_data = template_sip_global_endpoint_section_options.language;
-
-
-    // CODECS actifs Global
-    let allow_data = template_sip_global_endpoint_section_options.allow;
-    let allow_data_array = allow_data.split(",");
-    let dock_value_codecs = "";
-    for (var a in allow_data_array) {
-        let codec = allow_data_array[a];
-        for (var i = 0; i < codec_list.length; ++i) {
-            let o = codec_list[i];
-            if (o.value == codec) {
-                dock_value_codecs += o.name + " ";
-                break;
-            }
-        }
-    }
-
-
-    // CODECS actifs WebRTC
-    let allow_data_webrtc = template_sip_webrtc_endpoint_section_options.allow;
-    let allow_data_array_webrtc = allow_data_webrtc.split(",");
-    let dock_value_codecs_webrtc = "";
-    for (var a in allow_data_array_webrtc) {
-        let codec_webrtc = allow_data_array_webrtc[a];
-        for (var i = 0; i < codec_list.length; ++i) {
-            let o = codec_list[i];
-            if (o.value == codec_webrtc) {
-                dock_value_codecs_webrtc += o.name + " ";
-                break;
-            }
-        }
-    }
-
-    //genere select box pour MOH 
-    let select_moh_select = "";
-    let moh_tenant_select = $("#moh_tenant");
-    for (let i = 0; i < moh_list.items.length; i++) {
-        select_moh_select += '<option value="' + moh_list.items[i].name + '">' + moh_list.items[i].label + '</option>';
-    }
-    moh_tenant_select.append(select_moh_select);
-    moh_tenant_select.each(function() {
-        var $select = $(this);
-        var $dropdown = $(this).next('.nice-select');
-        var open = $dropdown.hasClass('open');
-
-        if ($dropdown.length) {
-            $dropdown.remove();
-            create_nice_select($select, 'moh');
-
-            if (open) {
-                $select.next().trigger('click');
-            }
-        }
-    });
-    ///////
-    //genere select box pour LOCALES
-    let select_locales_select = "";
-    let template_select_locales_select = "";
-    let locales_tenant_select = $("#locales_tenant");
-    let locales_tenant_select_template = $("#template_locales_tenant");
-    for (let i = 0; i < locale_list.length; i++) {
-        if ("template_keys" in localStorage) {
-            // si inclusion de template 
-            if (template.template_enable == 'no' && locale_list[i].locale == template.locale.sip_value) {
-                template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
-            } else if (template.template_enable == 'yes' && locale_list[i].locale == template.locale.sip_value) {
-                select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
-                template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
+        
+            ////// TEMPLATE : application des paramètres enregistrés
+        
+            //CONSTRUCTOR
+            if ("template_keys" in localStorage) {
+                template = JSON.parse(localStorage.getItem('template_keys'));
+                // console.log('template en localstorage')
+        
+                document.getElementById("template_active_codec_video_enable").checked = template.app_codecs.video;
+                //WDA Template
+                document.getElementById("template_active_stun_wda").checked = (template.app_wda.enable === 'true'); //boolean value
+                document.getElementsByName("template_server_stun_wda")[0].value = template.app_wda.server_stun_wda;
+                document.getElementsByName("template_server_port_stun_wda")[0].value = template.app_wda.server_port_stun_wda;
+                //MA Template
+                document.getElementById("template_active_turn_ma").checked = (template.app_ma.enable === 'true'); //boolean value
+                document.getElementsByName("template_server_turn_ma")[0].value = template.app_ma.server_turn_ma;
+                document.getElementsByName("template_server_port_turn_ma")[0].value = template.app_ma.server_port_turn_ma;
+                document.getElementsByName("template_server_username_turn_ma")[0].value = template.app_ma.server_username_turn_ma;
+                document.getElementsByName("template_server_password_turn_ma")[0].value = template.app_ma.server_password_turn_ma;
+                //NAT Template
+                let template_nat_tenant = document.getElementById("template_nat_tenant");
+                (template.nat.sip_value == 'rtp_symmetric,rewrite_contact') ? template_nat_tenant.checked = true: template_nat_tenant.checked = false;
+        
+                if (template.template_enable == 'yes') {
+                    // console.log('template actif')
+                    document.getElementById("flexSwitchCheckEnableTemplate").checked = true;
+                    //BTN ENABLE
+                    (btn_template_active_template.checked == false) ? document.getElementById("flexSwitchCheckEnableTemplate_label").classList.add("text-danger", "fw-bold"): document.getElementById("flexSwitchCheckEnableTemplate_label").classList.remove("text-danger", "fw-bold");
+        
+                    document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+ i18next.t('template.template_info_text') +' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal"> '+i18next.t('template.template_info_text_btn')+' </a>';
+                    document.getElementById("template_info_text").classList.add("text-success");
+                    document.getElementsByName("template_remove")[0].style.display = 'inline';
+        
+        
+                    document.getElementById("active_codec_video_enable").checked = template.app_codecs.video;
+        
+                    //NAT Wizard
+                    let nat_tenant = document.getElementById("nat_tenant");
+                    (template.nat.sip_value == 'rtp_symmetric,rewrite_contact') ? nat_tenant.checked = true: nat_tenant.checked = false;
+        
+        
+                    //WDA Wizard
+                    document.getElementById("active_stun_wda").checked = (template.app_wda.enable === 'true'); //boolean value
+                    document.getElementsByName("server_stun_wda")[0].value = template.app_wda.server_stun_wda;
+                    document.getElementsByName("server_port_stun_wda")[0].value = template.app_wda.server_port_stun_wda;
+                    //WDA Wizard cache zone WDA
+                    if (document.getElementById("active_stun_wda").checked == false) {
+                        let server_stun_wda = document.getElementsByName("server_stun_wda")[0];
+                        let server_port_stun_wda = document.getElementsByName("server_port_stun_wda")[0];
+                        server_stun_wda.classList.toggle("required");
+                        server_port_stun_wda.classList.toggle("required");
+                        $(".server_stun_wda, .server_port_stun_wda").toggle('show');
+                    }
+        
+        
+                    // MA Wizard
+                    document.getElementById("active_turn_ma").checked = (template.app_ma.enable === 'true'); //boolean value
+                    document.getElementsByName("server_turn_ma")[0].value = template.app_ma.server_turn_ma;
+                    document.getElementsByName("server_port_turn_ma")[0].value = template.app_ma.server_port_turn_ma;
+                    document.getElementsByName("server_username_turn_ma")[0].value = template.app_ma.server_username_turn_ma;
+                    document.getElementsByName("server_password_turn_ma")[0].value = template.app_ma.server_password_turn_ma;
+                    //MA Wizard Cache Zone MA
+                    if (document.getElementById("active_turn_ma").checked == false) {
+                        let server_turn_ma = document.getElementsByName("server_turn_ma")[0];
+                        let server_port_turn_ma = document.getElementsByName("server_port_turn_ma")[0];
+                        let server_username_turn_ma = document.getElementsByName("server_username_turn_ma")[0];
+                        let server_password_turn_ma = document.getElementsByName("server_password_turn_ma")[0];
+                        server_turn_ma.classList.toggle("required");
+                        server_port_turn_ma.classList.toggle("required");
+                        server_username_turn_ma.classList.toggle("required");
+                        server_password_turn_ma.classList.toggle("required");
+                        $(".server_turn_ma, .server_port_turn_ma, .server_username_turn_ma, .server_password_turn_ma").toggle('show');
+                    }
+        
+                } else {
+                    document.getElementsByName("template_remove")[0].style.display = 'inline';
+                    document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+i18next.t('template.template_info_text_case2')+' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">'+i18next.t('template.template_info_text_btn')+'</a>';
+                    document.getElementById("template_info_text").classList.add("text-warning");
+                    // console.log('template non actif')
+                }
             } else {
-                select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
-                template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>'
+                // console.log('template pas trouvé');
+                document.getElementsByName("template_remove")[0].style.display = 'none';
+                document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+i18next.t('template.template_info_text_case3')+' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">'+i18next.t('template.template_info_text_btn')+'</a>'
+        
             }
-        } else {
-            select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
-            template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>'
-        }
-    }
-    locales_tenant_select.append(select_locales_select);
-    locales_tenant_select.each(function() {
-        let $select = $(this);
-        let $dropdown = $(this).next('.nice-select');
-        let open = $dropdown.hasClass('open');
-        if ($dropdown.length) {
-            $dropdown.remove();
-            create_nice_select($select, 'locales');
-            if (open) {
-                $select.next().trigger('click');
-            }
-        }
-    });
-    locales_tenant_select_template.append(template_select_locales_select);
-    locales_tenant_select_template.each(function() {
-        let $select = $(this);
-        let $dropdown = $(this).next('.nice-select');
-        let open = $dropdown.hasClass('open');
-        if ($dropdown.length) {
-            $dropdown.remove();
-            create_nice_select($select, 'template_locales');
-            if (open) {
-                $select.next().trigger('click');
-            }
-        }
-    });
-    ///////
-    //genere select box pour CODECS 
-    let select_box = "";
-    let select_box_webrtc = "";
-    let template_select_box = "";
-    let template_select_box_webrtc = "";
-    //affiche liste codec basé sur template global et webrtc et/ou sur le template
-    for (let i = 0; i < codec_list.length; i++) {
-        let selected = '';
-        let selected_webrtc = '';
-        let template_selected = '';
-        let template_selected_webrtc = '';
-        if ("template_keys" in localStorage && template.template_enable == 'yes') {
-            // // console.log("a1 : " + codec_list[i].value);
-            let template_dock_value_codecs = template.codecs.sip_value;
-            let template_dock_value_codecs_webrtc = template.app_codecs.sip_value;
-            for (let d = 0; d < template_dock_value_codecs.length; d++) {
-                // // console.log("a2 : " + codec_list[i].value);
-                if (template_dock_value_codecs[d] === codec_list[i].value) {
-                    selected = 'checked';
-                    template_selected = 'checked';
+        
+            /////// FIN TEMPLATE
+            // condition pour afficher la liste des conf d'app activent et la bulle d'information 
+            const apps_list_active = (apps_list.total > 0) ? i18next.t('global.yes') + " (" + dock_value_apps + ")" : (document.getElementById("step1_tippy_app_show").style.display = "none", i18next.t('global.no'));
+        
+            //traitement des template sip
+            const endpoint_section_options = template_sip_global_data.items[0].endpoint_section_options;
+            template_sip_global_data_uuid = template_sip_global_data.items[0].uuid;
+            const endpoint_section_options_webrtc = template_sip_webrtc_data.items[0].endpoint_section_options;
+            template_sip_webrtc_data_uuid = template_sip_webrtc_data.items[0].uuid;
+            //retravail le retour JSON du SIP Global pour traitement plus efficace ulterieur
+            const template_sip_global_endpoint_section_options = new Array();
+            for (let i = 0; i < endpoint_section_options.length; i++) {
+                for (let f = 0; f < endpoint_section_options[i].length; f++) {
+                    if ([f] == 0) {
+                        template_sip_global_endpoint_section_options[endpoint_section_options[i][f]] = "no value"
+                    }
+                    if ([f] == 1) {
+                        template_sip_global_endpoint_section_options[endpoint_section_options[i][f - 1]] = endpoint_section_options[i][f]
+                    }
                 }
             }
-            for (let j = 0; j < template_dock_value_codecs_webrtc.length; j++) {
-                // // console.log("a3 : " + codec_list[i].value);
-                if (template_dock_value_codecs_webrtc[j] === codec_list[i].value) {
-                    selected_webrtc = 'checked';
-                    template_selected_webrtc = 'checked';
+            const template_sip_webrtc_endpoint_section_options = new Array();
+            for (let j = 0; j < endpoint_section_options_webrtc.length; j++) {
+                for (let k = 0; k < endpoint_section_options_webrtc[j].length; k++) {
+                    if ([k] == 0) {
+                        template_sip_webrtc_endpoint_section_options[endpoint_section_options_webrtc[j][k]] = "no value"
+                    }
+                    if ([k] == 1) {
+                        template_sip_webrtc_endpoint_section_options[endpoint_section_options_webrtc[j][k - 1]] = endpoint_section_options_webrtc[j][k]
+                    }
                 }
             }
-        } else if ("template_keys" in localStorage && template.template_enable == 'no') {
-            if (codec_list[i].value == "alaw") {
-                // // console.log("b1 : " + codec_list[i].value);
-                selected = 'checked';
-                selected_webrtc = 'checked';
-            } else if (codec_list[i].value == "vp8" || codec_list[i].value == "vp9" || codec_list[i].value == "h264") {
-                // // console.log("c1 : " + codec_list[i].value);
-                selected = '';
-                selected_webrtc = 'checked';
+            let language_data = template_sip_global_endpoint_section_options.language;
+        
+        
+            // CODECS actifs Global
+            let allow_data = template_sip_global_endpoint_section_options.allow;
+            let allow_data_array = allow_data.split(",");
+            let dock_value_codecs = "";
+            for (var a in allow_data_array) {
+                let codec = allow_data_array[a];
+                for (var i = 0; i < codec_list.length; ++i) {
+                    let o = codec_list[i];
+                    if (o.value == codec) {
+                        dock_value_codecs += o.name + " ";
+                        break;
+                    }
+                }
+            }
+        
+        
+            // CODECS actifs WebRTC
+            let allow_data_webrtc = template_sip_webrtc_endpoint_section_options.allow;
+            let allow_data_array_webrtc = allow_data_webrtc.split(",");
+            let dock_value_codecs_webrtc = "";
+            for (var a in allow_data_array_webrtc) {
+                let codec_webrtc = allow_data_array_webrtc[a];
+                for (var i = 0; i < codec_list.length; ++i) {
+                    let o = codec_list[i];
+                    if (o.value == codec_webrtc) {
+                        dock_value_codecs_webrtc += o.name + " ";
+                        break;
+                    }
+                }
+            }
+        
+            //genere select box pour MOH 
+            let select_moh_select = "";
+            let moh_tenant_select = $("#moh_tenant");
+            for (let i = 0; i < moh_list.items.length; i++) {
+                select_moh_select += '<option value="' + moh_list.items[i].name + '">' + moh_list.items[i].label + '</option>';
+            }
+            moh_tenant_select.append(select_moh_select);
+            moh_tenant_select.each(function() {
+                var $select = $(this);
+                var $dropdown = $(this).next('.nice-select');
+                var open = $dropdown.hasClass('open');
+        
+                if ($dropdown.length) {
+                    $dropdown.remove();
+                    create_nice_select($select, 'moh');
+        
+                    if (open) {
+                        $select.next().trigger('click');
+                    }
+                }
+            });
+            ///////
+            //genere select box pour LOCALES
+            let select_locales_select = "";
+            let template_select_locales_select = "";
+            let locales_tenant_select = $("#locales_tenant");
+            let locales_tenant_select_template = $("#template_locales_tenant");
+            for (let i = 0; i < locale_list.length; i++) {
+                if ("template_keys" in localStorage) {
+                    // si inclusion de template 
+                    if (template.template_enable == 'no' && locale_list[i].locale == template.locale.sip_value) {
+                        template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
+                    } else if (template.template_enable == 'yes' && locale_list[i].locale == template.locale.sip_value) {
+                        select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
+                        template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
+                    } else {
+                        select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
+                        template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>'
+                    }
+                } else {
+                    select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
+                    template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>'
+                }
+            }
+            locales_tenant_select.append(select_locales_select);
+            locales_tenant_select.each(function() {
+                let $select = $(this);
+                let $dropdown = $(this).next('.nice-select');
+                let open = $dropdown.hasClass('open');
+                if ($dropdown.length) {
+                    $dropdown.remove();
+                    create_nice_select($select, 'locales');
+                    if (open) {
+                        $select.next().trigger('click');
+                    }
+                }
+            });
+            locales_tenant_select_template.append(template_select_locales_select);
+            locales_tenant_select_template.each(function() {
+                let $select = $(this);
+                let $dropdown = $(this).next('.nice-select');
+                let open = $dropdown.hasClass('open');
+                if ($dropdown.length) {
+                    $dropdown.remove();
+                    create_nice_select($select, 'template_locales');
+                    if (open) {
+                        $select.next().trigger('click');
+                    }
+                }
+            });
+            ///////
+            //genere select box pour CODECS 
+            let select_box = "";
+            let select_box_webrtc = "";
+            let template_select_box = "";
+            let template_select_box_webrtc = "";
+            //affiche liste codec basé sur template global et webrtc et/ou sur le template
+            for (let i = 0; i < codec_list.length; i++) {
+                let selected = '';
+                let selected_webrtc = '';
+                let template_selected = '';
+                let template_selected_webrtc = '';
+                if ("template_keys" in localStorage && template.template_enable == 'yes') {
+                    // // console.log("a1 : " + codec_list[i].value);
+                    let template_dock_value_codecs = template.codecs.sip_value;
+                    let template_dock_value_codecs_webrtc = template.app_codecs.sip_value;
+                    for (let d = 0; d < template_dock_value_codecs.length; d++) {
+                        // // console.log("a2 : " + codec_list[i].value);
+                        if (template_dock_value_codecs[d] === codec_list[i].value) {
+                            selected = 'checked';
+                            template_selected = 'checked';
+                        }
+                    }
+                    for (let j = 0; j < template_dock_value_codecs_webrtc.length; j++) {
+                        // // console.log("a3 : " + codec_list[i].value);
+                        if (template_dock_value_codecs_webrtc[j] === codec_list[i].value) {
+                            selected_webrtc = 'checked';
+                            template_selected_webrtc = 'checked';
+                        }
+                    }
+                } else if ("template_keys" in localStorage && template.template_enable == 'no') {
+                    if (codec_list[i].value == "alaw") {
+                        // // console.log("b1 : " + codec_list[i].value);
+                        selected = 'checked';
+                        selected_webrtc = 'checked';
+                    } else if (codec_list[i].value == "vp8" || codec_list[i].value == "vp9" || codec_list[i].value == "h264") {
+                        // // console.log("c1 : " + codec_list[i].value);
+                        selected = '';
+                        selected_webrtc = 'checked';
+                    } else {
+                        // // console.log("d1 : " + codec_list[i].value);
+                        selected = '';
+                        selected_webrtc = '';
+                    }
+                    // ON APPLIQUE LES CODECS REGLÉS DNAS LE LOCALSTORAGE UNIQUEMENT AU TEMPLATE
+                    let template_dock_value_codecs = template.codecs.sip_value;
+                    let template_dock_value_codecs_webrtc = template.app_codecs.sip_value;
+                    for (let d = 0; d < template_dock_value_codecs.length; d++) {
+                        // // console.log("a2 : " + codec_list[i].value);
+                        if (template_dock_value_codecs[d] === codec_list[i].value) {
+                            template_selected = 'checked';
+                        }
+                    }
+                    for (let j = 0; j < template_dock_value_codecs_webrtc.length; j++) {
+                        // // console.log("a3 : " + codec_list[i].value);
+                        if (template_dock_value_codecs_webrtc[j] === codec_list[i].value) {
+                            template_selected_webrtc = 'checked';
+                        }
+                    }
+                } else if (!("template_keys" in localStorage)) {
+                    if (codec_list[i].value == "alaw") {
+                        // // console.log("b1 : " + codec_list[i].value);
+                        selected = 'checked';
+                        selected_webrtc = 'checked';
+                        template_selected = 'checked';
+                        template_selected_webrtc = 'checked';
+                    } else if (codec_list[i].value == "vp8" || codec_list[i].value == "vp9" || codec_list[i].value == "h264") {
+                        // // console.log("c1 : " + codec_list[i].value);
+                        selected = '';
+                        selected_webrtc = '';
+                        selected_webrtc = 'checked';
+                        template_selected_webrtc = 'checked';
+                    } else {
+                        // // console.log("d1 : " + codec_list[i].value);
+                        selected = '';
+                        selected_webrtc = '';
+                        template_selected = '';
+                        template_selected_webrtc = '';
+                    }
+                }
+        
+        
+                ////WIZARD////
+                //liste codec global
+                select_box += '<div class="form-group form-check-inline">' +
+                    '<label class="container_check version_2">' + codec_list[i].name +
+                    '<input type="checkbox" name="active_codec" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="" ' + selected + '>' +
+                    '<span class="checkmark"></span>' +
+                    '</label>' +
+                    '</div>';
+                //liste codec webrtc
+                select_box_webrtc += '<div class="form-group form-check-inline">' +
+                    '<label class="container_check version_2">' + codec_list[i].name +
+                    '<input type="checkbox" name="active_codec_webrtc" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="' + codec_list[i].value + '" ' + selected_webrtc + '>' +
+                    '<span class="checkmark"></span>' +
+                    '</label>' +
+                    '</div>'
+        
+                /////TEMPLATE////
+                //liste codec template global
+                template_select_box += '<div class="form-group form-check-inline">' +
+                    '<label class="container_check version_2">' + codec_list[i].name +
+                    '<input type="checkbox" name="template_active_codec" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="" ' + template_selected + '>' +
+                    '<span class="checkmark"></span>' +
+                    '</label>' +
+                    '</div>';
+                //liste codec template webrtc
+                template_select_box_webrtc += '<div class="form-group form-check-inline">' +
+                    '<label class="container_check version_2">' + codec_list[i].name +
+                    '<input type="checkbox" name="template_active_codec_webrtc" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="' + codec_list[i].value + '" ' + template_selected_webrtc + '>' +
+                    '<span class="checkmark"></span>' +
+                    '</label>' +
+                    '</div>'
+            }
+            document.getElementById("codec_activable").innerHTML = select_box;
+            document.getElementById("codec_activable_webrtc").innerHTML = select_box_webrtc;
+            document.getElementById("template_codec_activable").innerHTML = template_select_box;
+            document.getElementById("template_codec_activable_webrtc").innerHTML = template_select_box_webrtc;
+            ///////////
+            document.getElementById("client_site_name").innerHTML = client_site_name.items[0].name;
+            document.getElementsByName("lang")[0].innerHTML = i18next.t('locales_pbx.'+language_data);
+            document.getElementsByName("codec")[0].innerHTML = dock_value_codecs;
+            document.getElementsByName("codec_webrtc")[0].innerHTML = dock_value_codecs_webrtc;
+            document.getElementsByName("apps_webrtc")[0].innerHTML = apps_list_active;
+            if (template_sip_global_endpoint_section_options.rtp_symmetric === "yes" && template_sip_global_endpoint_section_options.rewrite_contact === "yes") {
+                document.getElementsByName("nat")[0].innerHTML = i18next.t('global.yes')
             } else {
-                // // console.log("d1 : " + codec_list[i].value);
-                selected = '';
-                selected_webrtc = '';
+                document.getElementsByName("nat")[0].innerHTML = i18next.t('global.no')
             }
-            // ON APPLIQUE LES CODECS REGLÉS DNAS LE LOCALSTORAGE UNIQUEMENT AU TEMPLATE
-            let template_dock_value_codecs = template.codecs.sip_value;
-            let template_dock_value_codecs_webrtc = template.app_codecs.sip_value;
-            for (let d = 0; d < template_dock_value_codecs.length; d++) {
-                // // console.log("a2 : " + codec_list[i].value);
-                if (template_dock_value_codecs[d] === codec_list[i].value) {
-                    template_selected = 'checked';
-                }
-            }
-            for (let j = 0; j < template_dock_value_codecs_webrtc.length; j++) {
-                // // console.log("a3 : " + codec_list[i].value);
-                if (template_dock_value_codecs_webrtc[j] === codec_list[i].value) {
-                    template_selected_webrtc = 'checked';
-                }
-            }
-        } else if (!("template_keys" in localStorage)) {
-            if (codec_list[i].value == "alaw") {
-                // // console.log("b1 : " + codec_list[i].value);
-                selected = 'checked';
-                selected_webrtc = 'checked';
-                template_selected = 'checked';
-                template_selected_webrtc = 'checked';
-            } else if (codec_list[i].value == "vp8" || codec_list[i].value == "vp9" || codec_list[i].value == "h264") {
-                // // console.log("c1 : " + codec_list[i].value);
-                selected = '';
-                selected_webrtc = '';
-                selected_webrtc = 'checked';
-                template_selected_webrtc = 'checked';
+            // MOH 
+            if (template_sip_global_endpoint_section_options.moh_suggest === undefined) {
+                document.getElementsByName("moh")[0].innerHTML = i18next.t('global.undefined')
             } else {
-                // // console.log("d1 : " + codec_list[i].value);
-                selected = '';
-                selected_webrtc = '';
-                template_selected = '';
-                template_selected_webrtc = '';
+                document.getElementsByName("moh")[0].innerHTML = template_sip_global_endpoint_section_options.moh_suggest
             }
-        }
-
-
-        ////WIZARD////
-        //liste codec global
-        select_box += '<div class="form-group form-check-inline">' +
-            '<label class="container_check version_2">' + codec_list[i].name +
-            '<input type="checkbox" name="active_codec" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="" ' + selected + '>' +
-            '<span class="checkmark"></span>' +
-            '</label>' +
-            '</div>';
-        //liste codec webrtc
-        select_box_webrtc += '<div class="form-group form-check-inline">' +
-            '<label class="container_check version_2">' + codec_list[i].name +
-            '<input type="checkbox" name="active_codec_webrtc" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="' + codec_list[i].value + '" ' + selected_webrtc + '>' +
-            '<span class="checkmark"></span>' +
-            '</label>' +
-            '</div>'
-
-        /////TEMPLATE////
-        //liste codec template global
-        template_select_box += '<div class="form-group form-check-inline">' +
-            '<label class="container_check version_2">' + codec_list[i].name +
-            '<input type="checkbox" name="template_active_codec" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="" ' + template_selected + '>' +
-            '<span class="checkmark"></span>' +
-            '</label>' +
-            '</div>';
-        //liste codec template webrtc
-        template_select_box_webrtc += '<div class="form-group form-check-inline">' +
-            '<label class="container_check version_2">' + codec_list[i].name +
-            '<input type="checkbox" name="template_active_codec_webrtc" data-label="' + codec_list[i].name + '" value="' + codec_list[i].value + '" class="' + codec_list[i].value + '" ' + template_selected_webrtc + '>' +
-            '<span class="checkmark"></span>' +
-            '</label>' +
-            '</div>'
     }
-    document.getElementById("codec_activable").innerHTML = select_box;
-    document.getElementById("codec_activable_webrtc").innerHTML = select_box_webrtc;
-    document.getElementById("template_codec_activable").innerHTML = template_select_box;
-    document.getElementById("template_codec_activable_webrtc").innerHTML = template_select_box_webrtc;
-    ///////////
-    document.getElementById("client_site_name").innerHTML = client_site_name.items[0].name;
-    document.getElementsByName("lang")[0].innerHTML = i18next.t('locales_pbx.'+language_data);
-    document.getElementsByName("codec")[0].innerHTML = dock_value_codecs;
-    document.getElementsByName("codec_webrtc")[0].innerHTML = dock_value_codecs_webrtc;
-    document.getElementsByName("apps_webrtc")[0].innerHTML = apps_list_active;
-    if (template_sip_global_endpoint_section_options.rtp_symmetric === "yes" && template_sip_global_endpoint_section_options.rewrite_contact === "yes") {
-        document.getElementsByName("nat")[0].innerHTML = i18next.t('global.yes')
-    } else {
-        document.getElementsByName("nat")[0].innerHTML = i18next.t('global.no')
-    }
-    // MOH 
-    if (template_sip_global_endpoint_section_options.moh_suggest === undefined) {
-        document.getElementsByName("moh")[0].innerHTML = i18next.t('global.undefined')
-    } else {
-        document.getElementsByName("moh")[0].innerHTML = template_sip_global_endpoint_section_options.moh_suggest
-    }
-})();
+    })();
+    
+}
+get_admin_type()

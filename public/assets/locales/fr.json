@@ -9,8 +9,9 @@
             "wait": "Patientez",
             "yes": "Oui",
             "no": "Non",
-            "undefined": "Option non définie"
-            
+            "undefined": "Option non définie",
+            "admin_access": "Accès non autorisé",
+            "admin_access_text": "Vous ne disposez pas des droits suffisants pour accéder à cette page"
         },
         "locales_pbx": {
             "French":"Français",
