@@ -826,8 +826,8 @@ const get_admin_type = () => {
         const context = app.getContext();
         // console.log(context);
         tenant_uuid = context.app.extra.tenant;
-        host = 'https://' + context.app.extra.instance.host;
-        token_session = context.app.extra.instance.session.token;
+        host = 'https://' + context.app.extra.stack.host;
+        token_session = context.app.extra.stack.session.token;
     
         const options = {
             method: 'GET',
