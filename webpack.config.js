@@ -7,11 +7,10 @@ const WebpackAutoInject = require('webpack-auto-inject-version-next');
 const miniSVGDataURI = require('mini-svg-data-uri');
 
 const isProduction = process.env.NODE_ENV == 'production';
-
+const titleHTML = (process.env.NODE_ENV == "production") ? "Wizard Configuration" : "BETA Wizard Configuration";
+const PlausState = (process.env.NODE_ENV == "production") ? "" : "beta--";
 
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
-
-
 
 const config = {
     performance: {
@@ -68,6 +67,12 @@ const config = {
 
         new HtmlWebpackPlugin({
             template: './src/index.html',
+            title: titleHTML,
+            scriptLoading: 'defer',
+            inject: 'head',
+            templateParameters: {
+                customScript: `<script defer="defer" data-domain="${PlausState}wazo-plugin-deploy.netlify.app" data-api="/lapetiteroute/api/event" src="/lapetiteroute/js/script.js"></script>`,
+            }
         }),
 
         new CopyPlugin({
@@ -161,7 +166,6 @@ module.exports = () => {
         config.mode = 'production';
         
         config.plugins.push(new MiniCssExtractPlugin());
-        
         
     } else {
         config.mode = 'development';
