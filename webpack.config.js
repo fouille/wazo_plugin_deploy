@@ -7,12 +7,10 @@ const WebpackAutoInject = require('webpack-auto-inject-version-next');
 const miniSVGDataURI = require('mini-svg-data-uri');
 
 const isProduction = process.env.NODE_ENV == 'production';
-const titleHTML = (isProduction == "production") ? "Wizard Configuration" : "BETA Wizard Configuration";
-const PlausState = (isProduction == "production") ? "" : "beta--";
+const titleHTML = (process.env.NODE_ENV == "production") ? "Wizard Configuration" : "BETA Wizard Configuration";
+const PlausState = (process.env.NODE_ENV == "production") ? "" : "beta--";
 
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
-
-
 
 const config = {
     performance: {
