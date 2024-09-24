@@ -2,6 +2,7 @@ import '@fortawesome/fontawesome-free/js/fontawesome';
 import '@fortawesome/fontawesome-free/js/solid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '/node_modules/flag-icons/css/flag-icons.min.css';
+import JSConfetti from 'js-confetti';
 import tippy from 'tippy.js';
 import 'bootstrap';
 import i18next from 'i18next';
@@ -24,154 +25,14 @@ i18next
     }
 });
 const what = process.env.NODE_ENV;
-console.log("env : " + what);
+
+const canvasJsConfetti = document.getElementById('tsparticles');
+const jsConfetti = new JSConfetti({ canvasJsConfetti });
 
 const app = new App();
 const version = `© [AIV]{date}[/AIV] FMW - ${i18next.t('global.copyright')} - [AIV]v{version}[/AIV] ${what}`;
 
-//set domain for pausible
-if(what == "development"){
-    // Créer une nouvelle balise script
-    const script = document.createElement('script');
-
-    // Définir les attributs de la balise script
-    script.defer = true; // Ajouter l'attribut defer
-    script.setAttribute('data-domain', 'beta--wazo-plugin-deploy.netlify.app');
-    script.setAttribute('data-api', '/lapetiteroute/api/event');
-    script.src = '/lapetiteroute/js/script.js'; // Définir le chemin du fichier JavaScript
-
-    // Ajouter la balise script dans la section head
-    document.head.appendChild(script);
-}else{
-    // Créer une nouvelle balise script
-    const script = document.createElement('script');
-
-    // Définir les attributs de la balise script
-    script.defer = true; // Ajouter l'attribut defer
-    script.setAttribute('data-domain', 'wazo-plugin-deploy.netlify.app');
-    script.setAttribute('data-api', '/lapetiteroute/api/event');
-    script.src = '/lapetiteroute/js/script.js'; // Définir le chemin du fichier JavaScript
-
-    // Ajouter la balise script dans la section head
-    document.head.appendChild(script);
-}
-
-
-
 document.querySelector('.copy').innerHTML = version;
-
-//rc1.0.8 I18N LANGUAGE//
-//global
-document.getElementById('backward').innerHTML = i18next.t('global.backward');
-document.getElementById('forward').innerHTML = i18next.t('global.forward');
-document.getElementById('process').innerHTML = i18next.t('global.process');
-
-//template//
-document.getElementById('template_save').innerHTML = i18next.t('global.process');
-document.getElementById('template_remove').innerHTML = i18next.t('global.delete');
-document.getElementById('templateModal').innerHTML = i18next.t('template.templateModal');
-document.getElementById('flexSwitchCheckEnableTemplate_label').innerHTML = i18next.t('template.activate');
-document.getElementById('information_text').innerHTML = i18next.t('template.information_text');
-//collapseOne
-document.getElementById('collapseOne_btn').innerHTML = i18next.t('template.collapseOne_btn');
-document.getElementById('collapseOne_text').innerHTML = i18next.t('template.collapseOne_text');
-document.getElementById('collapseOne_lang').innerHTML = i18next.t('template.collapseOne_lang');
-document.getElementById('collapseOne_lang_select').innerHTML = i18next.t('template.collapseOne_lang_select');
-document.getElementById('collapseOne_nat').innerHTML = i18next.t('template.collapseOne_nat');
-document.getElementById('collapseOne_nat_label').innerHTML = i18next.t('template.collapseOne_nat_label');
-document.getElementById('collapseOne_codecs').innerHTML = i18next.t('template.collapseOne_codecs');
-//collapseWebrtc
-document.getElementById('collapseWebrtc_btn').innerHTML = i18next.t('template.collapseWebrtc_btn');
-document.getElementById('collapseWebrtc_text').innerHTML = i18next.t('template.collapseWebrtc_text');
-document.getElementById('collapseWebrtc_codecs_enable').innerHTML = i18next.t('template.collapseWebrtc_codecs_enable');
-//collapseTwo
-document.getElementById('collapseTwo_btn').innerHTML = i18next.t('template.collapseTwo_btn');
-document.getElementById('collapseTwo_text').innerHTML = i18next.t('template.collapseTwo_text');
-document.getElementById('collapseTwo_stun_enable').innerHTML = i18next.t('template.collapseTwo_stun_enable');
-document.getElementById('collapseTwo_stun_uri').innerHTML = i18next.t('template.collapseTwo_stun_uri');
-//collapsThree
-document.getElementById('collapseThree_btn').innerHTML = i18next.t('template.collapseThree_btn');
-document.getElementById('collapseThree_text').innerHTML = i18next.t('template.collapseThree_text');
-document.getElementById('collapseThree_turn_enable').innerHTML = i18next.t('template.collapseThree_turn_enable');
-document.getElementById('collapseThree_turn_uri').innerHTML = i18next.t('template.collapseThree_turn_uri');
-document.getElementById('collapseThree_turn_username').innerHTML = i18next.t('template.collapseThree_turn_username');
-document.getElementById('collapseThree_turn_password').innerHTML = i18next.t('template.collapseThree_turn_password');
-//end template//
-//steps//
-//step0
-document.getElementById('title_text').innerHTML = i18next.t('step0.title_text');
-document.getElementById('subtitle_text').innerHTML = i18next.t('step0.subtitle_text');
-document.getElementById('step0_panel1_title').innerHTML = i18next.t('step0.step0_panel1_title');
-document.getElementById('step0_panel1_lang').innerHTML = i18next.t('step0.step0_panel1_lang');
-document.getElementById('step0_panel1_codecs').innerHTML = i18next.t('step0.step0_panel1_codecs');
-document.getElementById('step0_panel1_moh').innerHTML = i18next.t('step0.step0_panel1_moh');
-document.getElementById('step0_panel1_nat').innerHTML = i18next.t('step0.step0_panel1_nat');
-document.getElementById('step0_panel2_title').innerHTML = i18next.t('step0.step0_panel2_title');
-document.getElementById('step0_panel2_codecs').innerHTML = i18next.t('step0.step0_panel2_codecs');
-document.getElementById('step0_panel2_apps').innerHTML = i18next.t('step0.step0_panel2_apps');
-tippy('#step1_tippy_app_show', {
-    content: i18next.t('step0.step0_panel2_apps_tippy'),
-    placement: 'left',
-});
-//fin step0
-//step1
-document.getElementById('step1_panel1_title').innerHTML = i18next.t('step1.step1_panel1_title');
-document.getElementById('step1_panel2_title').innerHTML = i18next.t('step1.step1_panel2_title');
-document.getElementById('step1_panel3_title').innerHTML = i18next.t('step1.step1_panel3_title');
-document.getElementById('step1_panel3_moh_default').innerHTML = i18next.t('step1.step1_panel3_moh_default');
-document.getElementById('step1_panel4_title').innerHTML = i18next.t('step1.step1_panel4_title');
-document.getElementById('step1_panel4_nat_enable').innerHTML = i18next.t('step1.step1_panel4_nat_enable');
-tippy('#step1_panel1_title_tippy', {
-    content: i18next.t('step1.step1_panel1_title_tippy'),
-    placement: 'left',
-});
-tippy('#step1_panel2_title_tippy', {
-    content: i18next.t('step1.step1_panel2_title_tippy'),
-    placement: 'left',
-});
-tippy('#step1_panel3_title_tippy', {
-    content: i18next.t('step1.step1_panel3_title_tippy'),
-    placement: 'left',
-});
-tippy('#step1_panel4_title_tippy', {
-    content: i18next.t('step1.step1_panel4_title_tippy'),
-    placement: 'left',
-});
-//fin step1
-//step2
-document.getElementById('step2_panel1_title').innerHTML = i18next.t('step2.step2_panel1_title');
-tippy('#step2_panel2_title_tippy', {
-    content: i18next.t('step2.step2_panel1_title_tippy'),
-    placement: 'left',
-});
-//step2 special (ici on recupere les textes du template pour appliquer a la step2, car identique)
-document.getElementById('step2_panel1_enable_codecs').innerHTML = i18next.t('template.collapseWebrtc_codecs_enable');
-document.getElementById('step2_panel2_title').innerHTML = i18next.t('template.collapseTwo_btn');
-document.getElementById('step2_panel2_stun_enable').innerHTML = i18next.t('template.collapseTwo_stun_enable');
-document.getElementById('step2_panel2_stun_uri').innerHTML = i18next.t('template.collapseTwo_stun_uri');
-tippy('#step2_panel2_title_tippy', {
-    content: i18next.t('template.collapseTwo_text'),
-    placement: 'left',
-});
-document.getElementById('step2_panel3_title').innerHTML = i18next.t('template.collapseThree_btn');
-document.getElementById('step2_panel3_turn_enable').innerHTML = i18next.t('template.collapseThree_turn_enable');
-document.getElementById('step2_panel3_turn_uri').innerHTML = i18next.t('template.collapseThree_turn_uri');
-document.getElementById('step2_panel3_turn_username').innerHTML = i18next.t('template.collapseThree_turn_username');
-document.getElementById('step2_panel3_turn_password').innerHTML = i18next.t('template.collapseThree_turn_password');
-tippy('#step2_panel3_title_tippy', {
-    content: i18next.t('template.collapseThree_text'),
-    placement: 'left',
-});
-//fin step2
-//step3
-document.getElementById('main_question').innerHTML = i18next.t('step3.main_question');
-document.getElementById('step3_panel1_title').innerHTML = i18next.t('step3.step3_panel1_title');
-document.getElementById('step3_panel2_title').innerHTML = i18next.t('step3.step3_panel2_title');
-document.getElementById('step3_panel3_title').innerHTML = i18next.t('step3.step3_panel3_title');
-document.getElementById('step3_panel3_text1').innerHTML = i18next.t('step3.step3_panel3_text1');
-document.getElementById('step3_panel3_text2').innerHTML = i18next.t('step3.step3_panel3_text2');
-//fin steps//
-//fin language//
 
 export let template_sip_global_data_uuid = "";
 export let template_sip_webrtc_data_uuid = "";
@@ -183,285 +44,345 @@ let template;
 
 const codec_list = JSON.parse(codec_list_text);
 const locale_list = JSON.parse(locale_list_wazo);
-export const btn_next = document.getElementsByClassName("forward");
-export const btn_submit = document.getElementsByClassName("wizard_save");
-const btn_template = document.getElementsByClassName("template_save");
-const btn_stun = document.getElementsByClassName("active_stun_wda");
-const btn_turn = document.getElementsByClassName("active_turn_ma");
+const btn_next = [...document.getElementsByClassName("forward")];
+const btn_submit = [...document.getElementsByClassName("wizard_save")];
+const btn_template = [...document.getElementsByClassName("template_save")];
+const btn_template_remove = [...document.getElementsByClassName("template_remove")];
+const btn_stun = [...document.querySelectorAll(".active_stun_wda, .template_active_stun_wda")];
+const btn_turn = [...document.querySelectorAll(".active_turn_ma, .template_active_turn_ma")];
 const btn_active_codec = document.getElementById("active_codec_video_enable");
 const btn_template_active_codec = document.getElementById("template_active_codec_video_enable");
-const btn_template_remove = document.getElementsByClassName("template_remove");
 const btn_template_active_template = document.getElementById("flexSwitchCheckEnableTemplate");
-const btn_language_fr = document.getElementsByClassName("fi-fr");
-const btn_language_en = document.getElementsByClassName("fi-gb");
-const btn_language_es = document.getElementsByClassName("fi-es");
+const btn_language_fr = document.querySelectorAll(".fi-fr");
+const btn_language_en = document.querySelectorAll(".fi-gb");
+const btn_language_es = document.querySelectorAll(".fi-es");
+
+//rc1.0.8 I18N LANGUAGE//
+const elementsToTranslate = [
+    { id: 'backward', key: 'global.backward' },
+    { id: 'forward', key: 'global.forward' },
+    { id: 'process', key: 'global.process' },
+    { id: 'template_save', key: 'global.process' },
+    { id: 'template_remove', key: 'global.delete' },
+    { id: 'templateModal', key: 'template.templateModal' },
+    { id: 'flexSwitchCheckEnableTemplate_label', key: 'template.activate' },
+    { id: 'information_text', key: 'template.information_text' },
+    { id: 'collapseOne_btn', key: 'template.collapseOne_btn' },
+    { id: 'collapseOne_text', key: 'template.collapseOne_text' },
+    { id: 'collapseOne_lang', key: 'template.collapseOne_lang' },
+    { id: 'collapseOne_lang_select', key: 'template.collapseOne_lang_select' },
+    { id: 'collapseOne_nat', key: 'template.collapseOne_nat' },
+    { id: 'collapseOne_nat_label', key: 'template.collapseOne_nat_label' },
+    { id: 'collapseOne_codecs', key: 'template.collapseOne_codecs' },
+    { id: 'collapseWebrtc_btn', key: 'template.collapseWebrtc_btn' },
+    { id: 'collapseWebrtc_text', key: 'template.collapseWebrtc_text' },
+    { id: 'collapseWebrtc_codecs_enable', key: 'template.collapseWebrtc_codecs_enable' },
+    { id: 'collapseTwo_btn', key: 'template.collapseTwo_btn' },
+    { id: 'collapseTwo_text', key: 'template.collapseTwo_text' },
+    { id: 'collapseTwo_stun_enable', key: 'template.collapseTwo_stun_enable' },
+    { id: 'collapseTwo_stun_uri', key: 'template.collapseTwo_stun_uri' },
+    { id: 'collapseThree_btn', key: 'template.collapseThree_btn' },
+    { id: 'collapseThree_text', key: 'template.collapseThree_text' },
+    { id: 'collapseThree_turn_enable', key: 'template.collapseThree_turn_enable' },
+    { id: 'collapseThree_turn_uri', key: 'template.collapseThree_turn_uri' },
+    { id: 'collapseThree_turn_username', key: 'template.collapseThree_turn_username' },
+    { id: 'collapseThree_turn_password', key: 'template.collapseThree_turn_password' },
+    { id: 'title_text', key: 'step0.title_text' },
+    { id: 'subtitle_text', key: 'step0.subtitle_text' },
+    { id: 'step0_panel1_title', key: 'step0.step0_panel1_title' },
+    { id: 'step0_panel1_lang', key: 'step0.step0_panel1_lang' },
+    { id: 'step0_panel1_codecs', key: 'step0.step0_panel1_codecs' },
+    { id: 'step0_panel1_moh', key: 'step0.step0_panel1_moh' },
+    { id: 'step0_panel1_nat', key: 'step0.step0_panel1_nat' },
+    { id: 'step0_panel2_title', key: 'step0.step0_panel2_title' },
+    { id: 'step0_panel2_codecs', key: 'step0.step0_panel2_codecs' },
+    { id: 'step0_panel2_apps', key: 'step0.step0_panel2_apps' },
+    { id: 'step1_panel1_title', key: 'step1.step1_panel1_title' },
+    { id: 'step1_panel2_title', key: 'step1.step1_panel2_title' },
+    { id: 'step1_panel3_title', key: 'step1.step1_panel3_title' },
+    { id: 'step1_panel3_moh_default', key: 'step1.step1_panel3_moh_default' },
+    { id: 'step1_panel4_title', key: 'step1.step1_panel4_title' },
+    { id: 'step1_panel4_nat_enable', key: 'step1.step1_panel4_nat_enable' },
+    { id: 'step2_panel1_title', key: 'step2.step2_panel1_title' },
+    { id: 'step2_panel1_enable_codecs', key: 'template.collapseWebrtc_codecs_enable' },
+    { id: 'step2_panel2_title', key: 'template.collapseTwo_btn' },
+    { id: 'step2_panel2_stun_enable', key: 'template.collapseTwo_stun_enable' },
+    { id: 'step2_panel2_stun_uri', key: 'template.collapseTwo_stun_uri' },
+    { id: 'step2_panel3_title', key: 'template.collapseThree_btn' },
+    { id: 'step2_panel3_turn_enable', key: 'template.collapseThree_turn_enable' },
+    { id: 'step2_panel3_turn_uri', key: 'template.collapseThree_turn_uri' },
+    { id: 'step2_panel3_turn_username', key: 'template.collapseThree_turn_username' },
+    { id: 'step2_panel3_turn_password', key: 'template.collapseThree_turn_password' },
+    { id: 'main_question', key: 'step3.main_question' },
+    { id: 'step3_panel1_title', key: 'step3.step3_panel1_title' },
+    { id: 'step3_panel2_title', key: 'step3.step3_panel2_title' },
+    { id: 'step3_panel3_title', key: 'step3.step3_panel3_title' },
+    { id: 'step3_panel3_text1', key: 'step3.step3_panel3_text1' },
+    { id: 'step3_panel3_text2', key: 'step3.step3_panel3_text2' }
+  ];
+  
+const tippyConfigurations = [
+    { selector: '#step1_tippy_app_show', content: i18next.t('step0.step0_panel2_apps_tippy') },
+    { selector: '#step1_panel1_title_tippy', content: i18next.t('step1.step1_panel1_title_tippy') },
+    { selector: '#step1_panel2_title_tippy', content: i18next.t('step1.step1_panel2_title_tippy') },
+    { selector: '#step1_panel3_title_tippy', content: i18next.t('step1.step1_panel3_title_tippy') },
+    { selector: '#step1_panel4_title_tippy', content: i18next.t('step1.step1_panel4_title_tippy') },
+    { selector: '#step2_panel2_title_tippy', content: i18next.t('step2.step2_panel1_title_tippy') },
+    { selector: '#step2_panel2_title_tippy', content: i18next.t('template.collapseTwo_text') },
+    { selector: '#step2_panel3_title_tippy', content: i18next.t('template.collapseThree_text') }
+  ];
+
+  elementsToTranslate.forEach(({ id, key }) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.innerHTML = i18next.t(key);
+    }
+  });
+
+  tippyConfigurations.forEach(({ selector, content }) => {
+    tippy(selector, {
+      content,
+      placement: 'left'
+    });
+  });
+
+  const handleLanguageChange = (lang) => {
+    localStorage.setItem("i18nextLng", lang);
+    location.reload();
+  };
 
 //bouton de choix de langue
-for (let element of btn_language_fr) {
-    element.addEventListener("click", function(e) {
-        localStorage.setItem("i18nextLng", 'fr');
-        location.reload();
-    })
-}
-for (let element of btn_language_en) {
-    element.addEventListener("click", function(e) {
-        localStorage.setItem("i18nextLng", 'en');
-        location.reload();
-    })
-}
-for (let element of btn_language_es) {
-    element.addEventListener("click", function(e) {
-        localStorage.setItem("i18nextLng", 'es');
-        location.reload();
-    })
-}
-
+btn_language_fr.forEach(element => element.addEventListener("click", () => handleLanguageChange('fr')));
+btn_language_en.forEach(element => element.addEventListener("click", () => handleLanguageChange('en')));
+btn_language_es.forEach(element => element.addEventListener("click", () => handleLanguageChange('es')));
+//fin language//
 
 // FUNCTIONS
-
-// function pour update du sip template
-export async function update_sip_template_endpoint(keys) {
-    document.getElementById("title_text").innerText = i18next.t('global.wait');
-    document.getElementById("final-step-one").innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
-    document.getElementById("final-step-two").innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
-    document.getElementById("final-step-three").innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
-    let say_yes_or_no = "no";
-    if (keys.nat.sip_value == "rtp_symmetric,rewrite_contact") {
-        say_yes_or_no = "yes"
-    };
-    const api_confd_sip_temp_global_put = '/api/confd/1.1/endpoints/sip/templates/';
-    const put_options = {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Wazo-Tenant': tenant_uuid,
-            'X-Auth-Token': token_session
+//feu artifice
+const littleGoodie = () => {
+    tsParticles.load({
+        id: "tsparticles",
+        options: {
+          emitters: [
+            {
+              life: {
+                duration: 5,
+                count: 1,
+              },
+              position: {
+                x: 0,
+                y: 30,
+              },
+              particles: {
+                move: {
+                  direction: "top-right",
+                },
+              },
+            },
+            {
+              life: {
+                duration: 5,
+                count: 1,
+              },
+              position: {
+                x: 100,
+                y: 30,
+              },
+              particles: {
+                move: {
+                  direction: "top-left",
+                },
+              },
+            },
+          ],
+          preset: "confetti",
         },
-        body: JSON.stringify({
-            "endpoint_section_options": [
-                ["rtp_timeout",
-                    "7200"
-                ],
-                ["allow_transfer",
-                    "yes"
-                ],
-                ["use_ptime",
-                    "yes"
-                ],
-                ["callerid",
-                    "wazo"
-                ],
-                ["direct_media",
-                    "no"
-                ],
-                ["dtmf_mode",
-                    "rfc4733"
-                ],
-                ["language",
-                    keys.locale.sip_value
-                ],
-                ["inband_progress",
-                    "no"
-                ],
-                ["rtp_timeout_hold",
-                    "0"
-                ],
-                ["timers_sess_expires",
-                    "600"
-                ],
-                ["timers_min_se",
-                    "90"
-                ],
-                ["trust_id_inbound",
-                    "no"
-                ],
-                ["allow_subscribe",
-                    "yes"
-                ],
-                ["allow",
-                    keys.codecs.sip_value
-                ],
-                ["rewrite_contact",
-                    say_yes_or_no
-                ],
-                ["rtp_symmetric",
-                    say_yes_or_no
-                ],
-                ["moh_suggest",
-                    keys.moh.sip_value
-                ],
-                ["send_pai",
-                    "yes"
-                ],
-                ["set_var",
-                    "TIMEOUT(absolute)=36000"
-                ]
-            ]
-        })
-    };
-    try {
-        let promise = await fetch(host + api_confd_sip_temp_global_put + template_sip_global_data_uuid, put_options);
-        if (promise == null || promise.status == 204 || promise.ok) {
-            update_sip_template_webrtc_endpoint(keys)
-        } else {
-            // // console.log("no auth");
-        }
-    } catch (erreur) {
-        console.error("Erreur :", erreur);
-    }
+      });
 }
+// function pour update du sip template
+const updateSipTemplateEndpoint = async (keys) => {
+    const { nat, locale, codecs, moh } = keys;
+    
+    document.getElementById('title_text').innerText = i18next.t('global.wait');
+    ['final-step-one', 'final-step-two', 'final-step-three'].forEach(id => {
+      document.getElementById(id).innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
+    });
+  
+    const sayYesOrNo = nat.label === 'yes' ? 'yes' : 'no';
+  
+    const apiConfdSipTempGlobalPut = '/api/confd/1.1/endpoints/sip/templates/';
+    const putOptions = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Wazo-Tenant': tenant_uuid,
+        'X-Auth-Token': token_session
+      },
+      body: JSON.stringify({
+        endpoint_section_options: [
+          ['rtp_timeout', '7200'],
+          ['allow_transfer', 'yes'],
+          ['use_ptime', 'yes'],
+          ['callerid', 'wazo'],
+          ['direct_media', 'no'],
+          ['dtmf_mode', 'rfc4733'],
+          ['language', locale.sip_value],
+          ['inband_progress', 'no'],
+          ['rtp_timeout_hold', '0'],
+          ['timers_sess_expires', '600'],
+          ['timers_min_se', '90'],
+          ['trust_id_inbound', 'no'],
+          ['allow_subscribe', 'yes'],
+          ['allow', codecs.sip_value],
+          ['rewrite_contact', sayYesOrNo],
+          ['rtp_symmetric', sayYesOrNo],
+          ['moh_suggest', moh.sip_value],
+          ['send_pai', 'yes'],
+          ['set_var', 'TIMEOUT(absolute)=36000']
+        ]
+      })
+    };
+  
+    try {
+      const response = await fetch(`${host}${apiConfdSipTempGlobalPut}${template_sip_global_data_uuid}`, putOptions);
+      if (response && (response.status === 204 || response.ok)) {
+        await updateSipTemplateWebrtcEndpoint(keys);
+      } else {
+        console.log('Authorization failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
 
 // function pour update du sip template WEBRTC
-async function update_sip_template_webrtc_endpoint(pkeys) {
-    const api_confd_sip_temp_global_put = '/api/confd/1.1/endpoints/sip/templates/';
-    const put_options = {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Wazo-Tenant': tenant_uuid,
-            'X-Auth-Token': token_session
-        },
-        body: JSON.stringify({
-            "endpoint_section_options": [
-                ["webrtc",
-                    "yes"
-                ],
-                ["max_audio_streams",
-                    "1"
-                ],
-                ["max_video_streams",
-                    "25"
-                ],
-                ["allow",
-                    pkeys.app_codecs.sip_value
-                ],
-                ["dtls_auto_generate_cert",
-                    "yes"
-                ]
-            ]
-        })
+const updateSipTemplateWebrtcEndpoint = async (pkeys) => {
+    const apiConfdSipTempGlobalPut = '/api/confd/1.1/endpoints/sip/templates/';
+    const putOptions = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Wazo-Tenant': tenant_uuid,
+        'X-Auth-Token': token_session
+      },
+      body: JSON.stringify({
+        endpoint_section_options: [
+          ['webrtc', 'yes'],
+          ['max_audio_streams', '1'],
+          ['max_video_streams', '25'],
+          ['allow', pkeys.app_codecs.sip_value],
+          ['dtls_auto_generate_cert', 'yes']
+        ]
+      })
     };
+  
     try {
-        let promise = await fetch(host + api_confd_sip_temp_global_put + template_sip_webrtc_data_uuid, put_options);
-        if (promise == null || promise.status == 204 || promise.ok) {
-            document.getElementById("final-step-one").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
-            update_apps(apps_list, pkeys)
-        } else {
-            // // console.log("no auth");
-        }
-    } catch (erreur) {
-        console.error("Erreur :", erreur);
+      const response = await fetch(`${host}${apiConfdSipTempGlobalPut}${template_sip_webrtc_data_uuid}`, putOptions);
+      if (response && (response.status === 204 || response.ok)) {
+        document.getElementById('final-step-one').innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
+        updateApps(apps_list, pkeys);
+      } else {
+        console.log('Authorization failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
+  };
+  
+
+const updateOrCreateExtApps = async (name, app_keys, create_or_not) => {
+    
+const apiConfdSipTempGlobalPut = `/api/confd/1.1/external/apps/${name}`;
+let conf;
+const method = create_or_not === 0 ? 'PUT' : 'POST';
+
+if (name === 'wazo-euc-application-mobile') {
+    conf = {
+    turn_servers: JSON.stringify([{
+        urls: `turn:${app_keys.app_ma.server_turn_ma}:${app_keys.app_ma.server_port_turn_ma}`,
+        username: app_keys.app_ma.server_username_turn_ma,
+        credential: app_keys.app_ma.server_password_turn_ma
+    }])
+    };
+    
+} else if (name === 'wazo-euc-application-desktop' || name === 'wazo-euc-application-web') {
+    conf = {
+    stun_servers: `stun:${app_keys.app_wda.server_stun_wda}:${app_keys.app_wda.server_port_stun_wda}`
+    };
 }
 
-async function updateORcreate_ext_apps(name, app_keys, create_or_not) {
-    const api_confd_sip_temp_global_put = '/api/confd/1.1/external/apps/' + name;
-    let conf;
-    let PUT_or_POST;
-    if (name == "wazo-euc-application-mobile") {
-        (create_or_not == 0) ? PUT_or_POST = "PUT": PUT_or_POST = "POST";
-        conf = {
-            "turn_servers": "[{\"urls\":\"turn:" + app_keys.app_ma.server_turn_ma + ":" + app_keys.app_ma.server_port_turn_ma + "\",\"username\":\"" + app_keys.app_ma.server_username_turn_ma + "\",\"credential\":\"" + app_keys.app_ma.server_password_turn_ma + "\"}]"
-        }
+const putOptions = {
+    method,
+    headers: {
+    'Content-Type': 'application/json',
+    'Wazo-Tenant': tenant_uuid,
+    'X-Auth-Token': token_session
+    },
+    body: JSON.stringify({
+    configuration: conf,
+    label: name
+    })
+};
 
-    } else if (name == "wazo-euc-application-desktop" || name == "wazo-euc-application-web") {
-        (create_or_not == 0) ? PUT_or_POST = "PUT": PUT_or_POST = "POST";
-        conf = {
-            "stun_servers": "stun:" + app_keys.app_wda.server_stun_wda + ":" + app_keys.app_wda.server_port_stun_wda
-        }
-    }
-    const put_options = {
-        method: PUT_or_POST,
-        headers: {
-            'Content-Type': 'application/json',
-            'Wazo-Tenant': tenant_uuid,
-            'X-Auth-Token': token_session
-        },
-        body: JSON.stringify({
-            "configuration": conf,
-            "label": name
-        })
-    };
-    try {
-        let promise = await fetch(host + api_confd_sip_temp_global_put, put_options);
-        if (promise == null || promise.status == 204 || promise.ok) {
-            // // console.log(name + ": OK");
-        } else {
-            // // console.log(name + ": NOK");
-        }
-    } catch (erreur) {
-        console.error("Erreur :", erreur);
-    }
-}
-// function pour update ou ajout une configuration d'application 
-async function update_apps(apps_list, app_keys) {
-    // // console.log(apps_list);
-    if (apps_list.total > 0 && (app_keys.app_ma.enable == "true" || app_keys.app_wda.enable == "true")) {
-        // // console.log("Etat MA = " + app_keys.app_ma.enable);
-        // // console.log("Etat WDA = " + app_keys.app_wda.enable);
-        let apps_items = apps_list.items;
-        let apps_labell = app_keys.app_labels.activate_labels;
-        for (let g = 0; g < apps_labell.length; g++) {
-            // // console.log(apps_items);
-            // // console.log("Demande d'app conf: "+ apps_labell[g]);
-            const checkItemsExist = obj => obj.name === apps_labell[g];
-            // // console.log("CHECK ITEM");
-            let label_name_check = apps_items.some(checkItemsExist);
-            // // console.log(label_name_check);
-            // // console.log("FIN CHECK");
-            let label_name = apps_labell[g];
-            //je trouve un objet dans les items dapp retournés
-            if (label_name_check === true) {
-                // // console.log("L'app existe deja alors");
-                // // console.log("BOUCLE UPDATE");       
-                if (label_name == apps_labell[g]) {
-                    // // console.log("boucle update label: "+label_name);
-                    await updateORcreate_ext_apps(label_name, app_keys, 0)
-                } else {
-                    // // console.log("erreur boucle update");
-                }
-            } else if (label_name_check === false) {
-                // // console.log("L'app N'existe PAS deja alors");
-                // // console.log("BOUCLE CREATE");
-                // // console.log(apps_labell[g]);
-                // // console.log("boucle create label: "+apps_labell[g]);
-                await updateORcreate_ext_apps(apps_labell[g], app_keys, 1)
-            }
-        }
-    } else if (apps_list.total == 0 && (app_keys.app_ma.enable == "true" || app_keys.app_wda.enable == "true")) {
-        // // console.log("il ny a pas d'app configuree : ");
-        // // console.log("MA2 = " + app_keys.app_ma.enable);
-        // // console.log("WDA2 = " + app_keys.app_wda.enable);
-        //fonction de creation des conf dapp
-        let apps_label = app_keys.app_labels.activate_labels;
-        for (let h = 0; h < apps_label.length; h++) {
-            // // console.log("create app : " + apps_label[h]);
-            await updateORcreate_ext_apps(apps_label[h], app_keys, 1)
-        }
+try {
+    const response = await fetch(`${host}${apiConfdSipTempGlobalPut}`, putOptions);
+    if (response && (response.status === 204 || response.ok)) {
+    console.log(`${name}: OK`);
     } else {
-        // // console.log("il ny a pas d'app à configurer");
+    console.log(`${name}: NOK`);
     }
-    // EXIT de fin
-    // Settimeout pour attendre le retour d'appel API
-    setTimeout(function() {
-        // let btn_submit = document.getElementsByClassName("submit");
-        let btn_back = document.getElementsByClassName("backward");
-        for (let element of btn_submit) {
-            element.setAttribute('disabled', 'yes');
-        }
-        for (let element of btn_back) {
-            element.setAttribute('disabled', 'yes');
-        }
-        document.getElementById("final-step-two").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
-        document.getElementById("final-step-three").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
-        document.getElementById("title_text").innerText = i18next.t('step3.finish');
-        document.getElementById("subtitle_text").innerText = "";
-        document.getElementById("template_info_text").innerText = "";
-        document.getElementById("main_question").innerText = i18next.t('step3.configuration');
-    }, 1500);
-
-
+} catch (error) {
+    console.error('Erreur :', error);
 }
+};
+  
+// function pour update ou ajout une configuration d'application 
+const updateApps = async (apps_list, app_keys) => {
+    const { app_ma, app_wda, app_labels } = app_keys;
+  
+    if (apps_list.total > 0 && (app_ma.enable === true || app_wda.enable === true)) {
+      const appsItems = apps_list.items;
+      const appsLabels = app_labels.activate_labels;
+  
+      for (const label of appsLabels) {
+        const appExists = appsItems.some(item => item.name === label);
+  
+        if (appExists) {
+          await updateOrCreateExtApps(label, app_keys, 0);
+        } else {
+          await updateOrCreateExtApps(label, app_keys, 1);
+        }
+      }
+    } else if (apps_list.total === 0 && (app_ma.enable === true || app_wda.enable === true)) {
+      const appsLabels = app_labels.activate_labels;
+  
+      for (const label of appsLabels) {
+        await updateOrCreateExtApps(label, app_keys, 1);
+      }
+    } else {
+      console.log("Il n'y a pas d'app à configurer");
+    }
+  
+    setTimeout(() => {
+      const btnSubmit = document.getElementsByClassName("submit");
+      const btnBack = document.getElementsByClassName("backward");
+  
+      Array.from(btnSubmit).forEach(element => element.setAttribute('disabled', 'yes'));
+      Array.from(btnBack).forEach(element => element.setAttribute('disabled', 'yes'));
+  
+      document.getElementById("final-step-two").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
+      document.getElementById("final-step-three").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
+      document.getElementById("title_text").innerText = i18next.t('step3.finish');
+      document.getElementById("subtitle_text").innerText = "";
+      document.getElementById("template_info_text").innerText = "";
+      document.getElementById("main_question").innerText = i18next.t('step3.configuration');
+      jsConfetti.addConfetti({
+        confettiRadius: 4,
+        confettiNumber: 800,
+      });
+    }, 1500);
+  };
 
 //function update de niceselect
 export function create_nice_select($select, tag) {
@@ -494,23 +415,26 @@ export function create_nice_select($select, tag) {
     });
 }
 
-export function add_info_to_summary(data_keys) {
-    // creation des balises pour la page resumé
-    const check_before_send = document.getElementsByClassName("check_before_send")[0];
-    const check_before_send_app = document.getElementsByClassName("check_before_send_app")[0];
-    check_before_send.innerHTML = "<li><span class='font-weight-bold'> "+i18next.t('step3.step3_panel1_lang')+"</span> " + data_keys.locale.label + "</li>" +
-        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_codecs')+"</span> " + data_keys.codecs.label + "</li>" +
-        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_moh')+"</span> " + data_keys.moh.label + "</li>" +
-        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel1_nat')+"</span> " + ((data_keys.nat.label === 'yes') ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>";
-    check_before_send_app.innerHTML = "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_codecs')+"</span> " + data_keys.app_codecs.label + "</li>" +
-        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_apps_stun')+"</span> " + ((data_keys.app_wda.enable === "true") ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>" +
-        "<li><span class='font-weight-bold'>"+i18next.t('step3.step3_panel2_apps_turn')+"</span> " + ((data_keys.app_ma.enable === "true") ? i18next.t('global.yes') : i18next.t('global.no')) + "</li>";
-}
+const addInfoToSummary = (data_keys) => {
+    const { locale, codecs, moh, nat, app_codecs, app_wda, app_ma } = data_keys;
+    const checkBeforeSend = document.querySelector(".check_before_send");
+    const checkBeforeSendApp = document.querySelector(".check_before_send_app");
 
-
+    checkBeforeSend.innerHTML = `
+      <li><span class='font-weight-bold'>${i18next.t('step3.step3_panel1_lang')}</span> ${locale.label}</li>
+      <li><span class='font-weight-bold'>${i18next.t('step3.step3_panel1_codecs')}</span> ${codecs.label}</li>
+      <li><span class='font-weight-bold'>${i18next.t('step3.step3_panel1_moh')}</span> ${moh.label}</li>
+      <li><span class='font-weight-bold'>${i18next.t('step3.step3_panel1_nat')}</span> ${nat.label === 'yes' ? i18next.t('global.yes') : i18next.t('global.no')}</li>
+    `;
+  
+    checkBeforeSendApp.innerHTML = `
+      <li><span class='font-weight-bold'>${i18next.t('step3.step3_panel2_codecs')}</span> ${app_codecs.label}</li>
+      <li><span class='font-weight-bold'>${i18next.t('step3.step3_panel2_apps_stun')}</span> ${app_wda.enable ? i18next.t('global.yes') : i18next.t('global.no')}</li>
+      <li><span class='font-weight-bold'>${i18next.t('step3.step3_panel2_apps_turn')}</span> ${app_ma.enable ? i18next.t('global.yes') : i18next.t('global.no')}</li>
+    `;
+};
+  
 //END FUNCTIONS
-
-
 tippy('[data-tippy-content]', {
     // trigger: 'click focus',
     placement: 'left-start',
@@ -518,130 +442,112 @@ tippy('[data-tippy-content]', {
 });
 
 // BOUTON TEMPLATE SAVE EVENEMENT SUR CLICK
-export const template_keys = {
+const template_keys = {
     'template_enable': null
 };
-for (let element of btn_template) {
-    element.addEventListener("click", function(e) {
-        e.preventDefault;
-        let template_enable;
-        let codecs = {
-            'sip_value': [],
-            'label': []
-        };
-        let locales = {
-            'sip_value': [],
-            'label': []
-        };
-        let moh = {
-            'sip_value': [],
-            'label': []
-        };
-        let nat = {
-            'sip_value': [],
-            'label': []
-        };
-        let app_codecs = {
-            'sip_value': [],
-            'label': [],
-            'video': []
-        };
-        let app_labels = {
-            'activate_labels': []
-        };
-        let app_wda = {
-            'enable': [],
-            'label_web': [],
-            'label_desktop': [],
-            'server_stun_wda': [],
-            'server_port_stun_wda': []
-        };
-        let app_ma = {
-            'enable': [],
-            'label': [],
-            'server_turn_ma': [],
-            'server_port_turn_ma': [],
-            'server_username_turn_ma': [],
-            'server_password_turn_ma': []
-        };
-        // recupere si template enable 
-        $('.flexSwitchCheckEnableTemplate.form-check-input[type=checkbox]').each(function() {
-            if (jQuery(this).is(":checked")) {
-                template_enable = 'yes'
-            } else {
-                template_enable = 'no'
-            }
-        });
-
-        // recuperer elements dans la ckeckbox codecs
-        $('#template_codec_activable input[type=checkbox]:checked').each(function() {
-            if (jQuery(this).is(":checked")) {
-                codecs.sip_value.push($(this).val());
-                // codecs.label += this.dataset.label + " ";
-            }
-        });
-        $('#template_codec_activable_webrtc input[type=checkbox]:checked').each(function() {
-            if (jQuery(this).is(":checked")) {
-                app_codecs.sip_value.push($(this).val());
-                // app_codecs.label += this.dataset.label + " ";
-            }
-        });
-        // recupere si video enable webrtc
-        app_codecs.video = document.getElementById("template_active_codec_video_enable").checked;
-
-        // recuperer elements dans le select locales
-        $('.template_locales.selected').each(function() {
-            locales.sip_value += this.dataset.value;
-            locales.label += $(this).text();
-        });
-        // recuperer elements dans le select moh
-        // $('.moh.selected').each(function() {
-        //     moh.sip_value += this.dataset.value;
-        //     moh.label += $(this).text();
-        // })
-        // recuperer elements dans le select nat 
-        let template_nat_tenant = document.getElementById("template_nat_tenant").checked;
-        if (template_nat_tenant == true) {
-            nat.sip_value += 'rtp_symmetric,rewrite_contact';
-            nat.label += 'yes';
-        } else {
-            nat.sip_value += 'rtp_symmetric,rewrite_contact';
-            nat.label += 'no';
-        }
-
-        let template_active_stun_wda = document.getElementById("template_active_stun_wda").checked;
-        app_wda.enable += template_active_stun_wda;
-        (template_active_stun_wda) ? app_labels.activate_labels.push("wazo-euc-application-web", "wazo-euc-application-desktop"): "";
-        app_wda.server_stun_wda += $("input[name='template_server_stun_wda']").val();
-        app_wda.server_port_stun_wda += $("input[name='template_server_port_stun_wda']").val();
-
-        let template_active_turn_ma = document.getElementById("template_active_turn_ma").checked;
-        app_ma.enable += template_active_turn_ma;
-        (template_active_turn_ma) ? app_labels.activate_labels.push("wazo-euc-application-mobile"): "";
-        app_ma.server_turn_ma += $("input[name='template_server_turn_ma']").val();
-        app_ma.server_port_turn_ma += $("input[name='template_server_port_turn_ma']").val();
-        app_ma.server_username_turn_ma += $("input[name='template_server_username_turn_ma']").val();
-        app_ma.server_password_turn_ma += $("input[name='template_server_password_turn_ma']").val();
-
-        // creation du fichier json 
-        template_keys.template_enable = template_enable;
-        template_keys.codecs = codecs;
-        template_keys.locale = locales;
-        // template_keys.keys.moh = moh;
-        template_keys.nat = nat;
-        template_keys.app_labels = app_labels;
-        template_keys.app_codecs = app_codecs;
-        template_keys.app_ma = app_ma;
-        template_keys.app_wda = app_wda;
-        // console.log(template_keys);
-        localStorage.setItem('template_keys', JSON.stringify(template_keys))
-        // Refresh the page
-        location.reload();
-    })
-}
-
+btn_template.forEach(element => {
+    element.addEventListener("click", e => {
+      e.preventDefault();
+  
+      let template_enable;
+      const codecs = {
+        sip_value: [],
+        label: []
+      };
+      const locales = {
+        sip_value: [],
+        label: []
+      };
+      const nat = {
+        sip_value: [],
+        label: []
+      };
+      const app_codecs = {
+        sip_value: [],
+        label: [],
+        video: []
+      };
+      const app_labels = {
+        activate_labels: []
+      };
+      const app_wda = {
+        enable: [],
+        label_web: [],
+        label_desktop: [],
+        server_stun_wda: [],
+        server_port_stun_wda: []
+      };
+      const app_ma = {
+        enable: [],
+        label: [],
+        server_turn_ma: [],
+        server_port_turn_ma: [],
+        server_username_turn_ma: [],
+        server_password_turn_ma: []
+      };
+  
+      // Récupérer si template est activé
+      template_enable = $('.flexSwitchCheckEnableTemplate.form-check-input[type=checkbox]').is(":checked") ? 'yes' : 'no';
+  
+      // Récupérer les codecs activés
+      $('#template_codec_activable input[type=checkbox]:checked').each(function() {
+        codecs.sip_value.push($(this).val());
+      });
+      $('#template_codec_activable_webrtc input[type=checkbox]:checked').each(function() {
+        app_codecs.sip_value.push($(this).val());
+      });
+      app_codecs.video = document.getElementById("template_active_codec_video_enable").checked;
+  
+      // Récupérer les locales sélectionnées
+      $('.template_locales.selected').each(function() {
+        locales.sip_value.push(this.dataset.value);
+        locales.label.push($(this).text());
+      });
+  
+      // Récupérer l'état NAT
+      nat.sip_value = 'rtp_symmetric,rewrite_contact';
+      nat.label = document.getElementById("template_nat_tenant").checked ? 'yes' : 'no';
+  
+      // Récupérer l'état STUN WDA
+      app_wda.enable = document.getElementById("template_active_stun_wda").checked;
+      if (app_wda.enable) {
+        console.log("état STUN WDA : "+app_wda.enable);
+        
+        app_labels.activate_labels.push("wazo-euc-application-web", "wazo-euc-application-desktop");
+      }
+      app_wda.server_stun_wda = $("input[name='template_server_stun_wda']").val();
+      app_wda.server_port_stun_wda = $("input[name='template_server_port_stun_wda']").val();
+  
+      // Récupérer l'état TURN MA
+      app_ma.enable = document.getElementById("template_active_turn_ma").checked;
+      if (app_ma.enable) {
+        app_labels.activate_labels.push("wazo-euc-application-mobile");
+      }
+      app_ma.server_turn_ma = $("input[name='template_server_turn_ma']").val();
+      app_ma.server_port_turn_ma = $("input[name='template_server_port_turn_ma']").val();
+      app_ma.server_username_turn_ma = $("input[name='template_server_username_turn_ma']").val();
+      app_ma.server_password_turn_ma = $("input[name='template_server_password_turn_ma']").val();
+  
+      // Création de l'objet JSON
+      const template_keys = {
+        template_enable,
+        codecs,
+        locale: locales,
+        nat,
+        app_labels,
+        app_codecs,
+        app_ma,
+        app_wda
+      };
+  
+      // Stocker dans le localStorage et recharger la page
+      localStorage.setItem('template_keys', JSON.stringify(template_keys));
+      location.reload();
+    });
+  });
+  
 // BOUTON SUIVANT EVENEMENT SUR CLICK
-export const dkeys = {
+const dkeys = {
     'codecs': [],
     'locale': [],
     'moh': [],
@@ -650,145 +556,172 @@ export const dkeys = {
     'app_wda': [],
     'app_ma': []
 };
-for (let element of btn_next) {
-    element.addEventListener("click", function(e) {
-        e.preventDefault;
-        //errors//
-        document.getElementById('warning_title').innerHTML = i18next.t('error.warning_title');
-        document.getElementById('warning_text').innerHTML = i18next.t('error.warning_text_domain');
-        // VERIFICATION DE DOMAINE SAISI pour future version
-        // let getstate = document.getElementById("location");
-        // let state = getstate.getAttribute('data-state')
-        // let el = $("input[name='server_turn_ma']").val();
-        // let re = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/;
-        // if (state == 2) {
-        //   if (re.test(el)) {
-        //     console.log(true);
-        //   }else{
-        //     console.log(false);
-        //     let myModal = new bootstrap.Modal(document.getElementById('warning-modal'), {
-        //       keyboard: false
-        //     })
-        //     myModal.show();
-        //   }
-        // }
+btn_next.forEach(element => {
+  element.addEventListener("click", e => {
+    e.preventDefault();
+    console.log(dkeys);
+    
+    // Gestion des erreurs
+    document.getElementById('warning_title').innerHTML = i18next.t('error.warning_title');
+    document.getElementById('warning_text').innerHTML = i18next.t('error.warning_text_domain');
 
+    // Initialisation des objets
+    let codecs = {
+      sip_value: "!all",  // Commence directement avec une chaîne
+      label: ""
+    };
+    let locales = {
+      sip_value: "",  // Une seule valeur pour locale
+      label: ""
+    };
+    let moh = {
+      sip_value: "",  // Une seule valeur pour moh
+      label: ""
+    };
+    let nat = {
+      sip_value: "",
+      label: ""
+    };
+    let app_codecs = {
+      sip_value: "!all",  // Commence directement avec une chaîne
+      label: ""
+    };
+    let app_labels = {
+      activate_labels: []  // Tableau pour stocker les labels
+    };
+    let app_wda = {
+      enable: false,
+      server_stun_wda: "",
+      server_port_stun_wda: ""
+    };
+    let app_ma = {
+      enable: false,
+      server_turn_ma: "",
+      server_port_turn_ma: "",
+      server_username_turn_ma: "",
+      server_password_turn_ma: ""
+    };
 
-        let codecs = {
-            'sip_value': ["!all"],
-            'label': []
-        };
-        let locales = {
-            'sip_value': [],
-            'label': []
-        };
-        let moh = {
-            'sip_value': [],
-            'label': []
-        };
-        let nat = {
-            'sip_value': [],
-            'label': []
-        };
-        let app_codecs = {
-            'sip_value': ["!all"],
-            'label': []
-        };
-        let app_labels = {
-            'activate_labels': []
-        };
-        let app_wda = {
-            'enable': [],
-            'label_web': [],
-            'label_desktop': [],
-            'server_stun_wda': [],
-            'server_port_stun_wda': []
-        };
-        let app_ma = {
-            'enable': [],
-            'label': [],
-            'server_turn_ma': [],
-            'server_port_turn_ma': [],
-            'server_username_turn_ma': [],
-            'server_password_turn_ma': []
-        };
-        // recuperer elements dans la ckeckbox codecs
-        $('#codec_activable input[type=checkbox]:checked').each(function() {
-            if (jQuery(this).is(":checked")) {
-                codecs.sip_value += "," + $(this).val();
-                codecs.label += this.dataset.label + " ";
-            }
-        });
-        $('#codec_activable_webrtc input[type=checkbox]:checked').each(function() {
-            if (jQuery(this).is(":checked")) {
-                app_codecs.sip_value += "," + $(this).val();
-                app_codecs.label += this.dataset.label + " ";
-            }
-        });
+    // Récupérer les codecs activés
+    const codecValues = [];
+    const codecLabels = [];
+    document.querySelectorAll('#codec_activable input[type=checkbox]:checked').forEach(checkbox => {
+      codecValues.push(checkbox.value);
+      codecLabels.push(checkbox.dataset.label);
+    });
 
-        // recuperer elements dans le select locales
-        $('.locales.selected').each(function() {
-            locales.sip_value += this.dataset.value;
-            locales.label += $(this).text();
-        });
-        // recuperer elements dans le select moh
-        $('.moh.selected').each(function() {
-            moh.sip_value += this.dataset.value;
-            moh.label += $(this).text();
-        })
-        // recuperer elements dans le select nat 
-        let nat_tenant = document.getElementById("nat_tenant").checked;
-        if (nat_tenant == true) {
-            nat.sip_value += 'rtp_symmetric,rewrite_contact';
-            nat.label += 'yes';
-        } else {
-            nat.sip_value += 'rtp_symmetric,rewrite_contact';
-            nat.label += 'no';
-        }
+    // Si `sip_value` contient déjà une valeur, on la concatène avec une virgule
+    if (codecValues.length > 0) {
+      codecs.sip_value += `,${codecValues.join(',')}`;
+    }
+    // Concatène les labels s'il y a plusieurs valeurs
+    codecs.label = codecLabels.join(', ');
 
-        let active_stun_wda = document.getElementById("active_stun_wda").checked;
-        app_wda.enable += active_stun_wda;
-        (active_stun_wda) ? app_labels.activate_labels.push("wazo-euc-application-web", "wazo-euc-application-desktop"): "";
-        app_wda.server_stun_wda += $("input[name='server_stun_wda']").val();
-        app_wda.server_port_stun_wda += $("input[name='server_port_stun_wda']").val();
+    // Récupérer les codecs activés pour WebRTC
+    const appCodecValues = [];
+    const appCodecLabels = [];
+    document.querySelectorAll('#codec_activable_webrtc input[type=checkbox]:checked').forEach(checkbox => {
+      appCodecValues.push(checkbox.value);
+      appCodecLabels.push(checkbox.dataset.label);
+    });
 
-        let active_turn_ma = document.getElementById("active_turn_ma").checked;
-        app_ma.enable += active_turn_ma;
-        (active_turn_ma) ? app_labels.activate_labels.push("wazo-euc-application-mobile"): "";
-        app_ma.server_turn_ma += $("input[name='server_turn_ma']").val();
-        app_ma.server_port_turn_ma += $("input[name='server_port_turn_ma']").val();
-        app_ma.server_username_turn_ma += $("input[name='server_username_turn_ma']").val();
-        app_ma.server_password_turn_ma += $("input[name='server_password_turn_ma']").val();
+    // Si `sip_value` contient déjà des valeurs, on ajoute une virgule pour les nouvelles valeurs
+    if (appCodecValues.length > 0) {
+      app_codecs.sip_value += (app_codecs.sip_value ? ',' : '') + appCodecValues.join(',');
+    }
 
-        // creation du fichier json 
-        dkeys.codecs = codecs;
-        dkeys.locale = locales;
-        dkeys.moh = moh;
-        dkeys.nat = nat;
-        dkeys.app_labels = app_labels;
-        dkeys.app_codecs = app_codecs;
-        dkeys.app_ma = app_ma;
-        dkeys.app_wda = app_wda;
-        // // console.log(dkeys);
+    // Concatène les labels s'il y a plusieurs valeurs
+    app_codecs.label = appCodecLabels.join(', ');
 
-        add_info_to_summary(dkeys);
-    })
-}
+    // Récupérer l'élément locale (une seule valeur)
+    const localeElement = document.querySelector('.locales.selected');
+    if (localeElement) {
+      locales.sip_value = localeElement.dataset.value;  // Directement assigné sans boucle
+      locales.label = localeElement.textContent;        // Directement assigné sans boucle
+    }
+
+    // Récupérer l'élément MOH (une seule valeur)
+    const mohElement = document.querySelector('.moh.selected');
+    if (mohElement) {
+      moh.sip_value = mohElement.dataset.value;  // Directement assigné sans boucle
+      moh.label = mohElement.textContent;        // Directement assigné sans boucle
+    }
+
+    // Récupérer l'état NAT
+    const nat_tenant = document.getElementById("nat_tenant").checked;
+    nat.sip_value = 'rtp_symmetric,rewrite_contact';
+    nat.label = nat_tenant ? 'yes' : 'no';
+
+    // Récupérer l'état STUN WDA
+    const active_stun_wda = document.getElementById("active_stun_wda").checked;
+    app_wda.enable = active_stun_wda;
+    if (active_stun_wda) {
+      app_labels.activate_labels.push("wazo-euc-application-web", "wazo-euc-application-desktop");
+    }
+
+    const stunWdaElement = document.querySelector("input[name='server_stun_wda']");
+    const stunPortElement = document.querySelector("input[name='server_port_stun_wda']");
+    if (stunWdaElement) {
+      app_wda.server_stun_wda = stunWdaElement.value;
+    }
+    if (stunPortElement) {
+      app_wda.server_port_stun_wda = stunPortElement.value;
+    }
+
+    // Récupérer l'état TURN MA
+    const active_turn_ma = document.getElementById("active_turn_ma").checked;
+    app_ma.enable = active_turn_ma;
+    if (active_turn_ma) {
+      app_labels.activate_labels.push("wazo-euc-application-mobile");
+    }
+
+    const turnMaElement = document.querySelector("input[name='server_turn_ma']");
+    const portTurnMaElement = document.querySelector("input[name='server_port_turn_ma']");
+    const usernameTurnMaElement = document.querySelector("input[name='server_username_turn_ma']");
+    const passwordTurnMaElement = document.querySelector("input[name='server_password_turn_ma']");
+
+    if (turnMaElement) {
+      app_ma.server_turn_ma = turnMaElement.value;
+    }
+    if (portTurnMaElement) {
+      app_ma.server_port_turn_ma = portTurnMaElement.value;
+    }
+    if (usernameTurnMaElement) {
+      app_ma.server_username_turn_ma = usernameTurnMaElement.value;
+    }
+    if (passwordTurnMaElement) {
+      app_ma.server_password_turn_ma = passwordTurnMaElement.value;
+    }
+
+    // Création du fichier JSON
+    dkeys.codecs = codecs;
+    dkeys.locale = locales;
+    dkeys.moh = moh;
+    dkeys.nat = nat;
+    dkeys.app_labels = app_labels;
+    dkeys.app_codecs = app_codecs;
+    dkeys.app_ma = app_ma;
+    dkeys.app_wda = app_wda;
+
+    // Appel à la fonction pour ajouter les infos au résumé
+    addInfoToSummary(dkeys);
+  });
+});
 
 // BOUTON ENREGISTRER EVENEMENT SUR CLICK
-for (let element of btn_submit) {
-    element.addEventListener("click", function(e) {
-        update_sip_template_endpoint(dkeys)
-    })
-}
+btn_submit.forEach(element => {
+    element.addEventListener("click", e => {
+      updateSipTemplateEndpoint(dkeys);
+    });
+});
 
 // TEMPLATE BTN SUPPR
-for (let element of btn_template_remove) {
-    element.addEventListener("click", function() {
-        localStorage.removeItem('template_keys');
-        location.reload();
-    })
-}
+btn_template_remove.forEach(element => {
+    element.addEventListener("click", () => {
+      localStorage.removeItem('template_keys');
+      location.reload();
+    });
+  });
 
 // changement codec pour video 
 btn_active_codec.addEventListener("change", function() {
@@ -806,48 +739,93 @@ btn_template_active_codec.addEventListener("change", function() {
 
 })
 btn_template_active_template.addEventListener("change", function() {
-    (btn_template_active_template.checked == false) ?
-    document.getElementById("flexSwitchCheckEnableTemplate_label").classList.add("text-danger", "fw-bold"):
-        document.getElementById("flexSwitchCheckEnableTemplate_label").classList.remove("text-danger", "fw-bold");
+  const label = document.getElementById("flexSwitchCheckEnableTemplate_label");
+  btn_template_active_template.checked 
+    ? label.classList.remove("text-danger", "fw-bold")
+    : label.classList.add("text-danger", "fw-bold");
 })
+// Changement état STUN
+// Fonction pour montrer un élément avec une transition fluide
+const showElement = (el) => {
+    el.style.visibility = "visible"; // Rendre l'élément visible
+    el.style.opacity = "0"; // Commencer avec une opacité à 0 pour l'animation
+    el.style.height = "0"; // Commencer avec une hauteur à 0
+    el.style.overflow = "hidden"; // Empêcher le contenu de déborder
+    el.classList.remove('hide'); // Supprimer la classe 'hide' si présente
 
-// changement etat select stun 
-for (let element_stun of btn_stun) {
-    let server_stun_wda = document.getElementsByName("server_stun_wda");
-    let server_port_stun_wda = document.getElementsByName("server_port_stun_wda");
-    element_stun.onchange = () => {
-        for (let box_server_stun_wda of server_stun_wda) {
-            box_server_stun_wda.classList.toggle("required");
-        }
-        for (let box_server_port_stun_wda of server_port_stun_wda) {
-            box_server_port_stun_wda.classList.toggle("required");
-        }
-        $(".server_stun_wda, .server_port_stun_wda").toggle('show');
-    }
+    // Lancer la transition
+    setTimeout(() => {
+        el.style.height = el.scrollHeight + "px"; // Ajuster la hauteur pour l'animation
+        el.style.opacity = "1"; // Faire apparaître l'élément
+    }, 10); // Petit délai pour démarrer la transition
+
+    // Après la transition, restaurer la hauteur auto
+    setTimeout(() => {
+        el.style.height = "auto"; // Restaurer la hauteur auto pour les ajustements dynamiques
+    }, 500); // Correspond à la durée de la transition CSS
 }
 
-// changement etat select turn 
-for (let element_turn of btn_turn) {
-    let server_turn_ma = document.getElementsByName("server_turn_ma");
-    let server_port_turn_ma = document.getElementsByName("server_port_turn_ma");
-    let server_username_turn_ma = document.getElementsByName("server_username_turn_ma");
-    let server_password_turn_ma = document.getElementsByName("server_password_turn_ma");
-    element_turn.onchange = () => {
-        for (let box_server_turn_ma of server_turn_ma) {
-            box_server_turn_ma.classList.toggle("required");
-        }
-        for (let box_server_port_turn_ma of server_port_turn_ma) {
-            box_server_port_turn_ma.classList.toggle("required");
-        }
-        for (let box_server_username_turn_ma of server_username_turn_ma) {
-            box_server_username_turn_ma.classList.toggle("required");
-        }
-        for (let box_server_password_turn_ma of server_password_turn_ma) {
-            box_server_password_turn_ma.classList.toggle("required");
-        }
-        $(".server_turn_ma, .server_port_turn_ma, .server_username_turn_ma, .server_password_turn_ma").toggle('show');
-    }
+// Fonction pour masquer un élément avec une transition fluide
+const hideElement = (el) => {
+    el.style.height = el.scrollHeight + "px"; // Définir la hauteur actuelle avant la transition
+    el.style.opacity = "1"; // Assurer que l'opacité est au maximum
+    el.style.overflow = "hidden"; // Gérer le débordement de contenu
+
+    // Lancer la transition
+    setTimeout(() => {
+        el.style.height = "0"; // Réduire la hauteur pour cacher l'élément
+        el.style.opacity = "0"; // Réduire l'opacité pour l'animation
+    }, 10);
+
+    // Cacher l'élément après la transition
+    setTimeout(() => {
+        el.style.visibility = "hidden"; // Cacher complètement l'élément
+        el.classList.add('hide'); // Ajouter la classe 'hide' après la transition
+    }, 500); // Durée de la transition
 }
+
+btn_stun.forEach(element_stun => {
+    const server_stun_wda = document.getElementsByName("server_stun_wda");
+    const server_port_stun_wda = document.getElementsByName("server_port_stun_wda");
+
+    element_stun.addEventListener("change", () => {
+        const isChecked = element_stun.checked; // Vérifier l'état de la checkbox
+      [...server_stun_wda].forEach(box => box.classList.toggle("required"));
+      [...server_port_stun_wda].forEach(box => box.classList.toggle("required"));
+      document.querySelectorAll(".server_stun_wda, .server_port_stun_wda").forEach(el => 
+      {
+        if (isChecked) {
+            showElement(el); // Appeler la fonction pour montrer l'élément
+        } else {
+            hideElement(el); // Appeler la fonction pour masquer l'élément
+        }
+      });
+    });
+});
+  
+// Changement état TURN
+btn_turn.forEach(element_turn => {
+    const server_turn_ma = document.getElementsByName("server_turn_ma");
+    const server_port_turn_ma = document.getElementsByName("server_port_turn_ma");
+    const server_username_turn_ma = document.getElementsByName("server_username_turn_ma");
+    const server_password_turn_ma = document.getElementsByName("server_password_turn_ma");
+
+    element_turn.addEventListener("change", () => {
+        const isChecked = element_turn.checked; // Vérifier l'état de la checkbox
+        [...server_turn_ma].forEach(box => box.classList.toggle("required"));
+        [...server_port_turn_ma].forEach(box => box.classList.toggle("required"));
+        [...server_username_turn_ma].forEach(box => box.classList.toggle("required"));
+        [...server_password_turn_ma].forEach(box => box.classList.toggle("required"));
+        document.querySelectorAll(".server_turn_ma, .server_port_turn_ma, .server_username_turn_ma, .server_password_turn_ma").forEach(el => 
+        {
+            if (isChecked) {
+                showElement(el); // Appeler la fonction pour montrer l'élément
+            } else {
+                hideElement(el); // Appeler la fonction pour masquer l'élément
+            }
+        });
+    });
+});
 
 
 // BASE : on regarde si le type admin possède les ACL pour charger les éléments.
@@ -924,18 +902,18 @@ const get_admin_type = () => {
         
                 document.getElementById("template_active_codec_video_enable").checked = template.app_codecs.video;
                 //WDA Template
-                document.getElementById("template_active_stun_wda").checked = (template.app_wda.enable === 'true'); //boolean value
+                document.getElementById("template_active_stun_wda").checked = (template.app_wda.enable === true); //boolean value
                 document.getElementsByName("template_server_stun_wda")[0].value = template.app_wda.server_stun_wda;
                 document.getElementsByName("template_server_port_stun_wda")[0].value = template.app_wda.server_port_stun_wda;
                 //MA Template
-                document.getElementById("template_active_turn_ma").checked = (template.app_ma.enable === 'true'); //boolean value
+                document.getElementById("template_active_turn_ma").checked = (template.app_ma.enable === true); //boolean value
                 document.getElementsByName("template_server_turn_ma")[0].value = template.app_ma.server_turn_ma;
                 document.getElementsByName("template_server_port_turn_ma")[0].value = template.app_ma.server_port_turn_ma;
                 document.getElementsByName("template_server_username_turn_ma")[0].value = template.app_ma.server_username_turn_ma;
                 document.getElementsByName("template_server_password_turn_ma")[0].value = template.app_ma.server_password_turn_ma;
                 //NAT Template
                 let template_nat_tenant = document.getElementById("template_nat_tenant");
-                (template.nat.sip_value == 'rtp_symmetric,rewrite_contact') ? template_nat_tenant.checked = true: template_nat_tenant.checked = false;
+                (template.nat.label === 'yes') ? template_nat_tenant.checked = true: template_nat_tenant.checked = false;
         
                 if (template.template_enable == 'yes') {
                     // console.log('template actif')
@@ -951,12 +929,13 @@ const get_admin_type = () => {
                     document.getElementById("active_codec_video_enable").checked = template.app_codecs.video;
         
                     //NAT Wizard
+                    // let nat_tenant = document.getElementById("nat_tenant");
                     let nat_tenant = document.getElementById("nat_tenant");
-                    (template.nat.sip_value == 'rtp_symmetric,rewrite_contact') ? nat_tenant.checked = true: nat_tenant.checked = false;
+                    (template.nat.label === 'yes') ? nat_tenant.checked = true : nat_tenant.checked = false;
         
         
                     //WDA Wizard
-                    document.getElementById("active_stun_wda").checked = (template.app_wda.enable === 'true'); //boolean value
+                    document.getElementById("active_stun_wda").checked = (template.app_wda.enable === true); //boolean value
                     document.getElementsByName("server_stun_wda")[0].value = template.app_wda.server_stun_wda;
                     document.getElementsByName("server_port_stun_wda")[0].value = template.app_wda.server_port_stun_wda;
                     //WDA Wizard cache zone WDA
@@ -965,12 +944,15 @@ const get_admin_type = () => {
                         let server_port_stun_wda = document.getElementsByName("server_port_stun_wda")[0];
                         server_stun_wda.classList.toggle("required");
                         server_port_stun_wda.classList.toggle("required");
-                        $(".server_stun_wda, .server_port_stun_wda").toggle('show');
+                        // ajouter 'hide', pour cacher l'element
+                        document.querySelectorAll(".server_stun_wda, .server_port_stun_wda").forEach(el => {
+                                el.classList.add('hide'); 
+                        });
                     }
         
         
                     // MA Wizard
-                    document.getElementById("active_turn_ma").checked = (template.app_ma.enable === 'true'); //boolean value
+                    document.getElementById("active_turn_ma").checked = (template.app_ma.enable === true); //boolean value
                     document.getElementsByName("server_turn_ma")[0].value = template.app_ma.server_turn_ma;
                     document.getElementsByName("server_port_turn_ma")[0].value = template.app_ma.server_port_turn_ma;
                     document.getElementsByName("server_username_turn_ma")[0].value = template.app_ma.server_username_turn_ma;
@@ -985,7 +967,9 @@ const get_admin_type = () => {
                         server_port_turn_ma.classList.toggle("required");
                         server_username_turn_ma.classList.toggle("required");
                         server_password_turn_ma.classList.toggle("required");
-                        $(".server_turn_ma, .server_port_turn_ma, .server_username_turn_ma, .server_password_turn_ma").toggle('show');
+                        document.querySelectorAll(".server_turn_ma, .server_port_turn_ma, .server_username_turn_ma, .server_password_turn_ma").forEach(el => {
+                                el.classList.add('hide'); // Si l'élément est caché au départ, ajouter 'hide'
+                        });
                     }
         
                 } else {
