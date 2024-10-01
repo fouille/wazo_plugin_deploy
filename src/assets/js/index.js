@@ -38,6 +38,7 @@ export let template_sip_global_data_uuid = "";
 export let template_sip_webrtc_data_uuid = "";
 export let apps_list = "";
 export let host;
+let port;
 export let tenant_uuid;
 export let token_session;
 let template;
@@ -244,7 +245,7 @@ const updateSipTemplateEndpoint = async (keys) => {
     };
   
     try {
-      const response = await fetch(`${host}${apiConfdSipTempGlobalPut}${template_sip_global_data_uuid}`, putOptions);
+      const response = await fetch(`${host}:${port}${apiConfdSipTempGlobalPut}${template_sip_global_data_uuid}`, putOptions);
       if (response && (response.status === 204 || response.ok)) {
         await updateSipTemplateWebrtcEndpoint(keys);
       } else {
@@ -278,7 +279,7 @@ const updateSipTemplateWebrtcEndpoint = async (pkeys) => {
     };
   
     try {
-      const response = await fetch(`${host}${apiConfdSipTempGlobalPut}${template_sip_webrtc_data_uuid}`, putOptions);
+      const response = await fetch(`${host}:${port}${apiConfdSipTempGlobalPut}${template_sip_webrtc_data_uuid}`, putOptions);
       if (response && (response.status === 204 || response.ok)) {
         document.getElementById('final-step-one').innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
         updateApps(apps_list, pkeys);
@@ -326,7 +327,7 @@ const putOptions = {
 };
 
 try {
-    const response = await fetch(`${host}${apiConfdSipTempGlobalPut}`, putOptions);
+    const response = await fetch(`${host}:${port}${apiConfdSipTempGlobalPut}`, putOptions);
     if (response && (response.status === 204 || response.ok)) {
     console.log(`${name}: OK`);
     } else {
@@ -833,9 +834,10 @@ const get_admin_type = () => {
     (async () => {
         await app.initialize();
         const context = app.getContext();
-        // console.log(context);
+        console.log(context);
         tenant_uuid = context.app.extra.tenant;
         host = 'https://' + context.app.extra.stack.host;
+        port = context.app.extra.stack.port;
         token_session = context.app.extra.stack.session.token;
     
         const options = {
@@ -871,15 +873,15 @@ const get_admin_type = () => {
             const api_confd_apps_get = '/api/confd/1.1/external/apps?recurse=false';
         
             // appel api pour connaitre le nom du tenant et lexposer dans la page d'accueil
-            const client_site_name = await fetch(host + api_auth_tenant_read, options).then(response => response.json());
+            const client_site_name = await fetch(host + ':' + port + api_auth_tenant_read, options).then(response => response.json());
             // appel api pour lister le template SIP Global et exposer les variables dans la page d'accueil 
-            const template_sip_global_data = await fetch(host + api_confd_sip_temp_global_get, options).then(response => response.json());
+            const template_sip_global_data = await fetch(host + ':'  + port + api_confd_sip_temp_global_get, options).then(response => response.json());
             // appel api pour lister le template SIP WEBRTC et exposer les variables dans la page d'accueil 
-            const template_sip_webrtc_data = await fetch(host + api_confd_sip_temp_webrtc_get, options).then(response => response.json());
+            const template_sip_webrtc_data = await fetch(host + ':'  + port + api_confd_sip_temp_webrtc_get, options).then(response => response.json());
             // appel api pour lister les noms et uuid des musiques dattente
-            const moh_list = await fetch(host + api_confd_moh, options).then(response => response.json());
+            const moh_list = await fetch(host + ':'  + port + api_confd_moh, options).then(response => response.json());
             // appel api pour liste les configuration dapp existante
-            apps_list = await fetch(host + api_confd_apps_get, options).then(response => response.json());
+            apps_list = await fetch(host + ':'  + port + api_confd_apps_get, options).then(response => response.json());
             // // console.log(apps_list);
         
             // traitement si configuration app existe pour affichage sur page accueil
