@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
@@ -9,6 +10,7 @@ const miniSVGDataURI = require('mini-svg-data-uri');
 const isProduction = process.env.NODE_ENV == 'production';
 const titleHTML = (process.env.NODE_ENV == "production") ? "Wizard Configuration" : "BETA Wizard Configuration";
 const PlausState = (process.env.NODE_ENV == "production") ? "" : "beta--";
+const choiceManifest = (process.env.NODE_ENV == "production") ? "./src/manifest.json" : "./src/manifest.dev.json";
 
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 
@@ -74,17 +76,18 @@ const config = {
                 customScript: `<script defer="defer" data-domain="${PlausState}wazo-plugin-deploy.netlify.app" data-api="/lapetiteroute/api/event" src="/lapetiteroute/js/script.js"></script>`,
             }
         }),
-
+        
         new CopyPlugin({
             
             patterns: [
                 {
-                    from: "./src/manifest.json",
+                    
+                    from: `${choiceManifest}`,
                     globOptions: {
                         dot: true,
                         gitignore: true,
                     },
-                    to: "./"
+                    to: "./manifest.json"
                 },
                 {
                     from: "./src/assets/css",
