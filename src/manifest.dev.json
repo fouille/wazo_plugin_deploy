@@ -1,0 +1,29 @@
+{
+    "manifestVersion": "0.1",
+    "version": "1.1.02",
+    "id": "fmw-wazo-plugin-deploy",
+    "packageName": "io.wazo.portal.pbx-dashboard",
+    "productType": "portal",
+    "name" : {
+      "short": "BETA | Plugin de configuration",
+      "full": "BETA | Plugin de configuration pour les sites déployés"
+    },
+    "developer": {
+      "name": "FMW"
+    },
+    "description": {
+      "short": "BETA | Plugin de configuration pour les sites",
+      "full": "BETA | Plugin de configuration pour les sites déployés afin de simplifier la mise en production d'un site client."
+    },
+    "icons": {
+      "color": "https://avatars.githubusercontent.com/u/68688703?s=200&v=4"
+    },
+    "staticTabs": [
+      {
+        "entityId": "stack-dashboard-config",
+        "context": ["generalPbxTab"],
+        "name": "BETA | Wizard",
+        "contentUrl": "./index.html"
+      }
+    ]
+  }
