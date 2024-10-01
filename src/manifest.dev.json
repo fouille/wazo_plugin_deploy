@@ -22,7 +22,7 @@
       {
         "entityId": "stack-dashboard-config",
         "context": ["generalPbxTab"],
-        "name": "Wizard Configuration",
+        "name": "BETA | Wizard",
         "contentUrl": "./index.html"
       }
     ]
