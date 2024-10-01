@@ -36,3 +36,22 @@
         display: none;
     }
 }
+
+.server_stun_wda,
+.server_port_stun_wda,
+.server_turn_ma,
+.server_port_turn_ma,
+.server_username_turn_ma,
+.server_password_turn_ma {
+    transition: height 0.5s ease, opacity 0.5s ease;
+    overflow: hidden;
+    height: auto; /* Fixer la hauteur initiale */
+    opacity: 1;   /* Opacité pleine par défaut */
+    visibility: visible; /* Visible par défaut */
+}
+
+.hide {
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
