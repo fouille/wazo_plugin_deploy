@@ -20,7 +20,7 @@
     },
     "staticTabs": [
       {
-        "entityId": "stack-dashboard-config",
+        "entityId": "stack-dashboard-deployPlugin-beta",
         "context": ["generalPbxTab"],
         "name": "BETA | Wizard",
         "contentUrl": "./index.html"

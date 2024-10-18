@@ -488,7 +488,7 @@ btn_template.forEach(element => {
       };
   
       // Récupérer si template est activé
-      template_enable = $('.flexSwitchCheckEnableTemplate.form-check-input[type=checkbox]').is(":checked") ? 'yes' : 'no';
+      template_enable = $('.flexSwitchCheckEnableTemplate.form-check-input[type=checkbox]').is(":checked") ? true : false;
   
       // Récupérer les codecs activés
       $('#template_codec_activable input[type=checkbox]:checked').each(function() {
@@ -917,7 +917,7 @@ const get_admin_type = () => {
                 let template_nat_tenant = document.getElementById("template_nat_tenant");
                 (template.nat.label === 'yes') ? template_nat_tenant.checked = true: template_nat_tenant.checked = false;
         
-                if (template.template_enable == 'yes') {
+                if (template.template_enable === true) {
                     // console.log('template actif')
                     document.getElementById("flexSwitchCheckEnableTemplate").checked = true;
                     //BTN ENABLE
@@ -1076,42 +1076,52 @@ const get_admin_type = () => {
             });
             ///////
             //genere select box pour LOCALES
-            let select_locales_select = "";
-            let template_select_locales_select = "";
-            let locales_tenant_select = $("#locales_tenant");
-            let locales_tenant_select_template = $("#template_locales_tenant");
-            for (let i = 0; i < locale_list.length; i++) {
-                if ("template_keys" in localStorage) {
-                    // si inclusion de template 
-                    if (template.template_enable == 'no' && locale_list[i].locale == template.locale.sip_value) {
-                        template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
-                    } else if (template.template_enable == 'yes' && locale_list[i].locale == template.locale.sip_value) {
-                        select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
-                        template_select_locales_select += '<option selected data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
-                    } else {
-                        select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
-                        template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>'
-                    }
+            let selectLocalesSelect = "";
+            let templateSelectLocalesSelect = "";
+            const localesTenantSelect = $("#locales_tenant");
+            const localesTenantSelectTemplate = $("#template_locales_tenant");
+
+            locale_list.forEach(locale => {
+              console.log(locale);
+              
+            const { locale: localeValue, locale_text: localeText } = locale;
+            const localeOption = `<option data-label="${localeText}" value="${localeValue}">${i18next.t('locales_pbx.' + localeText)}</option>`;
+            const selectedOption = `<option selected data-label="${localeText}" value="${localeValue}">${i18next.t('locales_pbx.' + localeText)}</option>`;
+
+            if ("template_keys" in localStorage) {        
+                if (template.template_enable === false && localeValue == template.locale.sip_value) {
+                    templateSelectLocalesSelect += selectedOption;
+                } else if (template.template_enable === true && localeValue == template.locale.sip_value) {
+                    selectLocalesSelect += selectedOption;
+                    templateSelectLocalesSelect += selectedOption;
                 } else {
-                    select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>';
-                    template_select_locales_select += '<option data-label="' + locale_list[i].locale_text + '" value="' + locale_list[i].locale + '">' + i18next.t('locales_pbx.'+locale_list[i].locale_text) + '</option>'
+                    selectLocalesSelect += localeOption;
+                    templateSelectLocalesSelect += localeOption;
+                }
+            } else {
+                selectLocalesSelect += localeOption;
+                templateSelectLocalesSelect += localeOption;
+            }
+            });
+
+            localesTenantSelect.append(selectLocalesSelect);
+
+            localesTenantSelect.each(function() {
+            const $select = $(this);
+            const $dropdown = $select.next('.nice-select');
+            const isOpen = $dropdown.hasClass('open');
+
+            if ($dropdown.length) {
+                $dropdown.remove();
+                create_nice_select($select, 'locales');
+                if (isOpen) {
+                    $select.next().trigger('click');
                 }
             }
-            locales_tenant_select.append(select_locales_select);
-            locales_tenant_select.each(function() {
-                let $select = $(this);
-                let $dropdown = $(this).next('.nice-select');
-                let open = $dropdown.hasClass('open');
-                if ($dropdown.length) {
-                    $dropdown.remove();
-                    create_nice_select($select, 'locales');
-                    if (open) {
-                        $select.next().trigger('click');
-                    }
-                }
             });
-            locales_tenant_select_template.append(template_select_locales_select);
-            locales_tenant_select_template.each(function() {
+
+            localesTenantSelectTemplate.append(templateSelectLocalesSelect);
+            localesTenantSelectTemplate.each(function() {
                 let $select = $(this);
                 let $dropdown = $(this).next('.nice-select');
                 let open = $dropdown.hasClass('open');
@@ -1135,7 +1145,7 @@ const get_admin_type = () => {
                 let selected_webrtc = '';
                 let template_selected = '';
                 let template_selected_webrtc = '';
-                if ("template_keys" in localStorage && template.template_enable == 'yes') {
+                if ("template_keys" in localStorage && template.template_enable === true) {
                     // // console.log("a1 : " + codec_list[i].value);
                     let template_dock_value_codecs = template.codecs.sip_value;
                     let template_dock_value_codecs_webrtc = template.app_codecs.sip_value;
@@ -1153,7 +1163,7 @@ const get_admin_type = () => {
                             template_selected_webrtc = 'checked';
                         }
                     }
-                } else if ("template_keys" in localStorage && template.template_enable == 'no') {
+                } else if ("template_keys" in localStorage && template.template_enable === false) {
                     if (codec_list[i].value == "alaw") {
                         // // console.log("b1 : " + codec_list[i].value);
                         selected = 'checked';
