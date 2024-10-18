@@ -20,7 +20,7 @@
     },
     "staticTabs": [
       {
-        "entityId": "stack-dashboard-config",
+        "entityId": "stack-dashboard-deployPlugin",
         "context": ["generalPbxTab"],
         "name": "Wizard Configuration",
         "contentUrl": "./index.html"
