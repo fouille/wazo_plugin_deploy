@@ -899,7 +899,17 @@ const get_admin_type = () => {
         
             //CONSTRUCTOR
             if ("template_keys" in localStorage) {
+              
+                
                 template = JSON.parse(localStorage.getItem('template_keys'));
+                
+               //1.1.04 fix breaking change de valeur yes/no en true/false, permettant de changer le valeur sans refaire le template
+                if (template && (template.template_enable === 'yes' || template.template_enable === 'no')) {
+                    template.template_enable = template.template_enable === 'yes'; // true si 'yes', false si 'no'
+                    localStorage.setItem('template_keys', JSON.stringify(template));
+                    location.reload();
+                }
+
                 // console.log('template en localstorage')
         
                 document.getElementById("template_active_codec_video_enable").checked = template.app_codecs.video;
