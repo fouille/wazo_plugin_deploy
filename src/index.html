@@ -382,7 +382,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn btn-danger template_remove" name="template_remove" id="template_remove" data-bs-dismiss="modal"></button>
+					<button type="button" class="btn btn-success template_export_btn" name="template_export_btn" id="template_export_btn"></button>
+					<button type="button" class="btn btn-danger template_remove" name="template_remove" id="template_remove" data-bs-dismiss="modal"></button>
 					<button type="button" class="btn_1 template_save" name="template_save" id="template_save" data-bs-dismiss="modal"></button>
 				</div>
 			</div>
@@ -403,7 +404,24 @@
 		  </div>
 		</div>
 	  </div>
-
+	  <!-- MODAL DIMPORT TEMPLATE -->
+	  <div class="modal fade" id="import-modal" tabindex="-1" role="dialog" aria-labelledby="import-modal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title text-danger" id="template_import_title"></h5>
+			</div>
+			<div class="modal-body">
+			  <p id="template_import_text"></p>
+			  <input type="file" class="form-control form-control-sm" id="file_template_import" accept=".json" />
+			  <p id="template_import_errorMessage" class="error_import" style="display: none;"></p>
+			</div>
+			<div class="modal-footer">
+				<button id="template_import_btn" class="btn btn-primary template_import_btn"></button>
+			</div>
+		  </div>
+		</div>
+	  </div>
 	<!-- COMMON SCRIPTS -->
 	<script src="assets/js/jquery-3.7.1.min.js"></script>
     <script src="assets/js/common_scripts.min.js"></script>

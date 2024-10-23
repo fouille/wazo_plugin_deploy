@@ -27,7 +27,7 @@
 	<!-- Plaus -->
 	<script defer="defer" data-domain="beta--wazo-plugin-deploy.netlify.app" data-api="/lapetiteroute/api/event" src="/lapetiteroute/js/script.js"></script>
 	<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
-<script defer src="assets/js/index.2ded5691324eca719e96.js"></script><script defer src="assets/js/main.ccde6acb02fbaf1ca963.js"></script><script defer src="assets/js/function.cdf6e6c7dbbd98536203.js"></script><script defer src="assets/js/i18.897ccbd85c7b9238da06.js"></script></head>
+<script defer src="assets/js/index.794e3bf09acc533d4aff.js"></script><script defer src="assets/js/main.ccde6acb02fbaf1ca963.js"></script><script defer src="assets/js/function.5a5240e39c9dd6e89486.js"></script><script defer src="assets/js/i18.897ccbd85c7b9238da06.js"></script></head>
 
 <body>
 	<div id="preloader">
@@ -382,7 +382,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn btn-danger template_remove" name="template_remove" id="template_remove" data-bs-dismiss="modal"></button>
+					<button type="button" class="btn btn-success template_export_btn" name="template_export_btn" id="template_export_btn"></button>
+					<button type="button" class="btn btn-danger template_remove" name="template_remove" id="template_remove" data-bs-dismiss="modal"></button>
 					<button type="button" class="btn_1 template_save" name="template_save" id="template_save" data-bs-dismiss="modal"></button>
 				</div>
 			</div>
@@ -403,7 +404,24 @@
 		  </div>
 		</div>
 	  </div>
-
+	  <!-- MODAL DIMPORT TEMPLATE -->
+	  <div class="modal fade" id="import-modal" tabindex="-1" role="dialog" aria-labelledby="import-modal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title text-danger" id="template_import_title"></h5>
+			</div>
+			<div class="modal-body">
+			  <p id="template_import_text"></p>
+			  <input type="file" class="form-control form-control-sm" id="file_template_import" accept=".json" />
+			  <p id="template_import_errorMessage" class="error_import" style="display: none;"></p>
+			</div>
+			<div class="modal-footer">
+				<button id="template_import_btn" class="btn btn-primary template_import_btn"></button>
+			</div>
+		  </div>
+		</div>
+	  </div>
 	<!-- COMMON SCRIPTS -->
 	<script src="assets/js/jquery-3.7.1.min.js"></script>
     <script src="assets/js/common_scripts.min.js"></script>

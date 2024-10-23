@@ -13,7 +13,8 @@
         "no": "No",
         "undefined": "Opción no definida",
         "admin_access": "Acceso no autorizado",
-        "admin_access_text": "No tienes derechos suficientes para acceder a esta página"
+        "admin_access_text": "No tienes derechos suficientes para acceder a esta página",
+        "open_import_modal_button": "Importar modelo"
       },
       "locales_pbx": {
         "French": "Francés",
@@ -36,6 +37,11 @@
         "template_info_text_case2": "Se encontró una plantilla de configuración pero no está activa, activarla",
         "template_info_text_case3": "No se encontró ninguna plantilla de configuración, para crear una",
         "template_info_text_btn": "haga clic aquí",
+        "template_export_btn": "Exportar",
+        "template_import_title": "Importar una plantilla",
+        "template_import_text": "Importe su modelo en formato .json, se aplicará automáticamente después de la validación.",
+        "template_import_btn": "Importar",
+        "template_import_errorMessage": "Parece que el archivo a importar no está seleccionado.",
         "activate": "Habilitar plantilla",
         "templateModal": "Configuración de plantilla",
         "information_text": "La información de esta plantilla de configuración se guarda en el recurso <strong>Localstorage</strong> de su navegador. Si se elimina, los parámetros de su modelo ya no se escribirán automáticamente.",

@@ -505,6 +505,7 @@ a#logo {
   opacity: 0.5;
   font-size: x-small;
 }
+
 @media (max-width: 991px) {
   .copy {
     display: none;
