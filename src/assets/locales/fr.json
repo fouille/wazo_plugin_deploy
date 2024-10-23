@@ -11,7 +11,8 @@
             "no": "Non",
             "undefined": "Option non définie",
             "admin_access": "Accès non autorisé",
-            "admin_access_text": "Vous ne disposez pas des droits suffisants pour accéder à cette page"
+            "admin_access_text": "Vous ne disposez pas des droits suffisants pour accéder à cette page",
+            "open_import_modal_button": "Import modèle"
         },
         "locales_pbx": {
             "French":"Français",
@@ -35,6 +36,11 @@
             "template_info_text_case2": "Un modèle de configuration a été trouvé mais il n'est pas actif, pour l'activer",
             "template_info_text_case3": "Aucun modèle de configuration trouvé, pour en créer un",
             "template_info_text_btn": "cliquez ici",
+            "template_export_btn": "Exporter",
+            "template_import_title": "Importer un modèle",
+            "template_import_text": "Importez votre modèle au format .json, il s'appliquera automatiquement après validation.",
+            "template_import_btn": "Importer",
+            "template_import_errorMessage": "Il semblerait que le fichier à importer ne soit pas sélectionné.",
             "activate": "Activer le modèle",
             "templateModal": "Configuration modèle",
             "information_text": "Les informations de ce modèle de configuration sont enregistrées dans la ressource  <strong>Localstorage</strong> de votre navigateur. En cas d'effacement, les paramètres de votre modèle ne seront plus écris automatiquement.",

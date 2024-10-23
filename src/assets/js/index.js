@@ -13,6 +13,7 @@ import es from '../locales/es.json';
 import { App } from '@wazo/euc-plugins-sdk';
 import './survey_func';
 import { codec_list_text, locale_list_wazo } from './main.const';
+import { exportToJsonFile, importJsonToLocalStorage } from './main.functions'
 
 i18next
   .use(LanguageDetector)
@@ -30,7 +31,7 @@ const canvasJsConfetti = document.getElementById('tsparticles');
 const jsConfetti = new JSConfetti({ canvasJsConfetti });
 
 const app = new App();
-const version = `© [AIV]{date}[/AIV] FMW - ${i18next.t('global.copyright')} - [AIV]v{version}[/AIV] ${what}`;
+const version = `© [AIV]{date}[/AIV] FMW - ${i18next.t('global.copyright')} - [AIV]v{version}[/AIV] ${what} - <a href="#" class="btn-import-template" id="open_import_modal_button" data-bs-toggle="modal" data-bs-target="#import-modal"></a>`;
 
 document.querySelector('.copy').innerHTML = version;
 
@@ -49,6 +50,8 @@ const btn_next = [...document.getElementsByClassName("forward")];
 const btn_submit = [...document.getElementsByClassName("wizard_save")];
 const btn_template = [...document.getElementsByClassName("template_save")];
 const btn_template_remove = [...document.getElementsByClassName("template_remove")];
+const btn_template_export = [...document.getElementsByClassName("template_export_btn")];
+const btn_template_import = [...document.getElementsByClassName("template_import_btn")];
 const btn_stun = [...document.querySelectorAll(".active_stun_wda, .template_active_stun_wda")];
 const btn_turn = [...document.querySelectorAll(".active_turn_ma, .template_active_turn_ma")];
 const btn_active_codec = document.getElementById("active_codec_video_enable");
@@ -66,6 +69,12 @@ const elementsToTranslate = [
     { id: 'template_save', key: 'global.process' },
     { id: 'template_remove', key: 'global.delete' },
     { id: 'templateModal', key: 'template.templateModal' },
+    { id: 'template_export_btn', key: 'template.template_export_btn' },
+    { id: 'open_import_modal_button', key: 'global.open_import_modal_button' },
+    { id: 'template_import_title', key: 'template.template_import_title' },
+    { id: 'template_import_text', key: 'template.template_import_text' },
+    { id: 'template_import_btn', key: 'template.template_import_btn' },
+    { id: 'template_import_errorMessage', key: 'template.template_import_errorMessage' },
     { id: 'flexSwitchCheckEnableTemplate_label', key: 'template.activate' },
     { id: 'information_text', key: 'template.information_text' },
     { id: 'collapseOne_btn', key: 'template.collapseOne_btn' },
@@ -723,6 +732,33 @@ btn_template_remove.forEach(element => {
       location.reload();
     });
   });
+
+// BTN EXPORT TEMPLATE
+btn_template_export.forEach(element => {
+  element.addEventListener("click", () => {
+    exportToJsonFile('template_keys')
+  });
+});
+
+// BTN EXPORT TEMPLATE
+btn_template_import.forEach(element => {
+  element.addEventListener("click", () => {
+    const fileInput = document.getElementById('file_template_import');
+    const file = fileInput.files[0];
+    const errorMessage = document.getElementById('template_import_errorMessage');
+
+    // Réinitialiser le message d'erreur
+    errorMessage.style.display = 'none';
+
+    if (file) {
+        importJsonToLocalStorage(file);
+    } else {
+        console.log('Veuillez sélectionner un fichier à importer.');
+        // Afficher un message d'erreur si aucun fichier n'est sélectionné
+        errorMessage.style.display = 'block';
+    }
+  });
+});
 
 // changement codec pour video 
 btn_active_codec.addEventListener("change", function() {

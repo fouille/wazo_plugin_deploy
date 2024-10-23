@@ -55,3 +55,19 @@
     opacity: 0 !important;
     visibility: hidden !important;
 }
+
+
+.copy a {
+    color: inherit; /* Hérite la couleur de l'élément parent */
+    text-decoration: underline; /* Supprime le soulignement */
+  }
+  
+.copy a:hover {
+color: #d2d8dd !important;
+}
+
+.error_import {
+    color: red;
+    font-weight: bold;
+    font-size: x-small;
+}

@@ -13,7 +13,8 @@
             "no": "No",
             "undefined": "Option not defined",
             "admin_access": "Unauthorized access",
-            "admin_access_text": "You do not have sufficient rights to access this page."
+            "admin_access_text": "You do not have sufficient rights to access this page.",
+            "open_import_modal_button": "Import model"
         },
         "locales_pbx": {
             "French":"French",
@@ -36,6 +37,11 @@
             "template_info_text_case2": "A configuration template was found but it is not active, to activate it",
             "template_info_text_case3": "No configuration template found, to create one",
             "template_info_text_btn": "click here",
+            "template_export_btn": "Export",
+            "template_import_title": "Import a template",
+            "template_import_text": "Import your model in .json format, it will be applied automatically after validation.",
+            "template_import_btn": "Import",
+            "template_import_errorMessage": "It appears that the file to import is not selected.",
             "activate": "Enable template",
             "templateModal": "Template Configuration",
             "information_text": "The information from this configuration template is saved in your browser's <strong>Localstorage</strong> resource. If deleted, your model parameters will no longer be written automatically.",
