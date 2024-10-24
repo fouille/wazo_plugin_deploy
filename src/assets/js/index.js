@@ -67,6 +67,8 @@ const elementsToTranslate = [
     { id: 'backward', key: 'global.backward' },
     { id: 'forward', key: 'global.forward' },
     { id: 'process', key: 'global.process' },
+    { id: 'template_info_list', key: 'template.template_info_list' },
+    { id: 'template_info_flashMode', key: 'template.template_info_flashMode' },
     { id: 'template_save', key: 'global.process' },
     { id: 'template_remove', key: 'global.delete' },
     { id: 'templateModal', key: 'template.templateModal' },

@@ -33,6 +33,8 @@
         "nl_NL": "Holandés"
       },
       "template": {
+        "template_info_list": "Modelo de configuración",
+        "template_info_flashMode": "Modo Flash",
         "template_info_text": "Activado",
         "template_info_text_case2": "Desactivado",
         "template_info_text_case3": "Inexistente",

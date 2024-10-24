@@ -33,6 +33,8 @@
             "nl_NL": "Dutch"
         },
         "template": {
+            "template_info_list": "Configuration model",
+            "template_info_flashMode": "Flash Mode",
             "template_info_text": "Enabled",
             "template_info_text_case2": "Disabled",
             "template_info_text_case3": "Nonexistent",

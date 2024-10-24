@@ -32,6 +32,8 @@
 
         },
         "template": {
+            "template_info_list": "Modèle de configuration",
+            "template_info_flashMode": "Mode Flash",
             "template_info_text": "Activé",
             "template_info_text_case2": "Désactivé",
             "template_info_text_case3": "Inexistant",
