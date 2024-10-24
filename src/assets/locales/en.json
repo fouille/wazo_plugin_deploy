@@ -33,10 +33,10 @@
             "nl_NL": "Dutch"
         },
         "template": {
-            "template_info_text": "Your configuration template is active, to modify it",
-            "template_info_text_case2": "A configuration template was found but it is not active, to activate it",
-            "template_info_text_case3": "No configuration template found, to create one",
-            "template_info_text_btn": "click here",
+            "template_info_text": "Enabled",
+            "template_info_text_case2": "Disabled",
+            "template_info_text_case3": "Nonexistent",
+            "template_info_text_btn": "Click here to configure the model",
             "template_export_btn": "Export",
             "template_import_title": "Import a template",
             "template_import_text": "Import your model in .json format, it will be applied automatically after validation.",

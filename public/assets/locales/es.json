@@ -33,10 +33,10 @@
         "nl_NL": "Holandés"
       },
       "template": {
-        "template_info_text": "Tu plantilla de configuración está activa, para modificarla",
-        "template_info_text_case2": "Se encontró una plantilla de configuración pero no está activa, activarla",
-        "template_info_text_case3": "No se encontró ninguna plantilla de configuración, para crear una",
-        "template_info_text_btn": "haga clic aquí",
+        "template_info_text": "Activado",
+        "template_info_text_case2": "Desactivado",
+        "template_info_text_case3": "Inexistente",
+        "template_info_text_btn": "Haga clic aquí para configurar la plantilla",
         "template_export_btn": "Exportar",
         "template_import_title": "Importar una plantilla",
         "template_import_text": "Importe su modelo en formato .json, se aplicará automáticamente después de la validación.",

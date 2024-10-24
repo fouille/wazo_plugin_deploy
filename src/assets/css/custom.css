@@ -71,3 +71,8 @@ color: #d2d8dd !important;
     font-weight: bold;
     font-size: x-small;
 }
+
+.gear-edit-template {
+    color: inherit;
+    text-decoration: none;
+}
