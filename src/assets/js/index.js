@@ -14,6 +14,7 @@ import { App } from '@wazo/euc-plugins-sdk';
 import './survey_func';
 import { codec_list_text, locale_list_wazo } from './main.const';
 import { exportToJsonFile, importJsonToLocalStorage } from './main.functions'
+import { Modal } from 'bootstrap';
 
 i18next
   .use(LanguageDetector)
@@ -66,6 +67,8 @@ const elementsToTranslate = [
     { id: 'backward', key: 'global.backward' },
     { id: 'forward', key: 'global.forward' },
     { id: 'process', key: 'global.process' },
+    { id: 'template_info_list', key: 'template.template_info_list' },
+    { id: 'template_info_flashMode', key: 'template.template_info_flashMode' },
     { id: 'template_save', key: 'global.process' },
     { id: 'template_remove', key: 'global.delete' },
     { id: 'templateModal', key: 'template.templateModal' },
@@ -132,6 +135,7 @@ const elementsToTranslate = [
   ];
   
 const tippyConfigurations = [
+    { selector: '#tippy_template_edit', content: i18next.t('template.template_info_text_btn') },
     { selector: '#step1_tippy_app_show', content: i18next.t('step0.step0_panel2_apps_tippy') },
     { selector: '#step1_panel1_title_tippy', content: i18next.t('step1.step1_panel1_title_tippy') },
     { selector: '#step1_panel2_title_tippy', content: i18next.t('step1.step1_panel2_title_tippy') },
@@ -385,7 +389,7 @@ const updateApps = async (apps_list, app_keys) => {
       document.getElementById("final-step-three").innerHTML = '<i class="fa-solid fa-circle-check text-success fa-beat"></i>';
       document.getElementById("title_text").innerText = i18next.t('step3.finish');
       document.getElementById("subtitle_text").innerText = "";
-      document.getElementById("template_info_text").innerText = "";
+      document.getElementById("template_info_bloc").style.display = "none";
       document.getElementById("main_question").innerText = i18next.t('step3.configuration');
       jsConfetti.addConfetti({
         confettiRadius: 4,
@@ -740,7 +744,7 @@ btn_template_export.forEach(element => {
   });
 });
 
-// BTN EXPORT TEMPLATE
+// BTN IMPORT TEMPLATE
 btn_template_import.forEach(element => {
   element.addEventListener("click", () => {
     const fileInput = document.getElementById('file_template_import');
@@ -932,6 +936,8 @@ const get_admin_type = () => {
             }
         
             ////// TEMPLATE : application des paramètres enregistrés
+            // Indicateurs de template
+            const templateInfoTextElement = document.getElementById("template_info_text");
         
             //CONSTRUCTOR
             if ("template_keys" in localStorage) {
@@ -968,11 +974,12 @@ const get_admin_type = () => {
                     document.getElementById("flexSwitchCheckEnableTemplate").checked = true;
                     //BTN ENABLE
                     (btn_template_active_template.checked == false) ? document.getElementById("flexSwitchCheckEnableTemplate_label").classList.add("text-danger", "fw-bold"): document.getElementById("flexSwitchCheckEnableTemplate_label").classList.remove("text-danger", "fw-bold");
-        
-                    document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+ i18next.t('template.template_info_text') +' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal"> '+i18next.t('template.template_info_text_btn')+' </a>';
-                    document.getElementById("template_info_text").classList.add("text-success");
+
+                    //modification de l'incateur
+                    templateInfoTextElement.innerHTML = i18next.t('template.template_info_text');
+                    templateInfoTextElement.classList.add("bg-success");
+
                     document.getElementsByName("template_remove")[0].style.display = 'inline';
-        
         
                     document.getElementById("active_codec_video_enable").checked = template.app_codecs.video;
         
@@ -1021,15 +1028,18 @@ const get_admin_type = () => {
                     }
         
                 } else {
+                  // console.log('template non actif')
                     document.getElementsByName("template_remove")[0].style.display = 'inline';
-                    document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+i18next.t('template.template_info_text_case2')+' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">'+i18next.t('template.template_info_text_btn')+'</a>';
-                    document.getElementById("template_info_text").classList.add("text-warning");
-                    // console.log('template non actif')
+                    //modification de l'incateur
+                    templateInfoTextElement.innerHTML = i18next.t('template.template_info_text_case2');
+                    templateInfoTextElement.classList.add("bg-warning", "text-dark");
                 }
             } else {
                 // console.log('template pas trouvé');
                 document.getElementsByName("template_remove")[0].style.display = 'none';
-                document.getElementById("template_info_text").innerHTML = '<i class="fa-solid fa-gears"></i> '+i18next.t('template.template_info_text_case3')+' <a href="#" class="btn-create-template" id="open_modaltemplate_button" data-bs-toggle="modal" data-bs-target="#template-modal">'+i18next.t('template.template_info_text_btn')+'</a>'
+                //modification de l'incateur
+                templateInfoTextElement.innerHTML = i18next.t('template.template_info_text_case3');
+                templateInfoTextElement.classList.add("bg-secondary");
         
             }
         

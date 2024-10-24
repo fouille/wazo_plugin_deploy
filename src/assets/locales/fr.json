@@ -32,10 +32,12 @@
 
         },
         "template": {
-            "template_info_text": "Votre modèle de configuration est actif, pour le modifier",
-            "template_info_text_case2": "Un modèle de configuration a été trouvé mais il n'est pas actif, pour l'activer",
-            "template_info_text_case3": "Aucun modèle de configuration trouvé, pour en créer un",
-            "template_info_text_btn": "cliquez ici",
+            "template_info_list": "Modèle de configuration",
+            "template_info_flashMode": "Mode Flash",
+            "template_info_text": "Activé",
+            "template_info_text_case2": "Désactivé",
+            "template_info_text_case3": "Inexistant",
+            "template_info_text_btn": "Cliquez ici pour configurer le modèle",
             "template_export_btn": "Exporter",
             "template_import_title": "Importer un modèle",
             "template_import_text": "Importez votre modèle au format .json, il s'appliquera automatiquement après validation.",
